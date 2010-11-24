@@ -4,3 +4,6 @@ php app/console doctrine:generate:entity "Application\ChiaBundle" "Contact" --fi
 
 then add Bundle to app/AppKernel.php and run
 php app/console doctrine:generate:entities
+php hello/console doctrine:database:create
+php hello/console doctrine:schema:create
+

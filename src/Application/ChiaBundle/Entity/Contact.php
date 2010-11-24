@@ -71,4 +71,79 @@ class Contact
     {
         return $this->description;
     }
+    /**
+     * @var string $title
+     */
+    private $title;
+
+    /**
+     * @var string $code
+     */
+    private $code;
+
+    /**
+     * @var smallint $type
+     */
+    private $type;
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string $title
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string $code
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * Set type
+     *
+     * @param smallint $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get type
+     *
+     * @return smallint $type
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
 }

@@ -9,6 +9,13 @@ Application\ChiaBundle\Entity\Contact:
         strategy: AUTO
     name:
       type: string(255)
+    title:
+      type: string(255)
+    code:
+      type: string(100)
+      unique: true
+    type:
+      type: smallint
     description:
       type: string
       length: null

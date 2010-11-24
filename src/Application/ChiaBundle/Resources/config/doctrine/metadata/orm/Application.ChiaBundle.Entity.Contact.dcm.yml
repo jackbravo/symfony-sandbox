@@ -1,0 +1,15 @@
+Application\ChiaBundle\Entity\Contact:
+  type: entity
+  table: null
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    name:
+      type: string(255)
+    description:
+      type: string
+      length: null
+  lifecycleCallbacks: {  }

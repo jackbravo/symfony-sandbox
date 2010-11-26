@@ -18,9 +18,24 @@ class Contact
     private $name;
 
     /**
+     * @var string $title
+     */
+    private $title;
+
+    /**
+     * @var string $code
+     */
+    private $code;
+
+    /**
      * @var string $description
      */
     private $description;
+
+    /**
+     * @var smallint $type
+     */
+    private $type;
 
     /**
      * Get id
@@ -71,20 +86,6 @@ class Contact
     {
         return $this->description;
     }
-    /**
-     * @var string $title
-     */
-    private $title;
-
-    /**
-     * @var string $code
-     */
-    private $code;
-
-    /**
-     * @var smallint $type
-     */
-    private $type;
 
     /**
      * Set title

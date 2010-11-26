@@ -1,0 +1,3 @@
+contacts:
+    pattern:    /contacts
+    defaults:   { _controller: ChiaBundle:Contacts:index }

@@ -19,9 +19,6 @@ Application\ChiaBundle\Entity\Contact:
     description:
       type: string
       length: null
-    company_id:
-      type: integer
-      nullable: true
   oneToMany:
     people:
       targetEntity: Contact

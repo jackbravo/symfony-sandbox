@@ -40,11 +40,6 @@ class Contact
     private $type;
 
     /**
-     * @var integer $company_id
-     */
-    private $company_id;
-
-    /**
      * @var Contact
      */
     private $people;
@@ -165,26 +160,6 @@ class Contact
     }
 
     /**
-     * Set company_id
-     *
-     * @param integer $companyId
-     */
-    public function setCompanyId($companyId)
-    {
-        $this->company_id = $companyId;
-    }
-
-    /**
-     * Get company_id
-     *
-     * @return integer $companyId
-     */
-    public function getCompanyId()
-    {
-        return $this->company_id;
-    }
-
-    /**
      * Add people
      *
      * @param Contact $people
@@ -223,5 +198,6 @@ class Contact
     {
         return $this->company;
     }
+
 
 }

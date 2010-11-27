@@ -13,7 +13,7 @@ class ContactForm extends Form
         $this->add(new TextField('name'));
         $this->add(new TextField('title'));
         $this->add(new TextField('code'));
-        // type
+        $this->getData()->setType('1');
         $this->add(new TextareaField('description'));
     }
 }

@@ -12,13 +12,13 @@ class ContactsController extends Controller
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
         $contacts = $em->createQuery('SELECT c FROM ChiaBundle:Contact c')->getArrayResult();
-        return $this->render('ChiaBundle:Contacts:index.php', array('contacts' => $contacts));
+        return $this->render('ChiaBundle:Contacts:index.twig', array('contacts' => $contacts));
     }
 
     public function newAction()
     {
         $contact = new Contact();
         $form = new ContactForm('contact', $contact, $this->container->getValidatorService());
-        return $this->render('ChiaBundle:Contacts:new.php', array('form' => $form));
+        return $this->render('ChiaBundle:Contacts:new.twig', array('form' => $form));
     }
 }

@@ -1,4 +1,8 @@
-<form action="{% path 'contacts_new' %}" method="post" {{ form|render_enctype }}>
-    {{ form|render }}
-    <input type="submit" value="Send!" />
-</form>
+{% extends "ChiaBundle::layout.twig" %}
+
+{% block content %}
+    <form action="{% path 'contacts_new' %}" method="post" {{ form|render_enctype }}>
+        {{ form|render }}
+        <input type="submit" value="Send!" />
+    </form>
+{% endblock %}

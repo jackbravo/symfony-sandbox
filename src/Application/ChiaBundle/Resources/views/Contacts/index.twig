@@ -1,6 +1,10 @@
-<a href="{% path 'contacts_new' %}">New</a>
-<ul>
-{% for contact in contacts %}
-    <li>{{ contact.name }}</li>
-{% endfor %}
-</ul>
+{% extends "ChiaBundle::layout.twig" %}
+
+{% block content %}
+    <a href="{% path 'contacts_new' %}">New</a>
+    <ul>
+    {% for contact in contacts %}
+        <li>{{ contact.name }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

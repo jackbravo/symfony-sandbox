@@ -11,14 +11,17 @@ Application\ChiaBundle\Entity\Contact:
       type: string(255)
     title:
       type: string(255)
+      nullable: true
     code:
       type: string(100)
       unique: true
+      nullable: true
     type:
       type: smallint
     description:
       type: string
       length: null
+      nullable: true
   oneToMany:
     people:
       targetEntity: Contact

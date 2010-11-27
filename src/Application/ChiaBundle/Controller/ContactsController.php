@@ -4,6 +4,7 @@ namespace Application\ChiaBundle\Controller;
 
 use Application\ChiaBundle\Entity\Contact;
 use Application\ChiaBundle\Form\ContactForm;
+use Application\ChiaBundle\Form\CompanyForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ContactsController extends Controller
@@ -44,5 +45,25 @@ class ContactsController extends Controller
         }
 
         return $this->render('ChiaBundle:Contacts:new.twig', array('form' => $form));
+    }
+
+    public function newCompanyAction()
+    {
+        $contact = new Contact();
+        $form = new CompanyForm('contact', $contact, $this->container->get('validator'));
+
+        if('POST' === $this->get('request')->getMethod()) {
+            $form->bind($this->get('request')->get('contact'));
+            if($form->isValid()) {
+                $em = $this->container->get('doctrine.orm.entity_manager');
+                $em->persist($contact);
+                $em->flush();
+
+                //$this->container->getSessionService()->setFlash('project_create', array('project' => $project));
+                return $this->redirect($this->generateUrl('contacts'));
+            }
+        }
+
+        return $this->render('ChiaBundle:Contacts:new_company.twig', array('form' => $form));
     }
 }

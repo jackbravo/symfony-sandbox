@@ -4,3 +4,6 @@ contacts:
 contacts_new:
     pattern:    /contacts/new
     defaults:   { _controller: ChiaBundle:Contacts:new }
+companies_new:
+    pattern:    /companies/new
+    defaults:   { _controller: ChiaBundle:Contacts:newCompany }

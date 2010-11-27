@@ -1,7 +1,8 @@
 {% extends "ChiaBundle::layout.twig" %}
 
 {% block content %}
-    <a href="{% path 'contacts_new' %}">New</a>
+    <a href="{% path 'contacts_new' %}">New person</a><br>
+    <a href="{% path 'companies_new' %}">New company</a>
     <ul>
     {% for contact in contacts %}
         <li>{{ contact.name }}</li>

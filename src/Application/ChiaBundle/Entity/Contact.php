@@ -164,7 +164,7 @@ class Contact
      *
      * @param Contact $people
      */
-    public function addPeople(\Contact $people)
+    public function addPeople($people)
     {
         $this->people[] = $people;
     }
@@ -184,7 +184,7 @@ class Contact
      *
      * @param Contact $company
      */
-    public function setCompany(\Contact $company)
+    public function setCompany($company)
     {
         $this->company = $company;
     }

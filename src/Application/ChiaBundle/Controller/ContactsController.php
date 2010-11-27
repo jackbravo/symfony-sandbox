@@ -17,8 +17,19 @@ class ContactsController extends Controller
 
     public function newAction()
     {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $companies = $em->createQuery('SELECT c FROM ChiaBundle:Contact c WHERE c.type = 2 ORDER BY c.name')
+            ->getArrayResult();
+        $company_choices = array('' => '---');
+        foreach ($companies as $company) {
+            $company_choices[$company['id']] = $company['name'];
+        }
+
         $contact = new Contact();
-        $form = new ContactForm('contact', $contact, $this->container->get('validator'));
+        $form = new ContactForm('contact', $contact, $this->container->get('validator'), array(
+            'entity_manager' => $em,
+            'company_choices' => $company_choices,
+        ));
 
         if('POST' === $this->get('request')->getMethod()) {
             $form->bind($this->get('request')->get('contact'));

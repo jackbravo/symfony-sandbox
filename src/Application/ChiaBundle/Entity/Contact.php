@@ -40,6 +40,21 @@ class Contact
     private $type;
 
     /**
+     * @var integer $company_id
+     */
+    private $company_id;
+
+    /**
+     * @var Contact
+     */
+    private $people;
+
+    /**
+     * @var Contact
+     */
+    private $company;
+
+    /**
      * Get id
      *
      * @return integer $id
@@ -147,6 +162,66 @@ class Contact
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set company_id
+     *
+     * @param integer $companyId
+     */
+    public function setCompanyId($companyId)
+    {
+        $this->company_id = $companyId;
+    }
+
+    /**
+     * Get company_id
+     *
+     * @return integer $companyId
+     */
+    public function getCompanyId()
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * Add people
+     *
+     * @param Contact $people
+     */
+    public function addPeople(\Contact $people)
+    {
+        $this->people[] = $people;
+    }
+
+    /**
+     * Get people
+     *
+     * @return Doctrine\Common\Collections\Collection $people
+     */
+    public function getPeople()
+    {
+        return $this->people;
+    }
+
+    /**
+     * Set company
+     *
+     * @param Contact $company
+     */
+    public function setCompany(\Contact $company)
+    {
+        $this->company = $company;
+    }
+
+    /**
+     * Get company
+     *
+     * @return Contact $company
+     */
+    public function getCompany()
+    {
+        return $this->company;
     }
 
 }

@@ -14,6 +14,7 @@ class Contact
 
     /**
      * @var string $name
+     * @validation:NotBlank()
      */
     private $name;
 
@@ -34,6 +35,7 @@ class Contact
 
     /**
      * @var smallint $type
+     * @validation:NotBlank()
      */
     private $type;
 

@@ -18,7 +18,7 @@ class ContactsController extends Controller
     public function newAction()
     {
         $contact = new Contact();
-        $form = new ContactForm('contact', $contact, $this->container->getValidatorService());
+        $form = new ContactForm('contact', $contact, $this->container->get('validator'));
 
         if('POST' === $this->get('request')->getMethod()) {
             $form->bind($this->get('request')->get('contact'));

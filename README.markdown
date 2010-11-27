@@ -7,3 +7,5 @@ php app/console doctrine:generate:entities
 php hello/console doctrine:database:create
 php hello/console doctrine:schema:create
 
+publish assets:
+php app/console assets:install web

@@ -210,7 +210,7 @@ class Contact
      *
      * @param Phonenumber $phonenumbers
      */
-    public function addPhonenumbers(\Phonenumber $phonenumbers)
+    public function addPhonenumbers($phonenumbers)
     {
         $this->phonenumbers[] = $phonenumbers;
     }

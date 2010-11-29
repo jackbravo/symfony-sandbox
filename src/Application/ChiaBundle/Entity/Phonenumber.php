@@ -57,7 +57,7 @@ class Phonenumber
      *
      * @param Contact $contact
      */
-    public function setContact(\Contact $contact)
+    public function setContact($contact)
     {
         $this->contact = $contact;
     }

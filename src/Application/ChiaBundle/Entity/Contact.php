@@ -200,4 +200,28 @@ class Contact
     }
 
 
+    /**
+     * @var Phonenumber
+     */
+    private $phonenumbers;
+
+    /**
+     * Add phonenumbers
+     *
+     * @param Phonenumber $phonenumbers
+     */
+    public function addPhonenumbers(\Phonenumber $phonenumbers)
+    {
+        $this->phonenumbers[] = $phonenumbers;
+    }
+
+    /**
+     * Get phonenumbers
+     *
+     * @return Doctrine\Common\Collections\Collection $phonenumbers
+     */
+    public function getPhonenumbers()
+    {
+        return $this->phonenumbers;
+    }
 }

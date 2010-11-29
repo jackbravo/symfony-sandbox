@@ -1,0 +1,15 @@
+Application\ChiaBundle\Entity\Phonenumber:
+  type: entity
+  table: null
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    number:
+      type: string(50)
+  manyToOne:
+    contact:
+      targetEntity: Contact
+      inversedBy: phonenumbers

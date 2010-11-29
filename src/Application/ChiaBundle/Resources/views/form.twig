@@ -16,7 +16,6 @@
                 value: "{{ label }}"},
             {% endfor %}
             ];
-            <!-- TODO: Set selected ChoiceField value as the text for the autocomplete -->
             $("#{{ field.id }}_auto").autocomplete({
                 source: data,
                 select: on{{ field.id }}change,
@@ -24,6 +23,6 @@
             });
         });
     </script>
-    <input type="hidden" {% display field_attributes %}>
-    <input type="text" id="{{ field.id }}_auto" {% display attributes %}>
+    <input type="hidden" {% display field_attributes %} value="{{ field.displayedData }}">
+    <input type="text" id="{{ field.id }}_auto" value="{{ field.getLabel(field.displayedData) }}" {% display attributes %}>
 {% endblock autocomplete_field %}

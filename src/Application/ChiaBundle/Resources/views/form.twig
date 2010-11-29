@@ -1,0 +1,29 @@
+{% extends 'TwigBundle::form.twig' %}
+
+{% block autocomplete_field %}
+    <script>
+        function on{{ field.id }}change(event, ui) {
+            if (ui.item) {
+                $("#{{ field.id }}").val(ui.item.id);
+            } else {
+                $("#{{ field.id }}").val(this.value);
+            }
+        }
+        $(function() {
+            var data = [
+            {% for choice, label in field.otherChoices %}
+                {id: "{{ choice }}",
+                value: "{{ label }}"},
+            {% endfor %}
+            ];
+            <!-- TODO: Set selected ChoiceField value as the text for the autocomplete -->
+            $("#{{ field.id }}_auto").autocomplete({
+                source: data,
+                select: on{{ field.id }}change,
+                change: on{{ field.id }}change
+            });
+        });
+    </script>
+    <input type="hidden" {% display field_attributes %}>
+    <input type="text" id="{{ field.id }}_auto" {% display attributes %}>
+{% endblock autocomplete_field %}

@@ -5,7 +5,6 @@ namespace Application\ChiaBundle\Form;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\TextField;
 use Symfony\Component\Form\TextareaField;
-use Symfony\Component\Form\ChoiceField;
 use Symfony\Bundle\DoctrineBundle\Form\ValueTransformer\EntityToIDTransformer;
 
 class ContactForm extends Form
@@ -18,7 +17,7 @@ class ContactForm extends Form
             'em' => $this->getOption('entity_manager'),
             'className' => 'Application\ChiaBundle\Entity\Contact',
         ));
-        $companyField = new ChoiceField('company', array(
+        $companyField = new AutocompleteField('company', array(
             'choices' => $this->getOption('company_choices'),
         ));
         $companyField->setValueTransformer($contactTransformer);

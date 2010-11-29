@@ -4,6 +4,9 @@ contacts:
 contacts_new:
     pattern:    /contacts/new
     defaults:   { _controller: ChiaBundle:Contacts:new }
+contacts_edit:
+    pattern:    /contacts/:id/edit
+    defaults:   { _controller: ChiaBundle:Contacts:edit }
 companies_new:
     pattern:    /companies/new
     defaults:   { _controller: ChiaBundle:Contacts:newCompany }

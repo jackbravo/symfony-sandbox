@@ -2,6 +2,8 @@
 
 namespace Application\ChiaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Application\ChiaBundle\Entity\Contact
  */
@@ -48,6 +50,11 @@ class Contact
      * @var Contact
      */
     private $company;
+
+    public function __construct()
+    {
+        $this->phonenumbers = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -223,5 +230,15 @@ class Contact
     public function getPhonenumbers()
     {
         return $this->phonenumbers;
+    }
+
+    /**
+     * Set phonenumbers
+     *
+     * @param Doctrine\Common\Collections\Collection $phonenumbers
+     */
+    public function setPhonenumbers($phonenumbers)
+    {
+        $this->phonenumbers = $phonenumbers;
     }
 }

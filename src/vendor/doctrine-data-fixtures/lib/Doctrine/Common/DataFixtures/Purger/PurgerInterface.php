@@ -15,38 +15,21 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
-*/
+ */
 
-namespace Doctrine\ODM\MongoDB\Event;
-
-use Doctrine\Common\EventArgs;
+namespace Doctrine\Common\DataFixtures\Purger;
 
 /**
- * Collection event args
+ * PurgerInterface
  *
- * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @link        www.doctrine-project.com
- * @since       1.0
- * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author Jonathan H. Wage <jonwage@gmail.com>
  */
-class CollectionEventArgs extends EventArgs
+interface PurgerInterface
 {
-    private $invoker;
-    private $data;
-
-    public function __construct($invoker, &$data)
-    {
-        $this->invoker = $invoker;
-        $this->data = $data;
-    }
-
-    public function getInvoker()
-    {
-        return $this->invoker;
-    }
-
-    public function getData()
-    {
-        return $this->data;
-    }
+    /**
+     * Purge the data from the database for the given EntityManager.
+     *
+     * @return void
+     */
+    public function purge();
 }

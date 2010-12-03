@@ -17,27 +17,19 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace Doctrine\ODM\MongoDB\Query;
+namespace Doctrine\Common\DataFixtures;
 
 /**
- * InsertQuery
+ * Interface contract for fixture classes to implement.
  *
- * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @since       1.0
- * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author Jonathan H. Wage <jonwage@gmail.com>
  */
-class InsertQuery extends AbstractQuery
+interface FixtureInterface
 {
-    protected $newObj = array();
-
-    public function setNewObj(array $newObj)
-    {
-        $this->newObj = $newObj;
-    }
-
-    public function execute(array $options = array())
-    {
-        return $this->dm->getDocumentCollection($this->class->name)
-            ->insert($this->newObj);
-    }
+    /**
+     * Load data fixtures with the passed EntityManager
+     *
+     * @param object $manager
+     */
+    public function load($manager);
 }

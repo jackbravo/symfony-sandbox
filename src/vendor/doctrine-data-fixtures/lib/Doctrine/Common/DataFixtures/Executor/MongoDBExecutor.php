@@ -17,45 +17,40 @@
  * <http://www.doctrine-project.org>.
  */
 
-namespace Doctrine\ODM\MongoDB\Query;
+namespace Doctrine\Common\DataFixtures\Executor;
+
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\Common\DataFixtures\Purger\MongoDBPurger;
 
 /**
- * GroupQuery
+ * Class responsible for executing data fixtures.
  *
- * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @since       1.0
- * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author Jonathan H. Wage <jonwage@gmail.com>
  */
-class GroupQuery extends AbstractQuery
+class MongoDBExecutor extends AbstractExecutor
 {
-    protected $keys = array();
-    protected $initial;
-    protected $reduce;
-    protected $query = array();
-
-    public function setKeys(array $keys)
+    /**
+     * Construct new fixtures loader instance.
+     *
+     * @param DocumentManager $dm DocumentManager instance used for persistence.
+     */
+    public function __construct(DocumentManager $dm, MongoDBPurger $purger = null)
     {
-        $this->keys = $keys;
+        $this->dm = $dm;
+        if ($purger !== null) {
+            $this->purger = $purger;
+            $this->purger->setDocumentManager($dm);
+        }
     }
 
-    public function setInitial($initial)
+    /** @inheritDoc */
+    public function execute(array $fixtures, $append = false)
     {
-        $this->initial = $initial;
-    }
-
-    public function setReduce($reduce)
-    {
-        $this->reduce = $reduce;
-    }
-
-    public function setQuery(array $query)
-    {
-        $this->query = $query;
-    }
-
-    public function execute(array $options = array())
-    {
-        return $this->dm->getDocumentCollection($this->class->name)
-            ->group($this->keys, $this->initial, $this->reduce, $this->query);
+        if ($append === false) {
+            $this->purge();
+        }
+        foreach ($fixtures as $fixture) {
+            $this->load($this->dm, $fixture);
+        }
     }
 }

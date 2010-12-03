@@ -16,27 +16,33 @@ class ContactForm extends Form
 {
     public function configure()
     {
-        $this->addRequiredOption('entity_manager');
-        $this->addRequiredOption('company_choices');
+        $contact = $this->getData();
 
+        $this->addOption('company_choices');
+        $this->addRequiredOption('entity_manager');
         $em = $this->getOption('entity_manager');
-        $contactTransformer = new EntityToIDTransformer(array(
-            'em' => $em,
-            'className' => 'Application\ChiaBundle\Entity\Contact',
-        ));
-        $companyField = new AutocompleteField('company', array(
-            'choices' => $this->getOption('company_choices'),
-        ));
-        $companyField->setValueTransformer($contactTransformer);
 
         $this->add(new TextField('name'));
-        $this->add(new TextField('title'));
-        $this->add($companyField);
+
+        if ($contact->getType() == 1) {
+            $this->add(new TextField('title'));
+
+            $this->addRequiredOption('company_choices');
+            $contactTransformer = new EntityToIDTransformer(array(
+                'em' => $em,
+                'className' => 'Application\ChiaBundle\Entity\Contact',
+            ));
+            $companyField = new AutocompleteField('company', array(
+                'choices' => $this->getOption('company_choices'),
+            ));
+            $companyField->setValueTransformer($contactTransformer);
+
+            $this->add($companyField);
+        }
+
         $this->add(new TextField('code'));
-        $this->getData()->setType('1');
         $this->add(new TextareaField('description'));
 
-        $contact = $this->getData();
         $phonesTransformer = new CollectionToGroupTransformer(array(
             'em' => $em,
             'fields' => array('number'),

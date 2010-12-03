@@ -4,7 +4,6 @@ namespace Application\ChiaBundle\Controller;
 
 use Application\ChiaBundle\Entity\Contact;
 use Application\ChiaBundle\Form\ContactForm;
-use Application\ChiaBundle\Form\CompanyForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ContactsController extends Controller
@@ -27,6 +26,7 @@ class ContactsController extends Controller
         }
 
         $contact = new Contact();
+        $contact->setType(1);
         $form = new ContactForm('contact', $contact, $this->container->get('validator'), array(
             'entity_manager' => $em,
             'company_choices' => $company_choices,
@@ -81,8 +81,12 @@ class ContactsController extends Controller
 
     public function newCompanyAction()
     {
+        $em = $this->container->get('doctrine.orm.entity_manager');
         $contact = new Contact();
-        $form = new CompanyForm('contact', $contact, $this->container->get('validator'));
+        $contact->setType(2);
+        $form = new ContactForm('contact', $contact, $this->container->get('validator'), array(
+            'entity_manager' => $em,
+        ));
 
         if('POST' === $this->get('request')->getMethod()) {
             $form->bind($this->get('request')->get('contact'));

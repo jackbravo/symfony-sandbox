@@ -2,6 +2,7 @@
 
 namespace Application\ChiaBundle\Form;
 
+use Application\ChiaBundle\Entity\Contact;
 use Application\ChiaBundle\Entity\Phonenumber;
 use Application\ChiaBundle\Entity\Email;
 use Application\ChiaBundle\Entity\Address;
@@ -123,5 +124,21 @@ class ContactForm extends Form
         $addresses->setValueTransformer($addressesTransformer);
 
         $this->add($addresses);
+    }
+
+    public function doBind(array $taintedData)
+    {
+        $valid = parent::doBind($taintedData);
+
+        if (!is_numeric($taintedData['company'])) {
+            $em = $this->getOption('entity_manager');
+            $company = new Contact();
+            $company->setName($taintedData['company']);
+            $company->setType(2);
+            $this->getData()->setCompany($company);
+            $em->persist($company);
+        }
+
+        return $valid;
     }
 }

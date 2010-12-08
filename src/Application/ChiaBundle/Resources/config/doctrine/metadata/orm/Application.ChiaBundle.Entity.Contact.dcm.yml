@@ -1,6 +1,7 @@
 Application\ChiaBundle\Entity\Contact:
   type: entity
   table: null
+  repositoryClass: Application\ChiaBundle\Entity\ContactRepository
   fields:
     id:
       type: integer

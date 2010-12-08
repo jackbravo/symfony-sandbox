@@ -7,7 +7,7 @@ Application\ChiaBundle\Entity\Address:
       id: true
       generator:
         strategy: AUTO
-    street:
+    address:
       type: string(255)
     city:
       type: string(50)

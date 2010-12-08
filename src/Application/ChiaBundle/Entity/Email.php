@@ -14,6 +14,7 @@ class Email
 
     /**
      * @var string $email
+     * @validation:Email()
      */
     private $email;
 
@@ -57,7 +58,7 @@ class Email
      *
      * @param Contact $contact
      */
-    public function setContact(\Contact $contact)
+    public function setContact($contact)
     {
         $this->contact = $contact;
     }

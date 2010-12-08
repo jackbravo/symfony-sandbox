@@ -13,9 +13,10 @@ class Address
     private $id;
 
     /**
-     * @var string $street
+     * @var string $address
+     * @validation:NotBlank()
      */
-    private $street;
+    private $address;
 
     /**
      * @var string $city
@@ -29,6 +30,7 @@ class Address
 
     /**
      * @var string $country
+     * @validation:NotBlank()
      */
     private $country;
 
@@ -53,23 +55,23 @@ class Address
     }
 
     /**
-     * Set street
+     * Set address
      *
-     * @param string $street
+     * @param string $address
      */
-    public function setStreet($street)
+    public function setAddress($address)
     {
-        $this->street = $street;
+        $this->address = $address;
     }
 
     /**
-     * Get street
+     * Get address
      *
-     * @return string $street
+     * @return string $address
      */
-    public function getStreet()
+    public function getAddress()
     {
-        return $this->street;
+        return $this->address;
     }
 
     /**
@@ -157,7 +159,7 @@ class Address
      *
      * @param Contact $contact
      */
-    public function setContact(\Contact $contact)
+    public function setContact($contact)
     {
         $this->contact = $contact;
     }

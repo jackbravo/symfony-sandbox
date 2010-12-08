@@ -14,6 +14,7 @@ class Phonenumber
 
     /**
      * @var string $number
+     * @validation:NotBlank()
      */
     private $number;
 

@@ -10,7 +10,7 @@ php hello/console doctrine:schema:create
 
 
 publish assets:
-php app/console assets:install web
+php app/console assets:install --symlink web
 
 
 You need to add this to twig.config in app/config/config.yml

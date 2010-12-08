@@ -118,7 +118,7 @@ class ContactForm extends Form
         $addressGroup->add(new TextareaField('address'));
         $addressGroup->add(new TextField('city'));
         $addressGroup->add(new TextField('state'));
-        $addressGroup->add(new TextField('country'));
+        $addressGroup->add(new CountryField('country'));
         $addressGroup->add(new TextField('postal_code'));
         $addresses = new CollectionField($addressGroup, array('modifiable' => true));
         $addresses->setValueTransformer($addressesTransformer);

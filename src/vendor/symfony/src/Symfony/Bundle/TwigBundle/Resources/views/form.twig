@@ -83,10 +83,13 @@
         {% endfor %}
     {% else %}
         <select {% display field_attributes %}{% if field.isMultipleChoice %} multiple="multiple"{% endif %}>
+            {% if field.emptyValue %}
+                <option value="">{{ field.emptyValue }}</option>
+            {% endif %}
             {% if field.preferredChoices|length > 0 %}
                 {% set options = field.preferredChoices %}
                 {% display options %}
-                <option disabled="disabled">{{ params.separator|default('-------------------') }}</option>
+                <option disabled="disabled">{{ field.separator|default('-------------------') }}</option>
             {% endif %}
             {% set options = field.otherChoices %}
             {% display options %}

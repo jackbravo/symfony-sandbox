@@ -62,7 +62,10 @@ class ContactForm extends Form
 
         $phoneGroup = new FieldGroup('phonenumbers');
         $phoneGroup->add(new TextField('number'));
-        $phones = new CollectionField($phoneGroup, array('modifiable' => true));
+        $phones = new CollectionField($phoneGroup, array(
+            'modifiable' => true,
+            'modifiable_key' => "mykey",
+        ));
         $phones->setValueTransformer($phonesTransformer);
 
         $this->add($phones);

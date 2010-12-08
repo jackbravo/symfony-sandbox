@@ -1,5 +1,19 @@
 {% extends 'TwigBundle::form.twig' %}
 
+{% block field_group %}
+    {{ field|render_errors }}
+    {% for child in field %}
+        {% if not child.ishidden %}
+            <div id="{{ child.id }}_wrapper">
+                {{ child|render_label }}
+                {{ child|render_errors }}
+                {{ child|render }}
+            </div>
+        {% endif %}
+    {% endfor %}
+    {{ field|render_hidden }}
+{% endblock field_group %}
+
 {% block autocomplete_field %}
     <script>
         function on{{ field.id }}change(event, ui) {
@@ -26,3 +40,28 @@
     <input type="hidden" {% display field_attributes %} value="{{ field.displayedData }}">
     <input type="text" id="{{ field.id }}_auto" value="{{ field.getLabel(field.displayedData) }}" {% display attributes %}>
 {% endblock autocomplete_field %}
+
+{% block collection_field %}
+    <script>
+        $(function() {
+            $("#{{ field.id }}_wrapper").collection_field({
+                starting_index: {{ field.count - 1 }},
+                modifiable_key: "{{ field.modifiableKey }}"
+            });
+        });
+    </script>
+    <div class="collection-field">
+    {{ field|render_errors }}
+    {% for child in field %}
+        {% if not child.ishidden %}
+            <div id="{{ child.id }}_wrapper" class="row-item">
+                {{ child|render_errors }}
+                {{ child|render }}
+                <a href="#" class="remove-field">Remove field</a>
+            </div>
+        {% endif %}
+    {% endfor %}
+    {{ field|render_hidden }}
+    </div>
+    <a href="#" class="add-field">Add another</a>
+{% endblock collection_field %}

@@ -126,11 +126,6 @@ class Parser
     private $_customOutputWalker;
 
     /**
-     * @var array
-     */
-    private $_identVariableExpressions = array();
-
-    /**
      * Creates a new query parser object.
      *
      * @param Query $query The Query to parse.
@@ -299,21 +294,6 @@ class Parser
                 $treeWalkerChain->walkUpdateStatement($AST);
             } else {
                 $treeWalkerChain->walkDeleteStatement($AST);
-            }
-        }
-
-        // Fix order of identification variables.
-        // They have to appear in the select clause in the same order as the
-        // declarations (from ... x join ... y join ... z ...) appear in the query
-        // as the hydration process relies on that order for proper operation.
-        if ( count($this->_identVariableExpressions) > 1) {
-            foreach ($this->_queryComponents as $dqlAlias => $qComp) {
-                if (isset($this->_identVariableExpressions[$dqlAlias])) {
-                    $expr = $this->_identVariableExpressions[$dqlAlias];
-                    $key = array_search($expr, $AST->selectClause->selectExpressions);
-                    unset($AST->selectClause->selectExpressions[$key]);
-                    $AST->selectClause->selectExpressions[] = $expr;
-                }
             }
         }
 
@@ -1648,7 +1628,6 @@ class Parser
     public function SelectExpression()
     {
         $expression = null;
-        $identVariable = null;
         $fieldAliasIdentificationVariable = null;
         $peek = $this->_lexer->glimpse();
 
@@ -1660,7 +1639,7 @@ class Parser
                 $expression = $this->ScalarExpression();
             } else {
                 $supportsAlias = false;
-                $expression = $identVariable = $this->IdentificationVariable();
+                $expression = $this->IdentificationVariable();
             }
         } else if ($this->_lexer->lookahead['value'] == '(') {
             if ($peek['type'] == Lexer::T_SELECT) {
@@ -1687,7 +1666,6 @@ class Parser
         } else if ($this->_lexer->lookahead['type'] == Lexer::T_PARTIAL) {
             $supportsAlias = false;
             $expression = $this->PartialObjectExpression();
-            $identVariable = $expression->identificationVariable;
         } else if ($this->_lexer->lookahead['type'] == Lexer::T_INTEGER ||
                 $this->_lexer->lookahead['type'] == Lexer::T_FLOAT) {
             // Shortcut: ScalarExpression => SimpleArithmeticExpression
@@ -1716,11 +1694,7 @@ class Parser
             }
         }
 
-        $expr = new AST\SelectExpression($expression, $fieldAliasIdentificationVariable);
-        if (!$supportsAlias) {
-            $this->_identVariableExpressions[$identVariable] = $expr;
-        }
-        return $expr;
+        return new AST\SelectExpression($expression, $fieldAliasIdentificationVariable);
     }
 
     /**

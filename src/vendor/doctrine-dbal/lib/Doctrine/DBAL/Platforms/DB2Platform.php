@@ -52,7 +52,7 @@ class DB2Platform extends AbstractPlatform
     {
         if ( ! isset($field['length'])) {
             if (array_key_exists('default', $field)) {
-                $field['length'] = $this->getVarcharDefaultLength();
+                $field['length'] = $this->getVarcharMaxLength();
             } else {
                 $field['length'] = false;
             }
@@ -379,22 +379,22 @@ class DB2Platform extends AbstractPlatform
 
         $queryParts = array();
         foreach ($diff->addedColumns AS $fieldName => $column) {
-            $queryParts[] = 'ADD COLUMN ' . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
+            $queryParts[] = 'ADD COLUMN ' . $this->getColumnDeclarationSQL($column->getName(), $column->toArray());
         }
 
         foreach ($diff->removedColumns AS $column) {
-            $queryParts[] =  'DROP COLUMN ' . $column->getQuotedName($this);
+            $queryParts[] =  'DROP COLUMN ' . $column->getName();
         }
 
         foreach ($diff->changedColumns AS $columnDiff) {
             /* @var $columnDiff Doctrine\DBAL\Schema\ColumnDiff */
             $column = $columnDiff->column;
             $queryParts[] =  'ALTER ' . ($columnDiff->oldColumnName) . ' '
-                    . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
+                    . $this->getColumnDeclarationSQL($column->getName(), $column->toArray());
         }
 
         foreach ($diff->renamedColumns AS $oldColumnName => $column) {
-            $queryParts[] =  'RENAME ' . $oldColumnName . ' TO ' . $column->getQuotedName($this);
+            $queryParts[] =  'RENAME ' . $oldColumnName . ' TO ' . $column->getName();
         }
 
         if (count($queryParts) > 0) {

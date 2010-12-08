@@ -118,12 +118,8 @@ class EntityManager
         $this->conn = $conn;
         $this->config = $config;
         $this->eventManager = $eventManager;
-
-        $metadataFactoryClassName = $config->getClassMetadataFactoryName();
-        $this->metadataFactory = new $metadataFactoryClassName;
-        $this->metadataFactory->setEntityManager($this);
+        $this->metadataFactory = new ClassMetadataFactory($this);
         $this->metadataFactory->setCacheDriver($this->config->getMetadataCacheImpl());
-        
         $this->unitOfWork = new UnitOfWork($this);
         $this->proxyFactory = new ProxyFactory($this,
                 $config->getProxyDir(),
@@ -356,15 +352,11 @@ class EntityManager
         if ($entity = $this->unitOfWork->tryGetById($identifier, $class->rootEntityName)) {
             return $entity;
         }
-        if ($class->subClasses) {
-            $entity = $this->find($entityName, $identifier);
-        } else {
-            if ( ! is_array($identifier)) {
-                $identifier = array($class->identifier[0] => $identifier);
-            }
-            $entity = $this->proxyFactory->getProxy($class->name, $identifier);
-            $this->unitOfWork->registerManaged($entity, $identifier, array());
+        if ( ! is_array($identifier)) {
+            $identifier = array($class->identifier[0] => $identifier);
         }
+        $entity = $this->proxyFactory->getProxy($class->name, $identifier);
+        $this->unitOfWork->registerManaged($entity, $identifier, array());
 
         return $entity;
     }

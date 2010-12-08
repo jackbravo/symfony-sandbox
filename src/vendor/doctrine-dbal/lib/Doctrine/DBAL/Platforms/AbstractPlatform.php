@@ -246,16 +246,6 @@ abstract class AbstractPlatform
      */
     public function getVarcharMaxLength()
     {
-        return 4000;
-    }
-
-    /**
-     * Gets the default length of a varchar field.
-     *
-     * @return integer
-     */
-    public function getVarcharDefaultLength()
-    {
         return 255;
     }
 
@@ -682,7 +672,7 @@ abstract class AbstractPlatform
     public function getDropTableSQL($table)
     {
         if ($table instanceof \Doctrine\DBAL\Schema\Table) {
-            $table = $table->getQuotedName($this);
+            $table = $table->getName();
         }
 
         return 'DROP TABLE ' . $table;
@@ -698,7 +688,7 @@ abstract class AbstractPlatform
     public function getDropIndexSQL($index, $table=null)
     {
         if($index instanceof \Doctrine\DBAL\Schema\Index) {
-            $index = $index->getQuotedName($this);
+            $index = $index->getName();
         } else if(!is_string($index)) {
             throw new \InvalidArgumentException('AbstractPlatform::getDropIndexSQL() expects $index parameter to be string or \Doctrine\DBAL\Schema\Index.');
         }
@@ -716,11 +706,11 @@ abstract class AbstractPlatform
     public function getDropConstraintSQL($constraint, $table)
     {
         if ($constraint instanceof \Doctrine\DBAL\Schema\Constraint) {
-            $constraint = $constraint->getQuotedName($this);
+            $constraint = $constraint->getName();
         }
 
         if ($table instanceof \Doctrine\DBAL\Schema\Table) {
-            $table = $table->getQuotedName($this);
+            $table = $table->getName();
         }
 
         return 'ALTER TABLE ' . $table . ' DROP CONSTRAINT ' . $constraint;
@@ -734,11 +724,11 @@ abstract class AbstractPlatform
     public function getDropForeignKeySQL($foreignKey, $table)
     {
         if ($foreignKey instanceof \Doctrine\DBAL\Schema\ForeignKeyConstraint) {
-            $foreignKey = $foreignKey->getQuotedName($this);
+            $foreignKey = $foreignKey->getName();
         }
 
         if ($table instanceof \Doctrine\DBAL\Schema\Table) {
-            $table = $table->getQuotedName($this);
+            $table = $table->getName();
         }
 
         return 'ALTER TABLE ' . $table . ' DROP FOREIGN KEY ' . $foreignKey;
@@ -762,7 +752,7 @@ abstract class AbstractPlatform
             throw DBALException::noColumnsSpecifiedForTable($table->getName());
         }
 
-        $tableName = $table->getQuotedName($this);
+        $tableName = $table->getName();
         $options = $table->getOptions();
         $options['uniqueConstraints'] = array();
         $options['indexes'] = array();
@@ -783,7 +773,7 @@ abstract class AbstractPlatform
         foreach ($table->getColumns() AS $column) {
             /* @var \Doctrine\DBAL\Schema\Column $column */
             $columnData = array();
-            $columnData['name'] = $column->getQuotedName($this);
+            $columnData['name'] = $column->getName();
             $columnData['type'] = $column->getType();
             $columnData['length'] = $column->getLength();
             $columnData['notnull'] = $column->getNotNull();
@@ -886,10 +876,10 @@ abstract class AbstractPlatform
     public function getCreateConstraintSQL(\Doctrine\DBAL\Schema\Constraint $constraint, $table)
     {
         if ($table instanceof \Doctrine\DBAL\Schema\Table) {
-            $table = $table->getQuotedName($this);
+            $table = $table->getName();
         }
 
-        $query = 'ALTER TABLE ' . $table . ' ADD CONSTRAINT ' . $constraint->getQuotedName($this);
+        $query = 'ALTER TABLE ' . $table . ' ADD CONSTRAINT ' . $constraint->getName();
 
         $columns = array();
         foreach ($constraint->getColumns() as $column) {
@@ -933,9 +923,9 @@ abstract class AbstractPlatform
     public function getCreateIndexSQL(Index $index, $table)
     {
         if ($table instanceof Table) {
-            $table = $table->getQuotedName($this);
+            $table = $table->getName();
         }
-        $name = $index->getQuotedName($this);
+        $name = $index->getName();
         $columns = $index->getColumns();
 
         if (count($columns) == 0) {
@@ -982,7 +972,7 @@ abstract class AbstractPlatform
     public function getCreateForeignKeySQL(ForeignKeyConstraint $foreignKey, $table)
     {
         if ($table instanceof \Doctrine\DBAL\Schema\Table) {
-            $table = $table->getQuotedName($this);
+            $table = $table->getName();
         }
 
         $query = 'ALTER TABLE ' . $table . ' ADD ' . $this->getForeignKeyDeclarationSQL($foreignKey);
@@ -1433,7 +1423,7 @@ abstract class AbstractPlatform
     {
         $sql = '';
         if (strlen($foreignKey->getName())) {
-            $sql .= 'CONSTRAINT ' . $foreignKey->getQuotedName($this) . ' ';
+            $sql .= 'CONSTRAINT ' . $foreignKey->getName() . ' ';
         }
         $sql .= 'FOREIGN KEY (';
 

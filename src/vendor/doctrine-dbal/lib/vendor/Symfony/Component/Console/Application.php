@@ -37,7 +37,7 @@ use Symfony\Component\Console\Helper\DialogHelper;
  * Usage:
  *
  *     $app = new Application('myapp', '1.0 (stable)');
- *     $app->add(new SimpleCommand());
+ *     $app->addCommand(new SimpleCommand());
  *     $app->run();
  *
  * @author Fabien Potencier <fabien.potencier@symfony-project.com>
@@ -74,18 +74,18 @@ class Application
             new DialogHelper(),
         ));
 
-        $this->add(new HelpCommand());
-        $this->add(new ListCommand());
+        $this->addCommand(new HelpCommand());
+        $this->addCommand(new ListCommand());
 
         $this->definition = new InputDefinition(array(
             new InputArgument('command', InputArgument::REQUIRED, 'The command to execute'),
 
-            new InputOption('--help',           '-h', InputOption::VALUE_NONE, 'Display this help message.'),
-            new InputOption('--quiet',          '-q', InputOption::VALUE_NONE, 'Do not output any message.'),
-            new InputOption('--verbose',        '-v', InputOption::VALUE_NONE, 'Increase verbosity of messages.'),
-            new InputOption('--version',        '-V', InputOption::VALUE_NONE, 'Display this program version.'),
-            new InputOption('--ansi',           '-a', InputOption::VALUE_NONE, 'Force ANSI output.'),
-            new InputOption('--no-interaction', '-n', InputOption::VALUE_NONE, 'Do not ask any interactive question.'),
+            new InputOption('--help',           '-h', InputOption::PARAMETER_NONE, 'Display this help message.'),
+            new InputOption('--quiet',          '-q', InputOption::PARAMETER_NONE, 'Do not output any message.'),
+            new InputOption('--verbose',        '-v', InputOption::PARAMETER_NONE, 'Increase verbosity of messages.'),
+            new InputOption('--version',        '-V', InputOption::PARAMETER_NONE, 'Display this program version.'),
+            new InputOption('--ansi',           '-a', InputOption::PARAMETER_NONE, 'Force ANSI output.'),
+            new InputOption('--no-interaction', '-n', InputOption::PARAMETER_NONE, 'Do not ask any interactive question.'),
         ));
     }
 
@@ -181,7 +181,7 @@ class Application
         }
 
         // the command name MUST be the first element of the input
-        $command = $this->find($name);
+        $command = $this->findCommand($name);
 
         $this->runningCommand = $command;
         $statusCode = $command->run($input, $output);
@@ -329,7 +329,7 @@ class Application
      */
     public function register($name)
     {
-        return $this->add(new Command($name));
+        return $this->addCommand(new Command($name));
     }
 
     /**
@@ -340,7 +340,7 @@ class Application
     public function addCommands(array $commands)
     {
         foreach ($commands as $command) {
-            $this->add($command);
+            $this->addCommand($command);
         }
     }
 
@@ -353,7 +353,7 @@ class Application
      *
      * @return Command The registered command
      */
-    public function add(Command $command)
+    public function addCommand(Command $command)
     {
         $command->setApplication($this);
 
@@ -375,7 +375,7 @@ class Application
      *
      * @throws \InvalidArgumentException When command name given does not exist
      */
-    public function get($name)
+    public function getCommand($name)
     {
         if (!isset($this->commands[$name]) && !isset($this->aliases[$name])) {
             throw new \InvalidArgumentException(sprintf('The command "%s" does not exist.', $name));
@@ -386,7 +386,7 @@ class Application
         if ($this->wantHelps) {
             $this->wantHelps = false;
 
-            $helpCommand = $this->get('help');
+            $helpCommand = $this->getCommand('help');
             $helpCommand->setCommand($command);
 
             return $helpCommand;
@@ -402,7 +402,7 @@ class Application
      *
      * @return Boolean true if the command exists, false otherwise
      */
-    public function has($name)
+    public function hasCommand($name)
     {
         return isset($this->commands[$name]) || isset($this->aliases[$name]);
     }
@@ -451,7 +451,7 @@ class Application
     /**
      * Finds a command by name or alias.
      *
-     * Contrary to get, this command tries to find the best
+     * Contrary to getCommand, this command tries to find the best
      * match if you give it an abbreviation of a name or alias.
      *
      * @param  string $name A command name or a command alias
@@ -460,7 +460,7 @@ class Application
      *
      * @throws \InvalidArgumentException When command name is incorrect or ambiguous
      */
-    public function find($name)
+    public function findCommand($name)
     {
         // namespace
         $namespace = '';
@@ -481,7 +481,7 @@ class Application
 
         $abbrevs = static::getAbbreviations($commands);
         if (isset($abbrevs[$name]) && 1 == count($abbrevs[$name])) {
-            return $this->get($namespace ? $namespace.':'.$abbrevs[$name][0] : $abbrevs[$name][0]);
+            return $this->getCommand($namespace ? $namespace.':'.$abbrevs[$name][0] : $abbrevs[$name][0]);
         }
 
         if (isset($abbrevs[$name]) && count($abbrevs[$name]) > 1) {
@@ -500,7 +500,7 @@ class Application
             throw new \InvalidArgumentException(sprintf('Command "%s" is ambiguous (%s).', $fullName, $this->getAbbreviationSuggestions($abbrevs[$fullName])));
         }
 
-        return $this->get($abbrevs[$fullName][0]);
+        return $this->getCommand($abbrevs[$fullName][0]);
     }
 
     /**
@@ -512,7 +512,7 @@ class Application
      *
      * @return array An array of Command instances
      */
-    public function all($namespace = null)
+    public function getCommands($namespace = null)
     {
         if (null === $namespace) {
             return $this->commands;
@@ -566,7 +566,7 @@ class Application
      */
     public function asText($namespace = null)
     {
-        $commands = $namespace ? $this->all($this->findNamespace($namespace)) : $this->commands;
+        $commands = $namespace ? $this->getCommands($this->findNamespace($namespace)) : $this->commands;
 
         $messages = array($this->getHelp(), '');
         if ($namespace) {
@@ -607,7 +607,7 @@ class Application
      */
     public function asXml($namespace = null, $asDom = false)
     {
-        $commands = $namespace ? $this->all($this->findNamespace($namespace)) : $this->commands;
+        $commands = $namespace ? $this->getCommands($this->findNamespace($namespace)) : $this->commands;
 
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->formatOutput = true;

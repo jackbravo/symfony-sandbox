@@ -31,7 +31,7 @@ use Doctrine\ODM\MongoDB\Mapping\Driver\Driver,
  *     <?php
  *
  *     $config = new Configuration();
- *     $dm = DocumentManager::create(new Connection(), $config);
+ *     $dm = DocumentManager::create(new Mongo(), $config);
  *
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.doctrine-project.com
@@ -39,8 +39,15 @@ use Doctrine\ODM\MongoDB\Mapping\Driver\Driver,
  * @author      Jonathan H. Wage <jonwage@gmail.com>
  * @author      Roman Borschel <roman@code-factory.org>
  */
-class Configuration extends \Doctrine\MongoDB\Configuration
+class Configuration
 {
+    /**
+     * Array of attributes for this configuration instance.
+     *
+     * @var array $attributes
+     */
+    private $attributes = array('mongoCmd' => '$');
+
     /**
      * Adds a namespace under a certain alias.
      *
@@ -257,6 +264,27 @@ class Configuration extends \Doctrine\MongoDB\Configuration
     }
 
     /**
+     * Set the logger callable.
+     *
+     * @param mixed $loggerCallable The logger callable.
+     */
+    public function setLoggerCallable($loggerCallable)
+    {
+        $this->attributes['loggerCallable'] = $loggerCallable;
+    }
+
+    /**
+     * Gets the logger callable.
+     *
+     * @return mixed $loggerCallable The logger callable.
+     */
+    public function getLoggerCallable()
+    {
+        return isset($this->attributes['loggerCallable']) ?
+                $this->attributes['loggerCallable'] : null;
+    }
+
+    /**
      * Set prefix for db name
      *
      * @param string $prefix The prefix for names of databases
@@ -271,7 +299,7 @@ class Configuration extends \Doctrine\MongoDB\Configuration
      *
      * @return string 
      */
-    public function getDatabasePrefix()
+    public function getDBPrefix()
     {
         return isset($this->attributes['dbPrefix']) ?
             $this->attributes['dbPrefix'] : null;
@@ -292,9 +320,27 @@ class Configuration extends \Doctrine\MongoDB\Configuration
      *
      * @return string
      */
-    public function getDatabaseSuffix()
+    public function getDBSuffix()
     {
         return isset($this->attributes['dbSuffix']) ?
             $this->attributes['dbSuffix'] : null;
+    }
+
+    /**
+     * Get mongodb command prefix - '$' by default
+     * @return string
+     */
+    public function getMongoCmd()
+    {
+        return $this->attributes['mongoCmd'];
+    }
+
+    /**
+     * Set mongodb command prefix
+     * @param string $cmd
+     */
+    public function setMongoCmd($cmd)
+    {
+        $this->attributes['mongoCmd'] = $cmd;
     }
 }

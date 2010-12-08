@@ -77,11 +77,9 @@ class ProxyFactory
         $proxyClassName = str_replace('\\', '', $className) . 'Proxy';
         $fqn = $this->_proxyNamespace . '\\' . $proxyClassName;
 
-        if (! class_exists($fqn, false)) {
+        if ($this->_autoGenerate && ! class_exists($fqn, false)) {
             $fileName = $this->_proxyDir . DIRECTORY_SEPARATOR . $proxyClassName . '.php';
-            if ($this->_autoGenerate) {
-                $this->_generateProxyClass($this->_em->getClassMetadata($className), $proxyClassName, $fileName, self::$_proxyClassTemplate);
-            }
+            $this->_generateProxyClass($this->_em->getClassMetadata($className), $proxyClassName, $fileName, self::$_proxyClassTemplate);
             require $fileName;
         }
 

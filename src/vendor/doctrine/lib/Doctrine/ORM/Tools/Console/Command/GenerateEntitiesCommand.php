@@ -96,8 +96,7 @@ EOT
     {
         $em = $this->getHelper('em')->getEntityManager();
         
-        $cmf = new DisconnectedClassMetadataFactory();
-        $cmf->setEntityManager($em);
+        $cmf = new DisconnectedClassMetadataFactory($em);
         $metadatas = $cmf->getAllMetadata();
         $metadatas = MetadataFilter::filter($metadatas, $input->getOption('filter'));
         

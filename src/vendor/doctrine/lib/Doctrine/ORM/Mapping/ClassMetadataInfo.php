@@ -598,10 +598,9 @@ class ClassMetadataInfo
     /**
      * Gets the mapping of an association.
      *
-     * @see ClassMetadataInfo::$associationMappings
      * @param string $fieldName  The field name that represents the association in
      *                           the object model.
-     * @return array The mapping.
+     * @return Doctrine\ORM\Mapping\AssociationMapping  The mapping.
      */
     public function getAssociationMapping($fieldName)
     {
@@ -670,10 +669,6 @@ class ClassMetadataInfo
 
         // Complete id mapping
         if (isset($mapping['id']) && $mapping['id'] === true) {
-            if ($this->versionField == $mapping['fieldName']) {
-                throw MappingException::cannotVersionIdField($this->name, $mapping['fieldName']);
-            }
-
             if ( ! in_array($mapping['fieldName'], $this->identifier)) {
                 $this->identifier[] = $mapping['fieldName'];
             }
@@ -940,7 +935,6 @@ class ClassMetadataInfo
     public function setIdentifier(array $identifier)
     {
         $this->identifier = $identifier;
-        $this->isIdentifierComposite = (count($this->identifier) > 1);
     }
 
     /**
@@ -1447,13 +1441,6 @@ class ClassMetadataInfo
             if ( ! isset($columnDef['fieldName'])) {
                 $columnDef['fieldName'] = $columnDef['name'];
             }
-            if ( ! isset($columnDef['type'])) {
-                $columnDef['type'] = "string";
-            }
-            if (in_array($columnDef['type'], array("boolean", "array", "object", "datetime", "time", "date"))) {
-                throw MappingException::invalidDiscriminatorColumnType($this->name, $columnDef['type']);
-            }
-
             $this->discriminatorColumn = $columnDef;
         }
     }

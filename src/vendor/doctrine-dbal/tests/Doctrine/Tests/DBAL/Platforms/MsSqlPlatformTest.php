@@ -24,7 +24,7 @@ class MsSqlPlatformTest extends AbstractPlatformTestCase
     {
         return array(
             'CREATE TABLE test (foo NVARCHAR(255) DEFAULT NULL, bar NVARCHAR(255) DEFAULT NULL)',
-            'CREATE UNIQUE INDEX test_foo_bar_uniq ON test (foo, bar) WHERE foo IS NOT NULL AND bar IS NOT NULL'
+            'CREATE UNIQUE INDEX test_foo_bar_uniq ON test (foo, bar)'
         );
     }
 
@@ -67,7 +67,12 @@ class MsSqlPlatformTest extends AbstractPlatformTestCase
 
     public function testGeneratesDDLSnippets()
     {
-        $dropDatabaseExpectation = 'DROP DATABASE foobar';
+        $dropDatabaseExpectation = <<<DDB
+ALTER DATABASE [foobar]
+SET SINGLE_USER
+WITH ROLLBACK IMMEDIATE;
+DROP DATABASE foobar;
+DDB;
 
         $this->assertEquals('SHOW DATABASES', $this->_platform->getShowDatabasesSQL());
         $this->assertEquals('CREATE DATABASE foobar', $this->_platform->getCreateDatabaseSQL('foobar'));
@@ -133,7 +138,7 @@ class MsSqlPlatformTest extends AbstractPlatformTestCase
 
     public function getGenerateUniqueIndexSql()
     {
-        return 'CREATE UNIQUE INDEX index_name ON test (test, test2) WHERE test IS NOT NULL AND test2 IS NOT NULL';
+        return 'CREATE UNIQUE INDEX index_name ON test (test, test2)';
     }
 
     public function getGenerateForeignKeySql()

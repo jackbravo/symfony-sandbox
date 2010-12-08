@@ -95,9 +95,7 @@ class CreateSchemaSqlCollector implements Visitor
         // Append the foreign key constraints SQL
         if ($this->_platform->supportsForeignKeyConstraints()) {
             $this->_createFkConstraintQueries = array_merge($this->_createFkConstraintQueries,
-                (array) $this->_platform->getCreateForeignKeySQL(
-                    $fkConstraint, $localTable->getQuotedName($this->_platform)
-                )
+                (array) $this->_platform->getCreateForeignKeySQL($fkConstraint, $localTable->getName())
             );
         }
     }

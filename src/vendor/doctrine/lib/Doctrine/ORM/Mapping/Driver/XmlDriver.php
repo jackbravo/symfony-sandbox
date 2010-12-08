@@ -87,8 +87,6 @@ class XmlDriver extends AbstractFileDriver
                         'type' => (string)$discrColumn['type'],
                         'length' => (string)$discrColumn['length']
                     ));
-                } else {
-                    $metadata->setDiscriminatorColumn(array('name' => 'dtype', 'type' => 'string', 'length' => 255));
                 }
 
                 // Evaluate <discriminator-map...>

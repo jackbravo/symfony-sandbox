@@ -78,7 +78,7 @@ class StaticPHPDriver implements Driver
 
         foreach ($this->_paths as $path) {
             if ( ! is_dir($path)) {
-                throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath($path);
+                throw MappingException::fileMappingDriversRequireConfiguredDirectoryPath();
             }
 
             $iterator = new \RecursiveIteratorIterator(

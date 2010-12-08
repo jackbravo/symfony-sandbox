@@ -342,12 +342,12 @@ class PostgreSqlPlatform extends AbstractPlatform
         $sql = array();
 
         foreach ($diff->addedColumns as $column) {
-            $query = 'ADD ' . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
+            $query = 'ADD ' . $this->getColumnDeclarationSQL($column->getName(), $column->toArray());
             $sql[] = 'ALTER TABLE ' . $diff->name . ' ' . $query;
         }
 
         foreach ($diff->removedColumns as $column) {
-            $query = 'DROP ' . $column->getQuotedName($this);
+            $query = 'DROP ' . $column->getName();
             $sql[] = 'ALTER TABLE ' . $diff->name . ' ' . $query;
         }
 
@@ -388,7 +388,7 @@ class PostgreSqlPlatform extends AbstractPlatform
         }
 
         foreach ($diff->renamedColumns as $oldColumnName => $column) {
-            $sql[] = 'ALTER TABLE ' . $diff->name . ' RENAME COLUMN ' . $oldColumnName . ' TO ' . $column->getQuotedName($this);
+            $sql[] = 'ALTER TABLE ' . $diff->name . ' RENAME COLUMN ' . $oldColumnName . ' TO ' . $column->getName();
         }
 
         if ($diff->newName !== false) {
@@ -408,7 +408,7 @@ class PostgreSqlPlatform extends AbstractPlatform
      */
     public function getCreateSequenceSQL(\Doctrine\DBAL\Schema\Sequence $sequence)
     {
-        return 'CREATE SEQUENCE ' . $sequence->getQuotedName($this) .
+        return 'CREATE SEQUENCE ' . $sequence->getName() .
                ' INCREMENT BY ' . $sequence->getAllocationSize() .
                ' MINVALUE ' . $sequence->getInitialValue() .
                ' START ' . $sequence->getInitialValue();
@@ -422,7 +422,7 @@ class PostgreSqlPlatform extends AbstractPlatform
     public function getDropSequenceSQL($sequence)
     {
         if ($sequence instanceof \Doctrine\DBAL\Schema\Sequence) {
-            $sequence = $sequence->getQuotedName($this);
+            $sequence = $sequence->getName();
         }
         return 'DROP SEQUENCE ' . $sequence;
     }
@@ -595,7 +595,7 @@ class PostgreSqlPlatform extends AbstractPlatform
     {
         if ( ! isset($field['length'])) {
             if (array_key_exists('default', $field)) {
-                $field['length'] = $this->getVarcharDefaultLength();
+                $field['length'] = $this->getVarcharMaxLength();
             } else {
                 $field['length'] = false;
             }

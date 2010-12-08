@@ -114,7 +114,7 @@ EOT
                 throw new \LogicException("Option 'max-result' must contains an integer value");
             }
 
-            $query->setMaxResults((int) $maxResult);
+            $query->setMaxResult((int) $maxResult);
         }
 
         $resultSet = $query->execute(array(), constant($hydrationMode));

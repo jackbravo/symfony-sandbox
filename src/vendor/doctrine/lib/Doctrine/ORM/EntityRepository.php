@@ -133,6 +133,7 @@ class EntityRepository
     /**
      * Finds all entities in the repository.
      *
+     * @param int $hydrationMode
      * @return array The entities.
      */
     public function findAll()
@@ -143,7 +144,8 @@ class EntityRepository
     /**
      * Finds entities by a set of criteria.
      *
-     * @param array $criteria
+     * @param string $column
+     * @param string $value
      * @return array
      */
     public function findBy(array $criteria)
@@ -154,7 +156,8 @@ class EntityRepository
     /**
      * Finds a single entity by a set of criteria.
      *
-     * @param array $criteria
+     * @param string $column
+     * @param string $value
      * @return object
      */
     public function findOneBy(array $criteria)
@@ -185,14 +188,13 @@ class EntityRepository
             );
         }
 
-        if ( !isset($arguments[0])) {
-            // we dont even want to allow null at this point, because we cannot (yet) transform it into IS NULL.
+        if ( ! isset($arguments[0])) {
             throw ORMException::findByRequiresParameter($method.$by);
         }
 
         $fieldName = lcfirst(\Doctrine\Common\Util\Inflector::classify($by));
 
-        if ($this->_class->hasField($fieldName) || $this->_class->hasAssociation($fieldName)) {
+        if ($this->_class->hasField($fieldName)) {
             return $this->$method(array($fieldName => $arguments[0]));
         } else {
             throw ORMException::invalidFindByCall($this->_entityName, $fieldName, $method.$by);

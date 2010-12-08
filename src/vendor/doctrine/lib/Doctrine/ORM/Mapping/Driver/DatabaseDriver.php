@@ -48,7 +48,7 @@ class DatabaseDriver implements Driver
      */
     private $tables = null;
 
-    private $classToTableNames = array();
+    private $classes = array();
 
     /**
      * @var array
@@ -73,11 +73,11 @@ class DatabaseDriver implements Driver
         }
 
         foreach ($this->_sm->listTableNames() as $tableName) {
-            $tables[$tableName] = $this->_sm->listTableDetails($tableName);
+            $tables[strtolower($tableName)] = $this->_sm->listTableDetails($tableName);
         }
 
         $this->tables = array();
-        foreach ($tables AS $tableName => $table) {
+        foreach ($tables AS $name => $table) {
             /* @var $table Table */
             if ($this->_sm->getDatabasePlatform()->supportsForeignKeyConstraints()) {
                 $foreignKeys = $table->getForeignKeys();
@@ -89,23 +89,21 @@ class DatabaseDriver implements Driver
             foreach ($foreignKeys AS $foreignKey) {
                 $allForeignKeyColumns = array_merge($allForeignKeyColumns, $foreignKey->getLocalColumns());
             }
-            
+
             $pkColumns = $table->getPrimaryKey()->getColumns();
             sort($pkColumns);
             sort($allForeignKeyColumns);
 
             if ($pkColumns == $allForeignKeyColumns) {
                 if (count($table->getForeignKeys()) > 2) {
-                    throw new \InvalidArgumentException("ManyToMany table '" . $tableName . "' with more or less than two foreign keys are not supported by the Database Reverese Engineering Driver.");
+                    throw new \InvalidArgumentException("ManyToMany table '" . $name . "' with more or less than two foreign keys are not supported by the Database Reverese Engineering Driver.");
                 }
 
-                $this->manyToManyTables[$tableName] = $table;
+                $this->manyToManyTables[$name] = $table;
             } else {
-                // lower-casing is necessary because of Oracle Uppercase Tablenames,
-                // assumption is lower-case + underscore separated.
-                $className = Inflector::classify(strtolower($tableName));
-                $this->tables[$tableName] = $table;
-                $this->classToTableNames[$className] = $tableName;
+                $className = Inflector::classify($name);
+                $this->tables[$name] = $table;
+                $this->classes[$className] = $name;
             }
         }
     }
@@ -117,11 +115,11 @@ class DatabaseDriver implements Driver
     {
         $this->reverseEngineerMappingFromDatabase();
 
-        if (!isset($this->classToTableNames[$className])) {
+        if (!isset($this->classes[$className])) {
             throw new \InvalidArgumentException("Unknown class " . $className);
         }
 
-        $tableName = $this->classToTableNames[$className];
+        $tableName = Inflector::tableize($className);
 
         $metadata->name = $className;
         $metadata->table['name'] = $tableName;
@@ -185,7 +183,7 @@ class DatabaseDriver implements Driver
 
         foreach ($this->manyToManyTables AS $manyTable) {
             foreach ($manyTable->getForeignKeys() AS $foreignKey) {
-                if (strtolower($tableName) == strtolower($foreignKey->getForeignTableName())) {
+                if ($tableName == strtolower($foreignKey->getForeignTableName())) {
                     $myFk = $foreignKey;
                     foreach ($manyTable->getForeignKeys() AS $foreignKey) {
                         if ($foreignKey != $myFk) {
@@ -271,6 +269,6 @@ class DatabaseDriver implements Driver
     {
         $this->reverseEngineerMappingFromDatabase();
 
-        return array_keys($this->classToTableNames);
+        return array_keys($this->classes);
     }
 }

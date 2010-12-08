@@ -74,9 +74,11 @@ class ClassMetadataFactory
     private $initialized = false;
     
     /**
-     * @param EntityManager $$em
+     * Creates a new factory instance that uses the given metadata driver implementation.
+     *
+     * @param $driver  The metadata driver to use.
      */
-    public function setEntityManager(EntityManager $em)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
@@ -260,19 +262,15 @@ class ClassMetadataFactory
             $class = $this->newClassMetadataInstance($className);
 
             if ($parent) {
-                if (!$parent->isMappedSuperclass) {
-                    $class->setInheritanceType($parent->inheritanceType);
-                    $class->setDiscriminatorColumn($parent->discriminatorColumn);
-                }
+                $class->setInheritanceType($parent->inheritanceType);
+                $class->setDiscriminatorColumn($parent->discriminatorColumn);
                 $class->setIdGeneratorType($parent->generatorType);
                 $this->addInheritedFields($class, $parent);
                 $this->addInheritedRelations($class, $parent);
                 $class->setIdentifier($parent->identifier);
                 $class->setVersioned($parent->isVersioned);
                 $class->setVersionField($parent->versionField);
-                if (!$parent->isMappedSuperclass) {
-                    $class->setDiscriminatorMap($parent->discriminatorMap);
-                }
+                $class->setDiscriminatorMap($parent->discriminatorMap);
                 $class->setLifecycleCallbacks($parent->lifecycleCallbacks);
                 $class->setChangeTrackingPolicy($parent->changeTrackingPolicy);
             }
@@ -311,7 +309,7 @@ class ClassMetadataFactory
             $class->setParentClasses($visited);
 
             if ($this->evm->hasListeners(Events::loadClassMetadata)) {
-                $eventArgs = new \Doctrine\ORM\Event\LoadClassMetadataEventArgs($class, $this->em);
+                $eventArgs = new \Doctrine\ORM\Event\LoadClassMetadataEventArgs($class);
                 $this->evm->dispatchEvent(Events::loadClassMetadata, $eventArgs);
             }
 
@@ -381,10 +379,6 @@ class ClassMetadataFactory
     private function addInheritedRelations(ClassMetadata $subClass, ClassMetadata $parentClass)
     {
         foreach ($parentClass->associationMappings as $field => $mapping) {
-            if ($parentClass->isMappedSuperclass) {
-                $mapping['sourceEntity'] = $subClass->name;
-            }
-
             //$subclassMapping = $mapping;
             if ( ! isset($mapping['inherited']) && ! $parentClass->isMappedSuperclass) {
                 $mapping['inherited'] = $parentClass->name;

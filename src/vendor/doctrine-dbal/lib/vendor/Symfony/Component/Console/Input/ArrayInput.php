@@ -133,11 +133,11 @@ class ArrayInput extends Input
         $option = $this->definition->getOption($name);
 
         if (null === $value) {
-            if ($option->isValueRequired()) {
+            if ($option->isParameterRequired()) {
                 throw new \InvalidArgumentException(sprintf('The "--%s" option requires a value.', $name));
             }
 
-            $value = $option->isValueOptional() ? $option->getDefault() : true;
+            $value = $option->isParameterOptional() ? $option->getDefault() : true;
         }
 
         $this->options[$name] = $value;

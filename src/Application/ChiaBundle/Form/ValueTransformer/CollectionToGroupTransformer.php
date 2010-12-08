@@ -26,12 +26,6 @@ class CollectionToGroupTransformer extends BaseValueTransformer
     {
         $data = $this->clearData($data);
 
-        if (count($data) == 0) {
-            // don't check for collection count, a straight clear doesnt initialize the collection
-            $collection->clear();
-            return $collection;
-        }
-
         $remove_callback = $this->getOption('remove_instance_callback');
         foreach ($collection as $key => $object) {
             if (!array_key_exists($key, $data)) {
@@ -86,7 +80,6 @@ class CollectionToGroupTransformer extends BaseValueTransformer
         $fields = $this->getOption('fields');
 
         foreach ($fields as $fieldName) {
-            if (empty($data[$fieldName])) continue;
             $properties[$fieldName]->setValue($object, $data[$fieldName]);
         }
         return $data;

@@ -1,0 +1,23 @@
+Application\ChiaBundle\Entity\Address:
+  type: entity
+  table: null
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    street:
+      type: string(255)
+    city:
+      type: string(50)
+    state:
+      type: string(50)
+    country:
+      type: string(2)
+    postal_code:
+      type: string(10)
+  manyToOne:
+    contact:
+      targetEntity: Contact
+      inversedBy: addresses

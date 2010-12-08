@@ -29,6 +29,12 @@ Application\ChiaBundle\Entity\Contact:
     phonenumbers:
       targetEntity: Phonenumber
       mappedBy: contact
+    emails:
+      targetEntity: Email
+      mappedBy: contact
+    addresses:
+      targetEntity: Address
+      mappedBy: contact
   manyToOne:
     company:
       targetEntity: Contact

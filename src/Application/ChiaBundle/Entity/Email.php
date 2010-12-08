@@ -3,9 +3,9 @@
 namespace Application\ChiaBundle\Entity;
 
 /**
- * Application\ChiaBundle\Entity\Phonenumber
+ * Application\ChiaBundle\Entity\Email
  */
-class Phonenumber
+class Email
 {
     /**
      * @var integer $id
@@ -13,9 +13,9 @@ class Phonenumber
     private $id;
 
     /**
-     * @var string $number
+     * @var string $email
      */
-    private $number;
+    private $email;
 
     /**
      * @var Contact
@@ -33,23 +33,23 @@ class Phonenumber
     }
 
     /**
-     * Set number
+     * Set email
      *
-     * @param string $number
+     * @param string $email
      */
-    public function setNumber($number)
+    public function setEmail($email)
     {
-        $this->number = $number;
+        $this->email = $email;
     }
 
     /**
-     * Get number
+     * Get email
      *
-     * @return string $number
+     * @return string $email
      */
-    public function getNumber()
+    public function getEmail()
     {
-        return $this->number;
+        return $this->email;
     }
 
     /**
@@ -57,7 +57,7 @@ class Phonenumber
      *
      * @param Contact $contact
      */
-    public function setContact($contact)
+    public function setContact(\Contact $contact)
     {
         $this->contact = $contact;
     }
@@ -71,6 +71,5 @@ class Phonenumber
     {
         return $this->contact;
     }
-
 
 }

@@ -51,6 +51,21 @@ class Contact
      */
     private $company;
 
+    /**
+     * @var Phonenumber
+     */
+    private $phonenumbers;
+
+    /**
+     * @var Email
+     */
+    private $emails;
+
+    /**
+     * @var Address
+     */
+    private $addresses;
+
     public function __construct()
     {
         $this->phonenumbers = new ArrayCollection();
@@ -206,12 +221,6 @@ class Contact
         return $this->company;
     }
 
-
-    /**
-     * @var Phonenumber
-     */
-    private $phonenumbers;
-
     /**
      * Add phonenumbers
      *
@@ -240,5 +249,45 @@ class Contact
     public function setPhonenumbers($phonenumbers)
     {
         $this->phonenumbers = $phonenumbers;
+    }
+
+    /**
+     * Add emails
+     *
+     * @param Email $emails
+     */
+    public function addEmails(\Email $emails)
+    {
+        $this->emails[] = $emails;
+    }
+
+    /**
+     * Get emails
+     *
+     * @return Doctrine\Common\Collections\Collection $emails
+     */
+    public function getEmails()
+    {
+        return $this->emails;
+    }
+
+    /**
+     * Add addresses
+     *
+     * @param Address $addresses
+     */
+    public function addAddresses(\Address $addresses)
+    {
+        $this->addresses[] = $addresses;
+    }
+
+    /**
+     * Get addresses
+     *
+     * @return Doctrine\Common\Collections\Collection $addresses
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
     }
 }

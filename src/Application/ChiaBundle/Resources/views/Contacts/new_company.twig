@@ -4,5 +4,6 @@
     <form action="{% path 'companies_new' %}" method="post" {{ form|render_enctype }}>
         {{ form|render }}
         <input type="submit" value="Send!" />
+        <a href="{% path 'contacts' %}">Cancel</a>
     </form>
 {% endblock %}

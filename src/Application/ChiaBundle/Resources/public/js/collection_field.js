@@ -7,7 +7,6 @@
 
                 if (!data) {
                     var settings = {
-                        'modifiable_key': 'mykey',
                         'starting_index': 0
                     };
 
@@ -28,9 +27,8 @@
         add_field : function(event) {
             var settings = $(this).data('collection_field');
             var field = $(settings.skeleton).clone();
-            var regex = new RegExp(settings.modifiable_key, "g");
             field.html(function (i, oldhtml) {
-                return oldhtml.replace(regex, settings.starting_index++);
+                return oldhtml.replace(/\$\$key\$\$/g, settings.starting_index++);
             });
             $(".remove-field", field).bind("click.collection_field", methods.remove_field);
             $(".collection-field", settings.target).append(field);

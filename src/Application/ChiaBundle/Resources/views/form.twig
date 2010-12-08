@@ -45,8 +45,7 @@
     <script>
         $(function() {
             $("#{{ field.id }}_wrapper").collection_field({
-                starting_index: {{ field.count - 1 }},
-                modifiable_key: "{{ field.modifiableKey }}"
+                starting_index: {{ field.count - 1 }}
             });
         });
     </script>

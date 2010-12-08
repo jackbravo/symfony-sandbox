@@ -40,10 +40,9 @@ class CollectionField extends FieldGroup
     protected function configure()
     {
         $this->addOption('modifiable', false);
-        $this->addOption('modifiable_key', '$$key$$');
 
         if ($this->getOption('modifiable')) {
-            $field = $this->newField($this->getOption('modifiable_key'), null);
+            $field = $this->newField('$$key$$', null);
             // TESTME
             $field->setRequired(false);
             $this->add($field);
@@ -59,7 +58,7 @@ class CollectionField extends FieldGroup
         }
 
         foreach ($this as $name => $field) {
-            if (!$this->getOption('modifiable') || $name != $this->getOption('modifiable_key')) {
+            if (!$this->getOption('modifiable') || $name != '$$key$$') {
                 $this->remove($name);
             }
         }
@@ -78,7 +77,7 @@ class CollectionField extends FieldGroup
         }
 
         foreach ($this as $name => $field) {
-            if (!isset($taintedData[$name]) && $this->getOption('modifiable') && $name != $this->getOption('modifiable_key')) {
+            if (!isset($taintedData[$name]) && $this->getOption('modifiable') && $name != '$$key$$') {
                 $this->remove($name);
             }
         }
@@ -90,11 +89,6 @@ class CollectionField extends FieldGroup
         }
 
         return parent::bind($taintedData);
-    }
-
-    public function getModifiableKey()
-    {
-        return $this->getOption('modifiable_key');
     }
 
     protected function newField($key, $propertyPath)

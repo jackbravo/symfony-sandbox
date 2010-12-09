@@ -8,9 +8,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ContactsController extends Controller
 {
-    public function indexAction($which)
+    public function indexAction()
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
+
+        $get_which = $this->get('request')->query->get('which');
+        $which = $get_which ? $get_which : $this->get('session')->get('contacts.which');
+        $this->get('session')->set('contacts.which', $which);
+
         if ($which == "people") {
             $contacts = $em->getRepository('Application\ChiaBundle\Entity\Contact')->getPeople();
         } else if ($which == "companies") {
@@ -18,6 +23,7 @@ class ContactsController extends Controller
         } else {
             $contacts = $em->getRepository('Application\ChiaBundle\Entity\Contact')->getAll();
         }
+
         return $this->render('ChiaBundle:Contacts:index.twig', array('contacts' => $contacts));
     }
 

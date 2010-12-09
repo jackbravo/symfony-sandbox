@@ -1,3 +1,6 @@
+contacts:
+    pattern:    /contacts
+    defaults:   { _controller: ChiaBundle:Contacts:index }
 contacts_new:
     pattern:    /contacts/new
     defaults:   { _controller: ChiaBundle:Contacts:new }
@@ -7,6 +10,3 @@ contacts_edit:
 companies_new:
     pattern:    /companies/new
     defaults:   { _controller: ChiaBundle:Contacts:newCompany }
-contacts:
-    pattern:    /contacts/:which
-    defaults:   { _controller: ChiaBundle:Contacts:index, which: all }

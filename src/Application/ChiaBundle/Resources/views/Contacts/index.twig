@@ -1,8 +1,17 @@
 {% extends "ChiaBundle::layout.twig" %}
 
 {% block content %}
-    <a href="{% path 'contacts_new' %}">New person</a><br>
-    <a href="{% path 'companies_new' %}">New company</a>
+    <div>
+        <a href="{% path 'contacts_new' %}">New person</a><br>
+        <a href="{% path 'companies_new' %}">New company</a>
+    </div>
+
+    <p>
+        <a href="{% path 'contacts' %}">All</a> |
+        <a href="{% path 'contacts' with ['which': 'people'] %}">People</a> |
+        <a href="{% path 'contacts' with ['which': 'companies'] %}">Companies</a>
+    </p>
+
     <ul>
     {% for contact in contacts %}
         <li><a href="{% path 'contacts_edit' with ['id': contact.id] %}">{{ contact.name }}</a></li>

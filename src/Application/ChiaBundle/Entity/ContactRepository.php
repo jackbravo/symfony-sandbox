@@ -14,17 +14,19 @@ class ContactRepository extends EntityRepository
 {
     public function getAll()
     {
-        return $this->_em->createQuery('SELECT c, p, e FROM ChiaBundle:Contact c
+        return $this->_em->createQuery('SELECT c, p, e, co FROM ChiaBundle:Contact c
             LEFT JOIN c.phonenumbers p
-            LEFT JOIN c.emails e')
+            LEFT JOIN c.emails e
+            LEFT JOIN c.company co')
             ->getArrayResult();
     }
 
     public function getPeople()
     {
-        return $this->_em->createQuery('SELECT c, p, e FROM ChiaBundle:Contact c
+        return $this->_em->createQuery('SELECT c, p, e, co FROM ChiaBundle:Contact c
             LEFT JOIN c.phonenumbers p
             LEFT JOIN c.emails e
+            LEFT JOIN c.company co
             WHERE c.type = 1')
             ->getArrayResult();
     }

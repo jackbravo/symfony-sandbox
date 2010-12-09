@@ -7,14 +7,39 @@
     </div>
 
     <p>
-        <a href="{% path 'contacts' %}">All</a> |
+        <a href="{% path 'contacts' with ['which': 'all'] %}">All</a> |
         <a href="{% path 'contacts' with ['which': 'people'] %}">People</a> |
         <a href="{% path 'contacts' with ['which': 'companies'] %}">Companies</a>
     </p>
 
-    <ul>
+    <table class="contacts">
+    <thead>
+        <tr>
+            <th>Name</th><th>Email</th><th>Phone</th><th>Affiliation</th>
+        </tr>
+    </thead>
+    <tbody>
     {% for contact in contacts %}
-        <li><a href="{% path 'contacts_edit' with ['id': contact.id] %}">{{ contact.name }}</a></li>
+        <tr class="contact-row">
+            <td><strong><a href="{% path 'contacts_edit' with ['id': contact.id] %}">{{ contact.name }}</a></strong></td>
+            <td>
+                {% if contact.emails is defined %}
+                    <a href="mailto:{{ contact.emails[0].email }}">{{ contact.emails[0].email }}</a>
+                {% endif %}
+            </td>
+            <td>
+                {% if contact.phonenumbers is defined %}
+                    {{ contact.phonenumbers[0].number }}
+                {% endif %}
+            </td>
+            <td>
+                {% if contact.title is defined %} {{ contact.title }} at {% endif %}
+                {% if contact.company is defined %}
+                    <a href="{% path 'contacts_edit' with ['id': contact.company.id] %}">{{ contact.company.name }}</a>
+                {% endif %}
+            </td>
+        </tr>
     {% endfor %}
-    </ul>
+    </tbody>
+    </table>
 {% endblock %}

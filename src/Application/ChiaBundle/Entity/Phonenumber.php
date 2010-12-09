@@ -73,5 +73,8 @@ class Phonenumber
         return $this->contact;
     }
 
-
+    public function __toString()
+    {
+        return $this->getNumber();
+    }
 }

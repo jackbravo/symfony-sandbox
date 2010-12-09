@@ -73,4 +73,8 @@ class Email
         return $this->contact;
     }
 
+    public function __toString()
+    {
+        return $this->getEmail();
+    }
 }

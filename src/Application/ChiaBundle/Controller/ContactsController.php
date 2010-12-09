@@ -8,28 +8,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ContactsController extends Controller
 {
-    public function indexAction()
+    public function indexAction($which)
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
-        $contacts = $em->createQuery('SELECT c FROM ChiaBundle:Contact c')->getArrayResult();
+        if ($which == "people") {
+            $contacts = $em->getRepository('Application\ChiaBundle\Entity\Contact')->getPeople();
+        } else if ($which == "companies") {
+            $contacts = $em->getRepository('Application\ChiaBundle\Entity\Contact')->getCompanies();
+        } else {
+            $contacts = $em->getRepository('Application\ChiaBundle\Entity\Contact')->getAll();
+        }
         return $this->render('ChiaBundle:Contacts:index.twig', array('contacts' => $contacts));
     }
 
     public function newAction()
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
-        $companies = $em->createQuery('SELECT c FROM ChiaBundle:Contact c WHERE c.type = 2 ORDER BY c.name')
-            ->getArrayResult();
-        $company_choices = array('' => '---');
-        foreach ($companies as $company) {
-            $company_choices[$company['id']] = $company['name'];
-        }
-
         $contact = new Contact();
         $contact->setType(1);
+
         $form = new ContactForm('contact', $contact, $this->container->get('validator'), array(
             'entity_manager' => $em,
-            'company_choices' => $company_choices,
+            'company_choices' => $em->getRepository('Application\ChiaBundle\Entity\Contact')->getCompanyOptions(),
         ));
 
         if('POST' === $this->get('request')->getMethod()) {
@@ -50,18 +50,11 @@ class ContactsController extends Controller
     public function editAction($id)
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
-        $companies = $em->createQuery('SELECT c FROM ChiaBundle:Contact c WHERE c.type = 2 ORDER BY c.name')
-            ->getArrayResult();
-        $company_choices = array('' => '---');
-        foreach ($companies as $company) {
-            $company_choices[$company['id']] = $company['name'];
-        }
-
         $contact = $em->find('Application\ChiaBundle\Entity\Contact', $id);
 
         $form = new ContactForm('contact', $contact, $this->container->get('validator'), array(
             'entity_manager' => $em,
-            'company_choices' => $company_choices,
+            'company_choices' => $em->getRepository('Application\ChiaBundle\Entity\Contact')->getCompanyOptions(),
         ));
 
         if('POST' === $this->get('request')->getMethod()) {

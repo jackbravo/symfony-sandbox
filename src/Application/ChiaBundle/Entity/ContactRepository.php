@@ -12,4 +12,41 @@ use Doctrine\ORM\EntityRepository;
  */
 class ContactRepository extends EntityRepository
 {
+    public function getAll()
+    {
+        return $this->_em->createQuery('SELECT c, p, e FROM ChiaBundle:Contact c
+            LEFT JOIN c.phonenumbers p
+            LEFT JOIN c.emails e')
+            ->getArrayResult();
+    }
+
+    public function getPeople()
+    {
+        return $this->_em->createQuery('SELECT c, p, e FROM ChiaBundle:Contact c
+            LEFT JOIN c.phonenumbers p
+            LEFT JOIN c.emails e
+            WHERE c.type = 1')
+            ->getArrayResult();
+    }
+
+    public function getCompanies()
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.phonenumbers', 'p')
+            ->leftJoin('c.emails', 'e')
+            ->where('c.type = 2')
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    public function getCompanyOptions()
+    {
+        $companies = $this->_em->createQuery('SELECT c FROM ChiaBundle:Contact c WHERE c.type = 2 ORDER BY c.name')
+            ->getArrayResult();
+        $company_choices = array();
+        foreach ($companies as $company) {
+            $company_choices[$company['id']] = $company['name'];
+        }
+        return $company_choices;
+    }
 }

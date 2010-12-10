@@ -10,9 +10,6 @@ Application\ChiaBundle\Entity\Status:
         strategy: AUTO
     name:
       type: string(100)
-    weight:
-      type: smallint
-      default: 0
     value:
       type: smallint
   oneToMany:

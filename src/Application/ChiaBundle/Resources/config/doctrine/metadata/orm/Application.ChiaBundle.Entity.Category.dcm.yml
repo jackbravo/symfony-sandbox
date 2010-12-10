@@ -10,9 +10,6 @@ Application\ChiaBundle\Entity\Category:
         strategy: AUTO
     name:
       type: string(100)
-    color:
-      type: string(50)
-      default: '000'
   oneToMany:
     projects:
       targetEntity: Project

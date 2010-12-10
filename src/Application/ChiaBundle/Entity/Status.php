@@ -18,11 +18,6 @@ class Status
     private $name;
 
     /**
-     * @var smallint $weight
-     */
-    private $weight;
-
-    /**
      * @var smallint $value
      */
     private $value;
@@ -60,26 +55,6 @@ class Status
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set weight
-     *
-     * @param smallint $weight
-     */
-    public function setWeight($weight)
-    {
-        $this->weight = $weight;
-    }
-
-    /**
-     * Get weight
-     *
-     * @return smallint $weight
-     */
-    public function getWeight()
-    {
-        return $this->weight;
     }
 
     /**

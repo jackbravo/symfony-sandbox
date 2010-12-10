@@ -18,11 +18,6 @@ class Category
     private $name;
 
     /**
-     * @var string $color
-     */
-    private $color;
-
-    /**
      * @var Project
      */
     private $projects;
@@ -55,26 +50,6 @@ class Category
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set color
-     *
-     * @param string $color
-     */
-    public function setColor($color)
-    {
-        $this->color = $color;
-    }
-
-    /**
-     * Get color
-     *
-     * @return string $color
-     */
-    public function getColor()
-    {
-        return $this->color;
     }
 
     /**

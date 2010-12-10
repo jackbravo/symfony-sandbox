@@ -23,6 +23,11 @@ class Project
     private $status;
 
     /**
+     * @var Category
+     */
+    private $category;
+
+    /**
      * @var string $description
      */
     private $description;
@@ -41,11 +46,6 @@ class Project
      * @var Contact
      */
     private $contact;
-
-    public function __construct()
-    {
-        $this->status = 1;
-    }
 
     /**
      * Get id
@@ -80,7 +80,7 @@ class Project
     /**
      * Set status
      *
-     * @param smallint $status
+     * @param Status $status
      */
     public function setStatus($status)
     {
@@ -90,11 +90,31 @@ class Project
     /**
      * Get status
      *
-     * @return smallint $status
+     * @return Status $status
      */
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set category
+     *
+     * @param Category $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * Get category
+     *
+     * @return Category $category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 
     /**

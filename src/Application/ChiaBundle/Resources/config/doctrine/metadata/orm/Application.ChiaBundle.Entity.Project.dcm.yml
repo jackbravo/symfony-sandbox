@@ -10,8 +10,6 @@ Application\ChiaBundle\Entity\Project:
         strategy: AUTO
     name:
       type: string(255)
-    status:
-      type: smallint
     description:
       type: string
       length: null
@@ -23,6 +21,12 @@ Application\ChiaBundle\Entity\Project:
   manyToOne:
     contact:
       targetEntity: Contact
+      inversedBy: projects
+    category:
+      targetEntity: Category
+      inversedBy: projects
+    status:
+      targetEntity: Status
       inversedBy: projects
   lifecycleCallbacks:
     prePersist: [ doStuffOnPrePersist ]

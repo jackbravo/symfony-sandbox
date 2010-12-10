@@ -36,6 +36,9 @@ Application\ChiaBundle\Entity\Contact:
     addresses:
       targetEntity: Address
       mappedBy: contact
+    projects:
+      targetEntity: Project
+      mappedBy: contact
   manyToOne:
     company:
       targetEntity: Contact

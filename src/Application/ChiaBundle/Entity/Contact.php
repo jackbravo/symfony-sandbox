@@ -66,6 +66,11 @@ class Contact
      */
     private $addresses;
 
+    /**
+     * @var Project
+     */
+    private $projects;
+
     public function __construct()
     {
         $this->phonenumbers = new ArrayCollection();
@@ -311,5 +316,25 @@ class Contact
     public function setAddresses($addresses)
     {
         $this->addresses = $addresses;
+    }
+
+    /**
+     * Add projects
+     *
+     * @param Project $projects
+     */
+    public function addProjects($projects)
+    {
+        $this->projects[] = $projects;
+    }
+
+    /**
+     * Get projects
+     *
+     * @return Doctrine\Common\Collections\Collection $projects
+     */
+    public function getProjects()
+    {
+        return $this->projects;
     }
 }

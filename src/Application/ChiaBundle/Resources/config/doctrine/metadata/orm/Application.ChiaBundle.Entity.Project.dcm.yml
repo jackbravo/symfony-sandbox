@@ -1,0 +1,29 @@
+Application\ChiaBundle\Entity\Project:
+  type: entity
+  table: null
+  repositoryClass: Application\ChiaBundle\Entity\ProjectRepository
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    name:
+      type: string(255)
+    status:
+      type: smallint
+    description:
+      type: string
+      length: null
+      nullable: true
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+  manyToOne:
+    contact:
+      targetEntity: Contact
+      inversedBy: projects
+  lifecycleCallbacks:
+    prePersist: [ doStuffOnPrePersist ]
+    preUpdate: [ doStuffOnPreUpdate ]

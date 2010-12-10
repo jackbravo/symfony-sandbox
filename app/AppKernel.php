@@ -28,6 +28,7 @@ class AppKernel extends Kernel
             // register your bundles
             new Application\HelloBundle\HelloBundle(),
             new Application\ChiaBundle\ChiaBundle(),
+            new Bundle\MenuBundle\MenuBundle(),
         );
 
         if ($this->isDebug()) {

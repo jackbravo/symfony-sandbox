@@ -18,3 +18,6 @@ You need to add this to twig.config in app/config/config.yml
     twig.config:
         form:
             resources: [ChiaBundle::form.twig]
+
+    chia.menu: ~
+    menu.twig: ~

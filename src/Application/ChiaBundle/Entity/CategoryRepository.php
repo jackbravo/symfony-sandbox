@@ -12,4 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoryRepository extends EntityRepository
 {
+    public function getAll()
+    {
+        return $this->_em->createQuery('SELECT c FROM ChiaBundle:Category c ORDER BY c.name')
+            ->getArrayResult();
+    }
+
+    public function getCategoryOptions()
+    {
+        $categories = $this->_em->createQuery('SELECT c FROM ChiaBundle:Category c ORDER BY c.name')
+            ->getArrayResult();
+        $category_choices = array();
+        foreach ($categories as $category) {
+            $category_choices[$category['id']] = $category['name'];
+        }
+        return $category_choices;
+    }
 }

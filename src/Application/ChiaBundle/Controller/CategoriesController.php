@@ -12,7 +12,7 @@ class CategoriesController extends Controller
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
 
-        $categories = $em->getRepository('Application\ChiaBundle\Entity\Category')->findAll();
+        $categories = $em->getRepository('Application\ChiaBundle\Entity\Category')->getAll();
 
         return $this->render('ChiaBundle:Categories:index.twig', array('categories' => $categories));
     }

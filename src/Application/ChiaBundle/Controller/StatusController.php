@@ -12,7 +12,7 @@ class StatusController extends Controller
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
 
-        $statuses = $em->getRepository('Application\ChiaBundle\Entity\Status')->findAll();
+        $statuses = $em->getRepository('Application\ChiaBundle\Entity\Status')->getAll();
 
         return $this->render('ChiaBundle:Status:index.twig', array('statuses' => $statuses));
     }

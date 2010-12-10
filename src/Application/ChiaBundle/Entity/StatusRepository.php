@@ -12,4 +12,29 @@ use Doctrine\ORM\EntityRepository;
  */
 class StatusRepository extends EntityRepository
 {
+    public function getAll()
+    {
+        return $this->_em->createQuery('SELECT s FROM ChiaBundle:Status s ORDER BY s.value')
+            ->getArrayResult();
+    }
+
+    public function getDefaultStatus()
+    {
+        return $this->_em->createQuery('SELECT s FROM ChiaBundle:Status s
+            WHERE s.value != 0
+            ORDER BY s.value')
+            ->setMaxResults(1)
+            ->getSingleResult();
+    }
+
+    public function getStatusOptions()
+    {
+        $statuses = $this->_em->createQuery('SELECT s FROM ChiaBundle:Status s ORDER BY s.value')
+            ->getArrayResult();
+        $status_choices = array();
+        foreach ($statuses as $status) {
+            $status_choices[$status['id']] = $status['value'] . ". " . $status['name'];
+        }
+        return $status_choices;
+    }
 }

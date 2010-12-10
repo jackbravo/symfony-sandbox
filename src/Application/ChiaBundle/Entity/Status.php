@@ -82,7 +82,7 @@ class Status
      *
      * @param Project $projects
      */
-    public function addProjects(\Project $projects)
+    public function addProjects($projects)
     {
         $this->projects[] = $projects;
     }

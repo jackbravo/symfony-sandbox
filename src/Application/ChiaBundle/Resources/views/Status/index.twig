@@ -1,0 +1,24 @@
+{% extends "ChiaBundle::layout.twig" %}
+
+{% block content %}
+    <div>
+        <a href="{% path 'status_new' %}">New</a><br>
+    </div>
+
+    <table class="status">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for status in statuses %}
+        <tr class="status-row">
+            <td><strong><a href="{% path 'status_edit' with ['id': status.id] %}">{{ status.name }}</a></strong></td>
+            <td>{{ status.value }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}

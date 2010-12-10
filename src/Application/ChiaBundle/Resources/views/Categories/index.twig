@@ -1,0 +1,22 @@
+{% extends "ChiaBundle::layout.twig" %}
+
+{% block content %}
+    <div>
+        <a href="{% path 'categories_new' %}">New</a><br>
+    </div>
+
+    <table class="categories">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for category in categories %}
+        <tr class="category-row">
+            <td><strong><a href="{% path 'categories_edit' with ['id': category.id] %}">{{ category.name }}</a></strong></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "ChiaBundle::layout.twig" %}
+
+{% block content %}
+    <form action="{% path 'categories_new' %}" method="post" {{ form|render_enctype }}>
+        {{ form|render }}
+        <input type="submit" value="Send!" />
+        <a href="{% path 'categories' %}">Cancel</a>
+    </form>
+{% endblock %}

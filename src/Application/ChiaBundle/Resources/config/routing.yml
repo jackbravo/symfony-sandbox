@@ -27,20 +27,20 @@ admin:
 
 categories:
     pattern:    /categories
-    defaults:   { _controller: ChiaBundle:Projects:index }
+    defaults:   { _controller: ChiaBundle:Categories:index }
 categories_new:
     pattern:    /categories/new
-    defaults:   { _controller: ChiaBundle:Projects:new }
+    defaults:   { _controller: ChiaBundle:Categories:new }
 categories_edit:
     pattern:    /categories/:id/edit
-    defaults:   { _controller: ChiaBundle:Projects:edit }
+    defaults:   { _controller: ChiaBundle:Categories:edit }
 
 status:
     pattern:    /status
-    defaults:   { _controller: ChiaBundle:Projects:index }
+    defaults:   { _controller: ChiaBundle:Status:index }
 status_new:
     pattern:    /status/new
-    defaults:   { _controller: ChiaBundle:Projects:new }
+    defaults:   { _controller: ChiaBundle:Status:new }
 status_edit:
     pattern:    /status/:id/edit
-    defaults:   { _controller: ChiaBundle:Projects:edit }
+    defaults:   { _controller: ChiaBundle:Status:edit }

@@ -1,0 +1,22 @@
+{% extends "ChiaBundle::layout.twig" %}
+
+{% block content %}
+    <div>
+        <a href="{% path 'projects_new' %}">New</a><br>
+    </div>
+
+    <table class="projects">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for project in projects %}
+        <tr class="project-row">
+            <td><strong><a href="{% path 'projects_edit' with ['id': project.id] %}">{{ project.name }}</a></strong></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}

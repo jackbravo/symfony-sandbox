@@ -42,6 +42,11 @@ class Project
      */
     private $contact;
 
+    public function __construct()
+    {
+        $this->status = 1;
+    }
+
     /**
      * Get id
      *
@@ -157,7 +162,7 @@ class Project
      *
      * @param Contact $contact
      */
-    public function setContact(\Contact $contact)
+    public function setContact($contact)
     {
         $this->contact = $contact;
     }
@@ -171,17 +176,20 @@ class Project
     {
         return $this->contact;
     }
+
     /**
      * @prePersist
      */
     public function doStuffOnPrePersist()
     {
-        // Add your code here
-    }    /**
+        $this->created_at = $this->updated_at = new \DateTime();
+    }
+    
+    /**
      * @preUpdate
      */
     public function doStuffOnPreUpdate()
     {
-        // Add your code here
+        $this->updated_at = new \DateTime();
     }
 }

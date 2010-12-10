@@ -10,3 +10,13 @@ contacts_edit:
 companies_new:
     pattern:    /companies/new
     defaults:   { _controller: ChiaBundle:Contacts:newCompany }
+
+projects:
+    pattern:    /projects
+    defaults:   { _controller: ChiaBundle:Projects:index }
+projects_new:
+    pattern:    /projects/new
+    defaults:   { _controller: ChiaBundle:Projects:new }
+projects_edit:
+    pattern:    /projects/:id/edit
+    defaults:   { _controller: ChiaBundle:Projects:edit }

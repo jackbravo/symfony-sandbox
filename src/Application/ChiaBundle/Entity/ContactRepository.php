@@ -41,6 +41,17 @@ class ContactRepository extends EntityRepository
             ->getArrayResult();
     }
 
+    public function getContactOptions()
+    {
+        $contacts = $this->_em->createQuery('SELECT c FROM ChiaBundle:Contact c ORDER BY c.name')
+            ->getArrayResult();
+        $contact_choices = array();
+        foreach ($contacts as $contact) {
+            $contact_choices[$contact['id']] = $contact['name'];
+        }
+        return $contact_choices;
+    }
+
     public function getCompanyOptions()
     {
         $companies = $this->_em->createQuery('SELECT c FROM ChiaBundle:Contact c WHERE c.type = 2 ORDER BY c.name')

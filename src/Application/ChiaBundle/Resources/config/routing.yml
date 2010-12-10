@@ -20,3 +20,27 @@ projects_new:
 projects_edit:
     pattern:    /projects/:id/edit
     defaults:   { _controller: ChiaBundle:Projects:edit }
+
+admin:
+    pattern:    /admin
+    defaults:   { _controller: ChiaBundle:Admin:index }
+
+categories:
+    pattern:    /categories
+    defaults:   { _controller: ChiaBundle:Projects:index }
+categories_new:
+    pattern:    /categories/new
+    defaults:   { _controller: ChiaBundle:Projects:new }
+categories_edit:
+    pattern:    /categories/:id/edit
+    defaults:   { _controller: ChiaBundle:Projects:edit }
+
+status:
+    pattern:    /status
+    defaults:   { _controller: ChiaBundle:Projects:index }
+status_new:
+    pattern:    /status/new
+    defaults:   { _controller: ChiaBundle:Projects:new }
+status_edit:
+    pattern:    /status/:id/edit
+    defaults:   { _controller: ChiaBundle:Projects:edit }

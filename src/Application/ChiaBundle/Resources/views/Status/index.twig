@@ -10,6 +10,7 @@
         <tr>
             <th>Name</th>
             <th>Value</th>
+            <th>Active</th>
         </tr>
     </thead>
     <tbody>
@@ -17,6 +18,7 @@
         <tr class="status-row">
             <td><strong><a href="{% path 'status_edit' with ['id': status.id] %}">{{ status.name }}</a></strong></td>
             <td>{{ status.value }}</td>
+            <td>{{ status.active }}</td>
         </tr>
     {% endfor %}
     </tbody>

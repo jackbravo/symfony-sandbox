@@ -12,6 +12,8 @@ Application\ChiaBundle\Entity\Status:
       type: string(100)
     value:
       type: smallint
+    active:
+      type: boolean
   oneToMany:
     projects:
       targetEntity: Project

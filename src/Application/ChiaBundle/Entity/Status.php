@@ -23,6 +23,11 @@ class Status
     private $value;
 
     /**
+     * @var boolean $active
+     */
+    private $active;
+
+    /**
      * @var Project
      */
     private $projects;
@@ -95,5 +100,25 @@ class Status
     public function getProjects()
     {
         return $this->projects;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean $active
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 }

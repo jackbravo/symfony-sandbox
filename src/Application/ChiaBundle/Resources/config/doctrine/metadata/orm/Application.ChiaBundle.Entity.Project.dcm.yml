@@ -10,6 +10,12 @@ Application\ChiaBundle\Entity\Project:
         strategy: AUTO
     name:
       type: string(255)
+    price:
+      type: decimal
+      nullable: true
+    price_type:
+      type: smallint
+      nullable: true
     description:
       type: string
       length: null

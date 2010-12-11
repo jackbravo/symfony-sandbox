@@ -28,6 +28,23 @@ class Project
     private $category;
 
     /**
+     * @var decimal $price
+     */
+    private $price;
+
+    /**
+     * @var smallint $price_type
+     */
+    private $price_type;
+
+    static $price_types = array(
+        0 => "Fixed Price",
+        1 => "Per hour",
+        2 => "Per Month",
+        3 => "Per Year",
+    );
+
+    /**
      * @var string $description
      */
     private $description;
@@ -211,5 +228,45 @@ class Project
     public function doStuffOnPreUpdate()
     {
         $this->updated_at = new \DateTime();
+    }
+
+    /**
+     * Set price
+     *
+     * @param decimal $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * Get price
+     *
+     * @return decimal $price
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set price_type
+     *
+     * @param smallint $priceType
+     */
+    public function setPriceType($priceType)
+    {
+        $this->price_type = $priceType;
+    }
+
+    /**
+     * Get price_type
+     *
+     * @return smallint $priceType
+     */
+    public function getPriceType()
+    {
+        return $this->price_type;
     }
 }

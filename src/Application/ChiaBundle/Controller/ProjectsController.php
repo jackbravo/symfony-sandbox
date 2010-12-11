@@ -14,7 +14,10 @@ class ProjectsController extends Controller
 
         $projects = $em->getRepository('Application\ChiaBundle\Entity\Project')->findAll();
 
-        return $this->render('ChiaBundle:Projects:index.twig', array('projects' => $projects));
+        return $this->render('ChiaBundle:Projects:index.twig', array(
+            'projects' => $projects,
+            'price_types' => Project::$price_types,
+        ));
     }
 
     public function newAction()

@@ -23,8 +23,7 @@ You need to add this to twig.config in app/config/config.yml
     menu.twig: ~
 
 TODO:
-- make project.status status_id instead
-- add categories to projects
+- add active flag to status table
 - add price to projects
 - read about DoctrineUserBundle http://symfony2bundles.org/knplabs/DoctrineUserBundle
 - read about authentication http://docs.symfony-reloaded.org/master/guides/security/overview.html

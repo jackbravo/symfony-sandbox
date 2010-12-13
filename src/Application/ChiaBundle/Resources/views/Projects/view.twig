@@ -7,5 +7,5 @@
     {% if project.contact.id %}
         <strong>Contact: </strong><a href="{% path 'contacts_edit' with ['id': project.contact.id] %}">{{ project.contact.name }}</a></strong>
     {% endif %}
-    <p><strong>Background:<br></strong>{{ project.description }}</p>
+    <p><strong>Background:</strong>{{ project.description|markdown }}</p>
 {% endblock %}

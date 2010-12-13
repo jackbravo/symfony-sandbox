@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Application\HelloBundle\HelloBundle(),
             new Application\ChiaBundle\ChiaBundle(),
             new Bundle\MenuBundle\MenuBundle(),
+            new Bundle\MarkdownBundle\MarkdownBundle(),
         );
 
         if ($this->isDebug()) {

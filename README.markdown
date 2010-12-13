@@ -22,6 +22,9 @@ You need to add this to twig.config in app/config/config.yml
     chia.menu: ~
     menu.twig: ~
 
+    markdown.parser: ~
+    markdown.twig: ~
+
 TODO:
 - read about DoctrineUserBundle http://symfony2bundles.org/knplabs/DoctrineUserBundle
 - read about authentication http://docs.symfony-reloaded.org/master/guides/security/overview.html

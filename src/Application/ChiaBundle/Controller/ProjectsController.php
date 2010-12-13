@@ -69,4 +69,12 @@ class ProjectsController extends Controller
 
         return $this->render('ChiaBundle:Projects:edit.twig', array('form' => $form, 'project' => $project));
     }
+
+    public function viewAction($id)
+    {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $project = $em->find('Application\ChiaBundle\Entity\Project', $id);
+
+        return $this->render('ChiaBundle:Projects:view.twig', array('project' => $project));
+    }
 }

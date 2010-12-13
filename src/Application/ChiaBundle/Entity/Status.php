@@ -121,4 +121,9 @@ class Status
     {
         return $this->active;
     }
+
+    public function __toString()
+    {
+        return $this->value . "% " . $this->name;
+    }
 }

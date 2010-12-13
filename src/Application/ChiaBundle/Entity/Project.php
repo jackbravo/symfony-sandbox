@@ -269,4 +269,14 @@ class Project
     {
         return $this->price_type;
     }
+
+    /**
+     * Get price_type
+     *
+     * @return smallint $priceType
+     */
+    public function getPriceTypeName()
+    {
+        return Project::$price_types[$this->price_type];
+    }
 }

@@ -1,0 +1,27 @@
+Application\ChiaBundle\Entity\Note:
+  type: entity
+  table: null
+  repositoryClass: Application\ChiaBundle\Entity\NoteRepository
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    changes:
+      type: string(255)
+      nullable: true
+    note:
+      type: string
+      length: null
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+  manyToOne:
+    project:
+      targetEntity: Project
+      inversedBy: notes
+  lifecycleCallbacks:
+    prePersist: [ doStuffOnPrePersist ]
+    preUpdate: [ doStuffOnPreUpdate ]

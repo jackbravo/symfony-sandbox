@@ -65,6 +65,11 @@ class Project
     private $contact;
 
     /**
+     * @var Application\ChiaBundle\Entity\Note
+     */
+    private $notes;
+
+    /**
      * Get id
      *
      * @return integer $id
@@ -278,5 +283,25 @@ class Project
     public function getPriceTypeName()
     {
         return Project::$price_types[$this->price_type];
+    }
+
+    /**
+     * Add notes
+     *
+     * @param Application\ChiaBundle\Entity\Note $notes
+     */
+    public function addNotes(\Application\ChiaBundle\Entity\Note $notes)
+    {
+        $this->notes[] = $notes;
+    }
+
+    /**
+     * Get notes
+     *
+     * @return Doctrine\Common\Collections\Collection $notes
+     */
+    public function getNotes()
+    {
+        return $this->notes;
     }
 }

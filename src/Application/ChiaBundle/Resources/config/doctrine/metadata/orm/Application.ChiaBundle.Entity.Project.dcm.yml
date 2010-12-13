@@ -34,6 +34,10 @@ Application\ChiaBundle\Entity\Project:
     status:
       targetEntity: Status
       inversedBy: projects
+  oneToMany:
+    notes:
+      targetEntity: Note
+      mappedBy: project
   lifecycleCallbacks:
     prePersist: [ doStuffOnPrePersist ]
     preUpdate: [ doStuffOnPreUpdate ]

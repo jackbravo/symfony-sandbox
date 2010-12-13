@@ -1,3 +1,6 @@
 [submodule "src/Bundle/MenuBundle"]
 	path = src/Bundle/MenuBundle
 	url = git://github.com/knplabs/MenuBundle.git
+[submodule "src/Bundle/MarkdownBundle"]
+	path = src/Bundle/MarkdownBundle
+	url = git://github.com/knplabs/MarkdownBundle.git

@@ -28,6 +28,6 @@ You need to add this to twig.config in app/config/config.yml
 TODO:
 - read about DoctrineUserBundle http://symfony2bundles.org/knplabs/DoctrineUserBundle
 - read about authentication http://docs.symfony-reloaded.org/master/guides/security/overview.html
-- add view action to Contacts and Projects
+- add view action to Contacts
 - add notes to projects
 - add tasks to projects

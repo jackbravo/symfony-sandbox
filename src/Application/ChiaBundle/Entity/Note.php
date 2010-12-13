@@ -13,6 +13,11 @@ class Note
     private $id;
 
     /**
+     * @var string $verb
+     */
+    private $verb;
+
+    /**
      * @var string $changes
      */
     private $changes;
@@ -146,6 +151,27 @@ class Note
     {
         return $this->project;
     }
+
+    /**
+     * Set verb
+     *
+     * @param string $verb
+     */
+    public function setVerb($verb)
+    {
+        $this->verb = $verb;
+    }
+
+    /**
+     * Get verb
+     *
+     * @return string $verb
+     */
+    public function getVerb()
+    {
+        return $this->verb;
+    }
+
     /**
      * @prePersist
      */

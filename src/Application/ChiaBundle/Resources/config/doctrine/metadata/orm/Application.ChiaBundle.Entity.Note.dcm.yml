@@ -8,12 +8,15 @@ Application\ChiaBundle\Entity\Note:
       id: true
       generator:
         strategy: AUTO
+    verb: # created by, cancelled, won
+      type: string(255)
     changes:
       type: string(255)
       nullable: true
     note:
       type: string
       length: null
+      nullable: true
     created_at:
       type: datetime
     updated_at:

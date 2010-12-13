@@ -2,6 +2,8 @@
 
 namespace Application\ChiaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Application\ChiaBundle\Entity\Project
  */
@@ -68,6 +70,11 @@ class Project
      * @var Application\ChiaBundle\Entity\Note
      */
     private $notes;
+
+    public function __construct()
+    {
+        $this->notes = new ArrayCollection();
+    }
 
     /**
      * Get id

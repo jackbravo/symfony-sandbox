@@ -177,12 +177,14 @@ class Note
      */
     public function doStuffOnPrePersist()
     {
-        // Add your code here
-    }    /**
+        $this->created_at = $this->updated_at = new \DateTime();
+    }
+
+    /**
      * @preUpdate
      */
     public function doStuffOnPreUpdate()
     {
-        // Add your code here
+        $this->updated_at = new \DateTime();
     }
 }

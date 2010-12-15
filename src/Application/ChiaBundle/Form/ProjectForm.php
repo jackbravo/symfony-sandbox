@@ -3,8 +3,6 @@
 namespace Application\ChiaBundle\Form;
 
 use Application\ChiaBundle\Entity\Project;
-use Application\ChiaBundle\Entity\Contact;
-use Application\ChiaBundle\Entity\Note;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\TextField;

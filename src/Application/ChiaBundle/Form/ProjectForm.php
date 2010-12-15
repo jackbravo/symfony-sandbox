@@ -64,11 +64,4 @@ class ProjectForm extends Form
         $categoryField->setValueTransformer($categoryTransformer);
         $this->add($categoryField);
     }
-
-    protected function doBind(array $taintedData)
-    {
-        $valid = parent::doBind($taintedData);
-        $em = $this->getOption('entity_manager');
-        $em->persist($this->getData()->getNotes()->last());
-    }
 }

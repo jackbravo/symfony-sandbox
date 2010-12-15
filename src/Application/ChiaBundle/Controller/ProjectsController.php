@@ -60,6 +60,7 @@ class ProjectsController extends Controller
             if($form->isValid()) {
                 $em = $this->container->get('doctrine.orm.entity_manager');
                 $em->persist($project);
+                $em->persist($project->getNotes()->last());
                 $em->flush();
 
                 //$this->container->getSessionService()->setFlash('project_create', array('project' => $project));

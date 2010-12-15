@@ -23,6 +23,10 @@ projects_view:
 projects_edit:
     pattern:    /projects/:id/edit
     defaults:   { _controller: ChiaBundle:Projects:edit }
+projects_modify:
+    pattern:    /projects/:id/modify
+    defaults:   { _controller: ChiaBundle:Projects:modify }
+    requirements: { _method: POST }
 
 admin:
     pattern:    /admin

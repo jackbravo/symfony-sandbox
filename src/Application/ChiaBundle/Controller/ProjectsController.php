@@ -4,6 +4,7 @@ namespace Application\ChiaBundle\Controller;
 
 use Application\ChiaBundle\Entity\Project;
 use Application\ChiaBundle\Form\ProjectForm;
+use Application\ChiaBundle\Form\ModifyProjectForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ProjectsController extends Controller
@@ -71,11 +72,42 @@ class ProjectsController extends Controller
         return $this->render('ChiaBundle:Projects:edit.twig', array('form' => $form, 'project' => $project));
     }
 
+    public function modifyAction($id)
+    {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $project = $em->find('Application\ChiaBundle\Entity\Project', $id);
+
+        $form = new ModifyProjectForm('project', $project, $this->container->get('validator'), array(
+            'entity_manager' => $em,
+        ));
+
+        $form->bind($this->get('request')->get('project'));
+        if($form->isValid()) {
+            $em = $this->container->get('doctrine.orm.entity_manager');
+            $em->persist($project);
+            $em->persist($project->getNotes()->last());
+            $em->flush();
+
+            //$this->container->getSessionService()->setFlash('project_create', array('project' => $project));
+            return $this->redirect($this->generateUrl('projects_view', array('id'=>$project->getId())));
+        }
+        else {
+            return $this->render('ChiaBundle:Projects:view.twig', array('form' => $form, 'project' => $project));
+        }
+    }
+
     public function viewAction($id)
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
         $project = $em->find('Application\ChiaBundle\Entity\Project', $id);
 
-        return $this->render('ChiaBundle:Projects:view.twig', array('project' => $project));
+        $form = new ModifyProjectForm('project', $project, $this->container->get('validator'), array(
+            'entity_manager' => $em,
+        ));
+
+        return $this->render('ChiaBundle:Projects:view.twig', array(
+            'project' => $project,
+            'form' => $form,
+        ));
     }
 }

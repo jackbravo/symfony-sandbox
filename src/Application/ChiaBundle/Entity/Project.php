@@ -225,7 +225,8 @@ class Project
      */
     public function setContact($contact)
     {
-        if ($this->getId() && $this->contact->getId() != $contact->getId()) {
+        if (!$contact) exit;
+        if ($this->getId() && $this->contact && $this->contact->getId() != $contact->getId()) {
             $this->getLastNote()->addChange("Category changed from '{$this->contact}' to '$contact'");
         }
         $this->contact = $contact;
@@ -344,5 +345,24 @@ class Project
             $this->addNotes(new Note());
         }
         return $this->notes->last();
+    }
+
+    /**
+     * Method used by ModifyProjectForm
+     */
+    public function getNewNote()
+    {
+        if (!$this->notes->last() || $this->notes->last()->getId())
+            return '';
+        else
+            return $this->notes->last()->getNote();
+    }
+
+    /**
+     * Method used by ModifyProjectForm
+     */
+    public function setNewNote($note)
+    {
+        return $this->getLastNote()->setNote($note);
     }
 }

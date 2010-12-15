@@ -4,3 +4,6 @@
 [submodule "src/Bundle/MarkdownBundle"]
 	path = src/Bundle/MarkdownBundle
 	url = git://github.com/knplabs/MarkdownBundle.git
+[submodule "src/Bundle/DoctrineUserBundle"]
+	path = src/Bundle/DoctrineUserBundle
+	url = git://github.com/knplabs/DoctrineUserBundle.git

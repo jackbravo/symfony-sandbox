@@ -118,8 +118,13 @@ class Project
     public function setStatus($status)
     {
         if ($this->getId() && $this->status->getId() != $status->getId()) {
-            if ($this->status->getActive() > $status->getActive()) $this->getLastNote()->setVerb("Closed");
-            if ($this->status->getActive() < $status->getActive()) $this->getLastNote()->setVerb("Opened");
+            if ($this->status->getActive() < $status->getActive()) {
+                $this->getLastNote()->setVerb("Opened");
+            }
+            if ($this->status->getActive() > $status->getActive() || $this->status->getValue() != $status->getValue()) {
+                if ($status->getValue() == 0) $this->getLastNote()->setVerb("Lost");
+                if ($status->getValue() == 100) $this->getLastNote()->setVerb("Won");
+            }
             $this->getLastNote()->addChange("Status changed from '{$this->status}' to '$status'");
         }
         $this->status = $status;

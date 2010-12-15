@@ -42,6 +42,11 @@ class Note
      */
     private $project;
 
+    public function __construct()
+    {
+        $this->verb = "Modified";
+    }
+
     /**
      * Get id
      *
@@ -70,6 +75,15 @@ class Note
     public function getChanges()
     {
         return $this->changes;
+    }
+
+    public function addChange($change)
+    {
+        if ($this->changes) {
+            $this->changes = $this->changes . "  \n" . $change;
+        } else {
+            $this->changes = $change;
+        }
     }
 
     /**

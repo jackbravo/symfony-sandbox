@@ -3,6 +3,7 @@
 namespace Application\ChiaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Application\ChiaBundle\Entity\Note;
 
 /**
  * Application\ChiaBundle\Entity\Project
@@ -93,6 +94,9 @@ class Project
      */
     public function setName($name)
     {
+        if ($this->getId() && $this->name != $name) {
+            $this->getLastNote()->addChange("Name changed from '{$this->name}' to '$name'");
+        }
         $this->name = $name;
     }
 
@@ -113,6 +117,11 @@ class Project
      */
     public function setStatus($status)
     {
+        if ($this->getId() && $this->status->getId() != $status->getId()) {
+            if ($this->status->getActive() > $status->getActive()) $this->getLastNote()->setVerb("Closed");
+            if ($this->status->getActive() < $status->getActive()) $this->getLastNote()->setVerb("Opened");
+            $this->getLastNote()->addChange("Status changed from '{$this->status}' to '$status'");
+        }
         $this->status = $status;
     }
 
@@ -133,6 +142,9 @@ class Project
      */
     public function setCategory($category)
     {
+        if ($this->getId() && $this->category->getId() != $category->getId()) {
+            $this->getLastNote()->addChange("Status changed from '{$this->category}' to '$category'");
+        }
         $this->category = $category;
     }
 
@@ -213,6 +225,9 @@ class Project
      */
     public function setContact($contact)
     {
+        if ($this->getId() && $this->contact->getId() != $contact->getId()) {
+            $this->getLastNote()->addChange("Category changed from '{$this->contact}' to '$contact'");
+        }
         $this->contact = $contact;
     }
 
@@ -249,6 +264,9 @@ class Project
      */
     public function setPrice($price)
     {
+        if ($this->getId() && $this->price != $price) {
+            $this->getLastNote()->addChange("Price changed from '{$this->price}' to '$price'");
+        }
         $this->price = $price;
     }
 
@@ -269,6 +287,10 @@ class Project
      */
     public function setPriceType($priceType)
     {
+        if ($this->getId() && $this->price_type != $priceType) {
+            $newPriceType = Project::$price_types[$priceType];
+            $this->getLastNote()->addChange("Price type changed from '{$this->getPriceTypeName()}' to '$newPriceType'");
+        }
         $this->price_type = $priceType;
     }
 
@@ -299,6 +321,7 @@ class Project
      */
     public function addNotes(\Application\ChiaBundle\Entity\Note $notes)
     {
+        $notes->setProject($this);
         $this->notes[] = $notes;
     }
 
@@ -310,5 +333,16 @@ class Project
     public function getNotes()
     {
         return $this->notes;
+    }
+
+    /**
+     * Returns the last note which has to be a new one
+     */
+    public function getLastNote()
+    {
+        if (!$this->notes->last() || $this->notes->last()->getId()) {
+            $this->addNotes(new Note());
+        }
+        return $this->notes->last();
     }
 }

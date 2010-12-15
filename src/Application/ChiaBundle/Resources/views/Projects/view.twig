@@ -8,4 +8,14 @@
         <strong>Contact: </strong><a href="{% path 'contacts_edit' with ['id': project.contact.id] %}">{{ project.contact.name }}</a></strong>
     {% endif %}
     <p><strong>Background:</strong>{{ project.description|markdown }}</p>
+
+    <div class="notes">
+    {% for note in project.notes|reverse %}
+        <p class="note-row">
+            <strong>{{ note.verb }}</strong> <small>{{ note.createdAt|date("m/d/Y H:m:i") }}</small><br>
+            <small><em>{{ note.changes|markdown }}</em></small>
+            {% if note.note %}<p>{{ note.note|markdown }}</p>{% endif %}
+        </p>
+    {% endfor %}
+    </div>
 {% endblock %}

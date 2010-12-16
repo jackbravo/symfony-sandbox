@@ -1,0 +1,7 @@
+Application\ChiaBundle\Entity\User:
+  type: entity
+  table: null
+  repositoryClass: Application\ChiaBundle\Entity\UserRepository
+  lifecycleCallbacks:
+    prePersist: [ doStuffOnPrePersist ]
+    preUpdate: [ doStuffOnPreUpdate ]

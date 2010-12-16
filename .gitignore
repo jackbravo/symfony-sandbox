@@ -1,3 +1,4 @@
+app/config/database.yml
 /vendor/
 /app/cache/*
 /app/logs/*

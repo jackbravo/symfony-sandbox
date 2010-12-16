@@ -14,13 +14,16 @@ app.config:
 twig.config:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    form:
+        resources: [ChiaBundle::form.twig]
+
+imports:
+    - { resource: database.yml }
 
 ## Doctrine Configuration
-#doctrine.dbal:
-#    dbname:   xxxxxxxx
-#    user:     xxxxxxxx
-#    password: ~
-#doctrine.orm: ~
+doctrine.orm:
+# TODO: for prod environments this is not optimal
+    auto_generate_proxy_classes: true
 
 ## Swiftmailer Configuration
 #swiftmailer.config:
@@ -30,3 +33,28 @@ twig.config:
 #    host:       smtp.gmail.com
 #    username:   xxxxxxxx
 #    password:   xxxxxxxx
+
+# From MenuBundle
+chia.menu: ~
+menu.twig: ~
+
+# From MarkdownBundle
+markdown.parser: ~
+markdown.twig: ~
+
+doctrine_user.config:
+    db_driver: orm
+    class:
+        model:
+            user: Application\ChiaBundle\Entity\User
+            group: Application\ChiaBundle\Entity\Group
+            permission: Application\ChiaBundle\Entity\Permission
+
+security.config:
+    providers:
+        main:
+            password_encoder: sha1
+            entity:
+                class: ChiaBundle:User
+                property: username
+

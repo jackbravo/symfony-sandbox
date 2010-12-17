@@ -25,6 +25,9 @@ Application\ChiaBundle\Entity\Note:
     project:
       targetEntity: Application\ChiaBundle\Entity\Project
       inversedBy: notes
+    created_by:
+      targetEntity: Application\ChiaBundle\Entity\User
+      inversedBy: notes
   lifecycleCallbacks:
     prePersist: [ doStuffOnPrePersist ]
     preUpdate: [ doStuffOnPreUpdate ]

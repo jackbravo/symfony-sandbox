@@ -19,9 +19,15 @@ class User extends BaseUser
      */
     private $projects;
 
+    /**
+     * @var Application\ChiaBundle\Entity\Note
+     */
+    private $notes;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     /**
@@ -31,7 +37,7 @@ class User extends BaseUser
      */
     public function addProjects(\Application\ChiaBundle\Entity\Project $projects)
     {
-        $projects->setProject($this);
+        $projects->setOwner($this);
         $this->projects[] = $projects;
     }
 
@@ -43,6 +49,27 @@ class User extends BaseUser
     public function getProjects()
     {
         return $this->projects;
+    }
+
+    /**
+     * Add notes
+     *
+     * @param Application\ChiaBundle\Entity\Note $notes
+     */
+    public function addNotes(\Application\ChiaBundle\Entity\Note $notes)
+    {
+        $notes->setCreatedBy($this);
+        $this->notes[] = $notes;
+    }
+
+    /**
+     * Get notes
+     *
+     * @return Doctrine\Common\Collections\Collection $notes
+     */
+    public function getNotes()
+    {
+        return $this->notes;
     }
 
     /**

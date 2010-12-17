@@ -34,6 +34,7 @@ cd $VENDOR/doctrine-migrations && git pull
 cd $VENDOR/doctrine-data-fixtures && git pull
 
 # Doctrine MongoDB
+cd $VENDOR/doctrine-mongodb-odm && git pull
 cd $VENDOR/doctrine-mongodb
 git checkout master
 git pull

@@ -14,7 +14,7 @@
     <tbody>
     {% for category in categories %}
         <tr class="category-row">
-            <td><strong><a href="{% path 'categories_edit' with ['id': category.id] %}">{{ category.name }}</a></strong></td>
+            <td><strong><a href="{% path 'categories_edit' with {'id': category.id} %}">{{ category.name }}</a></strong></td>
         </tr>
     {% endfor %}
     </tbody>

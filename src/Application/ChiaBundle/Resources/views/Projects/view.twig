@@ -1,14 +1,14 @@
 {% extends "ChiaBundle::layout.twig" %}
 
 {% block content %}
-    <h2>{{ project.name }}<small> <a href="{% path 'projects_edit' with ['id': project.id] %}">(edit)</a></small></h2>
+    <h2>{{ project.name }}<small> <a href="{% path 'projects_edit' with {'id': project.id} %}">(edit)</a></small></h2>
     <p>{{ project.category.name }} {% if project.price %} <br>{{ project.price }} {{ project.priceTypeName }} {% endif %}</p>
     {% if project.contact.id %}
-        <strong>Contact: </strong><a href="{% path 'contacts_edit' with ['id': project.contact.id] %}">{{ project.contact.name }}</a></strong>
+        <strong>Contact: </strong><a href="{% path 'contacts_edit' with {'id': project.contact.id} %}">{{ project.contact.name }}</a></strong>
     {% endif %}
-    <p><strong>Background:</strong>{{ project.description|markdown }}</p>
+    <p><strong>Background:</strong>{{ project.description|markdown|raw }}</p>
 
-    <form action="{% path 'projects_modify' with ["id": project.id] %}" method="post" {{ form|render_enctype }}>
+    <form action="{% path 'projects_modify' with {"id": project.id} %}" method="post" {{ form|render_enctype }}>
         {{ form|render }}
         <input type="submit" value="Send!" />
     </form>

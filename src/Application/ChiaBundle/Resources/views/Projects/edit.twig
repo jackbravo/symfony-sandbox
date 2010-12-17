@@ -1,9 +1,9 @@
 {% extends "ChiaBundle::layout.twig" %}
 
 {% block content %}
-    <form action="{% path 'projects_edit' with ["id": project.id] %}" method="post" {{ form|render_enctype }}>
+    <form action="{% path 'projects_edit' with {"id": project.id} %}" method="post" {{ form|render_enctype }}>
         {{ form|render }}
         <input type="submit" value="Send!" />
-        <a href="{% path 'projects_view' with ["id": project.id] %}">Cancel</a>
+        <a href="{% path 'projects_view' with {"id": project.id} %}">Cancel</a>
     </form>
 {% endblock %}

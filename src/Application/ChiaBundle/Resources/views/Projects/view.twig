@@ -4,7 +4,8 @@
     <h2>{{ project.name }}<small> <a href="{% path 'projects_edit' with {'id': project.id} %}">(edit)</a></small></h2>
     <p>{{ project.category.name }} {% if project.price %} <br>{{ project.price }} {{ project.priceTypeName }} {% endif %}</p>
     {% if project.contact.id %}
-        <strong>Contact: </strong><a href="{% path 'contacts_edit' with {'id': project.contact.id} %}">{{ project.contact.name }}</a></strong>
+        <strong>Contact: </strong><a href="{% path 'contacts_edit' with {'id': project.contact.id} %}">{{ project.contact }}</a></strong><br/>
+        <strong>Owner: </strong>{{ project.owner }}</strong>
     {% endif %}
     <p><strong>Background:</strong>{{ project.description|markdown|raw }}</p>
 
@@ -16,9 +17,10 @@
     <div class="notes">
     {% for note in project.notes|reverse %}
         <div class="row">
-            <strong>{{ note.verb }}</strong> <small>{{ note.createdAt|date("m/d/Y H:m:i") }}</small>
-            {% if note.changes %}<br><small><em>{{ note.changes|markdown }}</em></small>{% endif %}
-            {% if note.note %}{{ note.note|markdown }}{% endif %}
+            <strong>{{ note.verb }}</strong> by {{ note.createdBy }}
+            <small>{{ note.createdAt|date("m/d/Y H:m:i") }}</small>
+            {% if note.changes %}<br><small><em>{{ note.changes|markdown|raw }}</em></small>{% endif %}
+            {% if note.note %}{{ note.note|markdown|raw }}{% endif %}
         </div>
     {% endfor %}
     </div>

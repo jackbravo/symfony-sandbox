@@ -87,4 +87,9 @@ class User extends BaseUser
     {
         // Add your code here
     }
+
+    public function __toString()
+    {
+        return $this->getUsername();
+    }
 }

@@ -337,4 +337,9 @@ class Contact
     {
         return $this->projects;
     }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

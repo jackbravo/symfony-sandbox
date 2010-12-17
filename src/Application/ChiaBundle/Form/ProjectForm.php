@@ -17,7 +17,6 @@ class ProjectForm extends Form
     {
         $project = $this->getData();
 
-        $this->addRequiredOption('contact_choices');
         $this->addRequiredOption('entity_manager');
         $em = $this->getOption('entity_manager');
 
@@ -42,10 +41,20 @@ class ProjectForm extends Form
             'className' => 'Application\ChiaBundle\Entity\Contact',
         ));
         $contactField = new AutocompleteField('contact', array(
-            'choices' => $this->getOption('contact_choices'),
+            'choices' => $em->getRepository('Application\ChiaBundle\Entity\Contact')->getContactOptions(),
         ));
         $contactField->setValueTransformer($contactTransformer);
         $this->add($contactField);
+
+        $userTransformer = new EntityToIDTransformer(array(
+            'em' => $em,
+            'className' => 'Application\ChiaBundle\Entity\Contact',
+        ));
+        $ownerField = new AutocompleteField('owner', array(
+            'choices' => $em->getRepository('Application\ChiaBundle\Entity\User')->getUserOptions(),
+        ));
+        $ownerField->setValueTransformer($userTransformer);
+        $this->add($ownerField);
 
         $this->add(new TextareaField('description'));
         $this->add(new MoneyField('price'));

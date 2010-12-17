@@ -2,6 +2,10 @@ Application\ChiaBundle\Entity\User:
   type: entity
   table: null
   repositoryClass: Application\ChiaBundle\Entity\UserRepository
+  oneToMany:
+    projects:
+      targetEntity: Application\ChiaBundle\Entity\Project
+      mappedBy: owner
   lifecycleCallbacks:
     prePersist: [ doStuffOnPrePersist ]
     preUpdate: [ doStuffOnPreUpdate ]

@@ -15,6 +15,37 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @var Application\ChiaBundle\Entity\Project
+     */
+    private $projects;
+
+    public function __construct()
+    {
+        $this->projects = new ArrayCollection();
+    }
+
+    /**
+     * Add projects
+     *
+     * @param Application\ChiaBundle\Entity\Project $projects
+     */
+    public function addProjects(\Application\ChiaBundle\Entity\Project $projects)
+    {
+        $projects->setProject($this);
+        $this->projects[] = $projects;
+    }
+
+    /**
+     * Get projects
+     *
+     * @return Doctrine\Common\Collections\Collection $projects
+     */
+    public function getProjects()
+    {
+        return $this->projects;
+    }
+
+    /**
      * @prePersist
      */
     public function doStuffOnPrePersist()

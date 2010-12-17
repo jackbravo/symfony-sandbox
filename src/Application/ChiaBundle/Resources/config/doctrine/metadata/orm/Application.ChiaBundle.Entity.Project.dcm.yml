@@ -28,6 +28,9 @@ Application\ChiaBundle\Entity\Project:
     contact:
       targetEntity: Contact
       inversedBy: projects
+    owner:
+      targetEntity: User
+      inversedBy: projects
     category:
       targetEntity: Category
       inversedBy: projects

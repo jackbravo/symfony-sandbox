@@ -47,3 +47,4 @@ TODO:
 - read about authentication http://docs.symfony-reloaded.org/master/guides/security/overview.html
 - add view action to Contacts
 - add tasks to projects
+- add User (owner) to projects

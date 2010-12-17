@@ -23,7 +23,7 @@ Application\ChiaBundle\Entity\Note:
       type: datetime
   manyToOne:
     project:
-      targetEntity: Project
+      targetEntity: Application\ChiaBundle\Entity\Project
       inversedBy: notes
   lifecycleCallbacks:
     prePersist: [ doStuffOnPrePersist ]

@@ -26,20 +26,20 @@ Application\ChiaBundle\Entity\Project:
       type: datetime
   manyToOne:
     contact:
-      targetEntity: Contact
+      targetEntity: Application\ChiaBundle\Entity\Contact
       inversedBy: projects
     owner:
-      targetEntity: User
+      targetEntity: Application\ChiaBundle\Entity\User
       inversedBy: projects
     category:
-      targetEntity: Category
+      targetEntity: Application\ChiaBundle\Entity\Category
       inversedBy: projects
     status:
-      targetEntity: Status
+      targetEntity: Application\ChiaBundle\Entity\Status
       inversedBy: projects
   oneToMany:
     notes:
-      targetEntity: Note
+      targetEntity: Application\ChiaBundle\Entity\Note
       mappedBy: project
   lifecycleCallbacks:
     prePersist: [ doStuffOnPrePersist ]

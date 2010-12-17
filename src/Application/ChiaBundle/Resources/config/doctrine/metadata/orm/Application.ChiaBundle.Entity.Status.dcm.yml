@@ -16,5 +16,5 @@ Application\ChiaBundle\Entity\Status:
       type: boolean
   oneToMany:
     projects:
-      targetEntity: Project
+      targetEntity: Application\ChiaBundle\Entity\Project
       mappedBy: status

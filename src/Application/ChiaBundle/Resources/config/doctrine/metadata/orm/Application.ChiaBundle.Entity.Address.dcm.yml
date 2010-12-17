@@ -19,5 +19,5 @@ Application\ChiaBundle\Entity\Address:
       type: string(10)
   manyToOne:
     contact:
-      targetEntity: Contact
+      targetEntity: Application\ChiaBundle\Entity\Contact
       inversedBy: addresses

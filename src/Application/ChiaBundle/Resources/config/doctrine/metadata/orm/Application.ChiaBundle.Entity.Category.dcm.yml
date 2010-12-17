@@ -12,5 +12,5 @@ Application\ChiaBundle\Entity\Category:
       type: string(100)
   oneToMany:
     projects:
-      targetEntity: Project
+      targetEntity: Application\ChiaBundle\Entity\Project
       mappedBy: category

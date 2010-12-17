@@ -11,5 +11,5 @@ Application\ChiaBundle\Entity\Email:
       type: string(100)
   manyToOne:
     contact:
-      targetEntity: Contact
+      targetEntity: Application\ChiaBundle\Entity\Contact
       inversedBy: emails

@@ -25,8 +25,26 @@ You need to add this to twig.config in app/config/config.yml
     markdown.parser: ~
     markdown.twig: ~
 
+    doctrine_user.config:
+        db_driver: orm
+        class:
+            model:
+                user: Application\ChiaBundle\Entity\User
+                group: Application\ChiaBundle\Entity\Group
+                permission: Application\ChiaBundle\Entity\Permission
+
+    security.config:
+        providers:
+            main:
+                password_encoder: sha1
+                entity:
+                    class: ChiaBundle:User
+                    property: username
+
+
 TODO:
 - read about DoctrineUserBundle http://symfony2bundles.org/knplabs/DoctrineUserBundle
 - read about authentication http://docs.symfony-reloaded.org/master/guides/security/overview.html
 - add view action to Contacts
 - add tasks to projects
+- add User (owner) to projects

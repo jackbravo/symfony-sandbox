@@ -12,16 +12,18 @@
             <th>Category</th>
             <th>Price</th>
             <th>Status</th>
+            <th>Owner</th>
             <th>Last update</th>
         </tr>
     </thead>
     <tbody>
     {% for project in projects %}
         <tr class="project-row">
-            <td><strong><a href="{% path 'projects_view' with ['id': project.id] %}">{{ project.name }}</a></strong></td>
+            <td><strong><a href="{% path 'projects_view' with {'id': project.id} %}">{{ project.name }}</a></strong></td>
             <td>{% if project.category is defined %} {{ project.category.name }} {% endif %}</td>
             <td>{{ project.price }} {{ price_types[project.priceType] }}</td>
             <td>{% if project.status is defined %} {{ project.status.name }} {% endif %}</td>
+            <td>{{ project.owner }}</th>
             <td>{{ project.updatedAt|date("m/d/Y") }}</th>
         </tr>
     {% endfor %}

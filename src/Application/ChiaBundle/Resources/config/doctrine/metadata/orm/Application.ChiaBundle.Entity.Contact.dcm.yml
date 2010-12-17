@@ -25,22 +25,22 @@ Application\ChiaBundle\Entity\Contact:
       nullable: true
   oneToMany:
     people:
-      targetEntity: Contact
+      targetEntity: Application\ChiaBundle\Entity\Contact
       mappedBy: company
     phonenumbers:
-      targetEntity: Phonenumber
+      targetEntity: Application\ChiaBundle\Entity\Phonenumber
       mappedBy: contact
     emails:
-      targetEntity: Email
+      targetEntity: Application\ChiaBundle\Entity\Email
       mappedBy: contact
     addresses:
-      targetEntity: Address
+      targetEntity: Application\ChiaBundle\Entity\Address
       mappedBy: contact
     projects:
-      targetEntity: Project
+      targetEntity: Application\ChiaBundle\Entity\Project
       mappedBy: contact
   manyToOne:
     company:
-      targetEntity: Contact
+      targetEntity: Application\ChiaBundle\Entity\Contact
       inversedBy: people
   lifecycleCallbacks: {  }

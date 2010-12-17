@@ -7,9 +7,9 @@
     </div>
 
     <p>
-        <a href="{% path 'contacts' with ['which': 'all'] %}">All</a> |
-        <a href="{% path 'contacts' with ['which': 'people'] %}">People</a> |
-        <a href="{% path 'contacts' with ['which': 'companies'] %}">Companies</a>
+        <a href="{% path 'contacts' with {'which': 'all'} %}">All</a> |
+        <a href="{% path 'contacts' with {'which': 'people'} %}">People</a> |
+        <a href="{% path 'contacts' with {'which': 'companies'} %}">Companies</a>
     </p>
 
     <table class="contacts">
@@ -21,7 +21,7 @@
     <tbody>
     {% for contact in contacts %}
         <tr class="contact-row">
-            <td><strong><a href="{% path 'contacts_edit' with ['id': contact.id] %}">{{ contact.name }}</a></strong></td>
+            <td><strong><a href="{% path 'contacts_edit' with {'id': contact.id} %}">{{ contact.name }}</a></strong></td>
             <td>
                 {% if contact.emails is defined %}
                     <a href="mailto:{{ contact.emails[0].email }}">{{ contact.emails[0].email }}</a>
@@ -35,7 +35,7 @@
             <td>
                 {% if contact.title is defined %} {{ contact.title }} at {% endif %}
                 {% if contact.company is defined %}
-                    <a href="{% path 'contacts_edit' with ['id': contact.company.id] %}">{{ contact.company.name }}</a>
+                    <a href="{% path 'contacts_edit' with {'id': contact.company.id} %}">{{ contact.company.name }}</a>
                 {% endif %}
             </td>
         </tr>

@@ -28,7 +28,6 @@ class ProjectsController extends Controller
 
         $form = new ProjectForm('project', $project, $this->container->get('validator'), array(
             'entity_manager' => $em,
-            'contact_choices' => $em->getRepository('Application\ChiaBundle\Entity\Contact')->getContactOptions(),
         ));
 
         if('POST' === $this->get('request')->getMethod()) {
@@ -53,15 +52,16 @@ class ProjectsController extends Controller
 
         $form = new ProjectForm('project', $project, $this->container->get('validator'), array(
             'entity_manager' => $em,
-            'contact_choices' => $em->getRepository('Application\ChiaBundle\Entity\Contact')->getContactOptions(),
         ));
 
         if('POST' === $this->get('request')->getMethod()) {
             $form->bind($this->get('request')->get('project'));
             if($form->isValid()) {
+                $user = $this->container->get('security.context')->getUser();
+                $project->getLastNote()->setCreatedBy($user);
                 $em = $this->container->get('doctrine.orm.entity_manager');
                 $em->persist($project);
-                $em->persist($project->getNotes()->last());
+                $em->persist($project->getLastNote());
                 $em->flush();
 
                 //$this->container->getSessionService()->setFlash('project_create', array('project' => $project));
@@ -84,8 +84,10 @@ class ProjectsController extends Controller
         $form->bind($this->get('request')->get('project'));
         if($form->isValid()) {
             $em = $this->container->get('doctrine.orm.entity_manager');
+            $user = $this->container->get('security.context')->getUser();
+            $project->getLastNote()->setCreatedBy($user);
             $em->persist($project);
-            $em->persist($project->getNotes()->last());
+            $em->persist($project->getLastNote());
             $em->flush();
 
             //$this->container->getSessionService()->setFlash('project_create', array('project' => $project));

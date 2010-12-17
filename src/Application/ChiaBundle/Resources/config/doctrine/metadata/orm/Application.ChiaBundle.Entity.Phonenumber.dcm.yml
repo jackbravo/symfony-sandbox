@@ -11,5 +11,5 @@ Application\ChiaBundle\Entity\Phonenumber:
       type: string(50)
   manyToOne:
     contact:
-      targetEntity: Contact
+      targetEntity: Application\ChiaBundle\Entity\Contact
       inversedBy: phonenumbers

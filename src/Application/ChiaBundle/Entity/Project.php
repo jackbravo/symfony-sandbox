@@ -68,6 +68,11 @@ class Project
     private $contact;
 
     /**
+     * @var Application\ChiaBundle\Entity\User
+     */
+    private $owner;
+
+    /**
      * @var Application\ChiaBundle\Entity\Note
      */
     private $notes;
@@ -232,7 +237,7 @@ class Project
     {
         if (!$contact) exit;
         if ($this->getId() && $this->contact && $this->contact->getId() != $contact->getId()) {
-            $this->getLastNote()->addChange("Category changed from '{$this->contact}' to '$contact'");
+            $this->getLastNote()->addChange("Contact changed from '{$this->contact}' to '$contact'");
         }
         $this->contact = $contact;
     }
@@ -245,6 +250,30 @@ class Project
     public function getContact()
     {
         return $this->contact;
+    }
+
+    /**
+     * Set owner
+     *
+     * @param Application\ChiaBundle\Entity\User $owner
+     */
+    public function setOwner($owner)
+    {
+        if (!$owner) exit;
+        if ($this->getId() && $this->owner && $this->owner->getId() != $owner->getId()) {
+            $this->getLastNote()->addChange("Owner changed from '{$this->owner}' to '$owner'");
+        }
+        $this->owner = $owner;
+    }
+
+    /**
+     * Get owner
+     *
+     * @return Application\ChiaBundle\Entity\User $owner
+     */
+    public function getOwner()
+    {
+        return $this->owner;
     }
 
     /**

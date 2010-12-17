@@ -1,0 +1,14 @@
+Application\ChiaBundle\Entity\User:
+  type: entity
+  table: null
+  repositoryClass: Application\ChiaBundle\Entity\UserRepository
+  oneToMany:
+    projects:
+      targetEntity: Application\ChiaBundle\Entity\Project
+      mappedBy: owner
+    notes:
+      targetEntity: Application\ChiaBundle\Entity\Note
+      mappedBy: created_by
+  lifecycleCallbacks:
+    prePersist: [ doStuffOnPrePersist ]
+    preUpdate: [ doStuffOnPreUpdate ]

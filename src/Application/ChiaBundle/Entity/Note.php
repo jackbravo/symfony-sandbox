@@ -38,6 +38,11 @@ class Note
     private $updated_at;
 
     /**
+     * @var Application\ChiaBundle\Entity\User
+     */
+    private $created_by;
+
+    /**
      * @var Application\ChiaBundle\Entity\Project
      */
     private $project;
@@ -164,6 +169,26 @@ class Note
     public function getProject()
     {
         return $this->project;
+    }
+
+    /**
+     * Set created_by
+     *
+     * @param Application\ChiaBundle\Entity\User $created_by
+     */
+    public function setCreatedBy(\Application\ChiaBundle\Entity\User $created_by)
+    {
+        $this->created_by = $created_by;
+    }
+
+    /**
+     * Get created_by
+     *
+     * @return Application\ChiaBundle\Entity\User $created_by
+     */
+    public function getCreatedBy()
+    {
+        return $this->created_by;
     }
 
     /**

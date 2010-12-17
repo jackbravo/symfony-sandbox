@@ -1,7 +1,0 @@
-Application\ChiaBundle\Entity\Group:
-  type: entity
-  table: null
-  repositoryClass: Application\ChiaBundle\Entity\GroupRepository
-  lifecycleCallbacks:
-    prePersist: [ doStuffOnPrePersist ]
-    preUpdate: [ doStuffOnPreUpdate ]

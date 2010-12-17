@@ -1,7 +1,0 @@
-Application\ChiaBundle\Entity\Permission:
-  type: entity
-  table: null
-  repositoryClass: Application\ChiaBundle\Entity\PermissionRepository
-  lifecycleCallbacks:
-    prePersist: [ doStuffOnPrePersist ]
-    preUpdate: [ doStuffOnPreUpdate ]

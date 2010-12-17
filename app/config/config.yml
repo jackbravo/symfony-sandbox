@@ -44,11 +44,10 @@ markdown.twig: ~
 
 doctrine_user.config:
     db_driver: orm
+    password_encoder: sha1
     class:
         model:
             user: Application\ChiaBundle\Entity\User
-            group: Application\ChiaBundle\Entity\Group
-            permission: Application\ChiaBundle\Entity\Permission
 
 security.config:
     providers:
@@ -56,5 +55,16 @@ security.config:
             password_encoder: sha1
             entity:
                 class: ChiaBundle:User
-                property: username
+    firewalls:
+        session:
+            pattern:    /(login|logout|welcome)
+            security:   false
+        profiler:
+            pattern:    /_profiler/.*
+            security:   false
+        frontend:
+            pattern:    /.*
+            logout:     true
+            form-login:
+                default_target_path: /projects
 

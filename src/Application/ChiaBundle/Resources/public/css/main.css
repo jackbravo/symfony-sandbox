@@ -11,14 +11,28 @@ form > div {
     margin: .5em 0;
 }
 
-#main-menu {
+.menu {
     margin: 0;
     padding: 0;
 }
 
-#main-menu li {
+.menu li {
     display: inline;
     list-style: none outside none;
     margin: 0;
     padding: 0 8px;
+}
+
+.sidebar-right {
+    width: 300px;
+    float: right;
+}
+
+header #app-title, #main-menu {
+    display: inline;
+    font-size: 80%;
+}
+
+h1 + p, h2 + p, h3 + p {
+    margin-top: -1em;
 }

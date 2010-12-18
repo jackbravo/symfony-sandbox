@@ -2,6 +2,7 @@
 {% javascript 'bundles/chia/js/jquery.min.js' %}
 {% javascript 'bundles/chia/js/jquery-ui.min.js' %}
 #}
+{% javascript 'http://html5shim.googlecode.com/svn/trunk/html5.js' %}
 {% javascript 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js' %}
 {% javascript 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js' %}
 {% javascript 'bundles/chia/js/collection_field.js' %}
@@ -16,12 +17,18 @@
         <meta charset=utf-8" />
         {% javascripts %}
         {% stylesheets %}
-        <title>{% block title %}Chia Application{% endblock %}</title>
+        <title>{% block title 'Welcome' %} | Chia</title>
     </head>
     <body>
-        <h1>Chia Application</h1>
-        <small>{{ _view.session.flash('notice') }}</small>
-        {% menu 'chia' %}
-        {% block content %}{% endblock %}
+        <header>
+            <h3 id="app-title">Chia</h3>
+            {% menu 'chia' %}
+        </header>
+        <div id="content">
+            <small>{{ _view.session.flash('notice') }}</small>
+            {% block content %}{% endblock %}
+        </div>
+        <footer>
+        </footer>
     </body>
 </html>

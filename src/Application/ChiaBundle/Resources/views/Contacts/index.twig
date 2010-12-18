@@ -1,10 +1,11 @@
 {% extends "ChiaBundle::layout.twig" %}
 
 {% block content %}
-    <div>
+    <h1>{% block title 'Contacts' %}</h1>
+    <p>
         <a href="{% path 'contacts_new' %}">New person</a><br>
         <a href="{% path 'companies_new' %}">New company</a>
-    </div>
+    </p>
 
     <p>
         <a href="{% path 'contacts' with {'which': 'all'} %}">All</a> |

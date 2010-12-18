@@ -1,9 +1,10 @@
 {% extends "ChiaBundle::layout.twig" %}
 
 {% block content %}
-    <div>
+    <h1>{% block title 'Status' %}</h1>
+    <p>
         <a href="{% path 'status_new' %}">New</a><br>
-    </div>
+    </p>
 
     <table class="status">
     <thead>

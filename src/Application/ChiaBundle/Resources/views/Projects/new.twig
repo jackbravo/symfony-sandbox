@@ -1,6 +1,7 @@
 {% extends "ChiaBundle::layout.twig" %}
 
 {% block content %}
+    <h1>{% block title 'New Project' %}</h1>
     <form action="{% path 'projects_new' %}" method="post" {{ form|render_enctype }}>
         {{ form|render }}
         <input type="submit" value="Send!" />

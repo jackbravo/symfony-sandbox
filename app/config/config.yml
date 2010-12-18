@@ -19,20 +19,12 @@ twig.config:
 
 imports:
     - { resource: database.yml }
+    - { resource: email.yml }
 
 ## Doctrine Configuration
 doctrine.orm:
 # TODO: for prod environments this is not optimal
     auto_generate_proxy_classes: true
-
-## Swiftmailer Configuration
-#swiftmailer.config:
-#    transport:  smtp
-#    encryption: ssl
-#    auth_mode:  login
-#    host:       smtp.gmail.com
-#    username:   xxxxxxxx
-#    password:   xxxxxxxx
 
 # From MenuBundle
 chia.menu: ~

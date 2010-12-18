@@ -399,4 +399,9 @@ class Project
     {
         return $this->getLastNote()->setNote($note);
     }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

@@ -64,6 +64,8 @@ class ProjectsController extends Controller
                 $em->persist($project->getLastNote());
                 $em->flush();
 
+                $this->notifyProjectWatchers($project);
+
                 //$this->container->getSessionService()->setFlash('project_create', array('project' => $project));
                 return $this->redirect($this->generateUrl('projects_view', array('id'=>$project->getId())));
             }
@@ -90,6 +92,8 @@ class ProjectsController extends Controller
             $em->persist($project->getLastNote());
             $em->flush();
 
+            $this->notifyProjectWatchers($project, $user);
+
             //$this->container->getSessionService()->setFlash('project_create', array('project' => $project));
             return $this->redirect($this->generateUrl('projects_view', array('id'=>$project->getId())));
         }
@@ -111,5 +115,23 @@ class ProjectsController extends Controller
             'project' => $project,
             'form' => $form,
         ));
+    }
+
+    public function notifyProjectWatchers($project, $from)
+    {
+        if ($from != $project->getOwner())
+        {
+            $mailer = $this->get('swiftmailer.mailer');
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject("[Project {$project}] was updated by {$from}")
+                ->setFrom($from->getEmail())
+                ->setTo($project->getOwner()->getEmail())
+                ->setBody($this->renderView('ChiaBundle:Projects:email.twig', array('project' => $project)))
+            ;
+            $mailer->send($message);
+
+            $this->get('request')->getSession()->setFlash('notice', 'Email sent');
+        }
     }
 }

@@ -20,6 +20,7 @@
     </head>
     <body>
         <h1>Chia Application</h1>
+        <small>{{ _view.session.flash('notice') }}</small>
         {% menu 'chia' %}
         {% block content %}{% endblock %}
     </body>

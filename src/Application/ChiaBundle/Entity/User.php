@@ -2,6 +2,7 @@
 
 namespace Application\ChiaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Bundle\DoctrineUserBundle\Entity\User as BaseUser;
 
 /**
@@ -24,10 +25,11 @@ class User extends BaseUser
      */
     private $notes;
 
-    public function __construct()
+    public function __construct($algorithm)
     {
         $this->projects = new ArrayCollection();
         $this->notes = new ArrayCollection();
+        parent::__construct($algorithm);
     }
 
     /**

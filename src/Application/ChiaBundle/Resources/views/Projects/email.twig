@@ -1,0 +1,12 @@
+{{ project.name }} was {{ project.notes.last.verb }} by {{ project.notes.last.createdBy }}
+
+
+Changes:
+{{ project.notes.last.changes }}
+
+
+Last note:
+{{ project.notes.last.note }}
+
+
+You can check the project page on: {% path 'projects_view' with {'id': project.id} %}

@@ -1,4 +1,5 @@
 app/config/database.yml
+app/config/email.yml
 /vendor/
 /app/cache/*
 /app/logs/*

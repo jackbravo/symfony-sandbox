@@ -10,3 +10,15 @@ form {
 form > div {
     margin: .5em 0;
 }
+
+#main-menu {
+    margin: 0;
+    padding: 0;
+}
+
+#main-menu li {
+    display: inline;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0 8px;
+}

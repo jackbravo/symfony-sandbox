@@ -18,5 +18,7 @@ class ChiaMenu extends Menu
         $this->addChild('Projects', $router->generate('projects'));
         $this->addChild('Admin', $router->generate('admin'));
         $this->addChild('Signout', $router->generate('_security_logout'));
+
+        $this->setAttributes(array('id'=>'main-menu'));
     }
 }

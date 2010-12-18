@@ -27,6 +27,7 @@ doctrine.orm:
     auto_generate_proxy_classes: true
 
 # From MenuBundle
+tools.menu: ~
 chia.menu: ~
 menu.twig: ~
 

@@ -6,7 +6,7 @@ use Bundle\MenuBundle\Menu;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
 
-class ChiaMenu extends Menu
+class ToolsMenu extends Menu
 {
     public function __construct(Request $request, Router $router)
     {
@@ -14,9 +14,9 @@ class ChiaMenu extends Menu
 
         $this->setCurrentUri($request->getRequestUri());
 
-        $this->addChild('Contacts', $router->generate('contacts'));
-        $this->addChild('Projects', $router->generate('projects'));
+        $this->addChild('Admin', $router->generate('admin'));
+        $this->addChild('Sign out', $router->generate('_security_logout'));
 
-        $this->setAttributes(array('id'=>'main-menu', 'class'=>'menu'));
+        $this->setAttributes(array('id'=>'tools-menu', 'class'=>'menu'));
     }
 }

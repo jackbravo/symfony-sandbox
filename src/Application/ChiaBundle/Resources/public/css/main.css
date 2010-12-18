@@ -28,9 +28,13 @@ form > div {
     float: right;
 }
 
-header #app-title, #main-menu {
+header #app-title, #main-menu, #tools-menu {
     display: inline;
     font-size: 80%;
+}
+
+#tools-menu {
+    float: right;
 }
 
 h1 + p, h2 + p, h3 + p {

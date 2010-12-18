@@ -5,11 +5,17 @@
 
     <parameters>
         <parameter key="menu.chia.class">Application\ChiaBundle\Menu\ChiaMenu</parameter>
+        <parameter key="menu.tools.class">Application\ChiaBundle\Menu\ToolsMenu</parameter>
     </parameters>
 
     <services>
         <service id="menu.chia" class="%menu.chia.class%" shared="true">
             <tag name="menu" alias="chia" />
+            <argument type="service" id="request" />
+            <argument type="service" id="router" />
+        </service>
+        <service id="menu.tools" class="%menu.tools.class%" shared="true">
+            <tag name="menu" alias="tools" />
             <argument type="service" id="request" />
             <argument type="service" id="router" />
         </service>

@@ -43,10 +43,7 @@ You need to add this to twig.config in app/config/config.yml
 
 
 TODO:
-- read about DoctrineUserBundle http://symfony2bundles.org/knplabs/DoctrineUserBundle
-- read about authentication http://docs.symfony-reloaded.org/master/guides/security/overview.html
 - add view action to Contacts
 - add tasks to projects
-- add mailing capabilities
 - add hability to create new users
 

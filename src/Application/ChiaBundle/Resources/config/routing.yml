@@ -28,6 +28,14 @@ projects_modify:
     defaults:   { _controller: ChiaBundle:Projects:modify }
     requirements: { _method: POST }
 
+tasks:
+    pattern:    /tasks
+    defaults:   { _controller: ChiaBundle:Tasks:index }
+tasks_create:
+    pattern:    /tasks/create
+    defaults:   { _controller: ChiaBundle:Tasks:create }
+    requirements: { _method: POST }
+
 admin:
     pattern:    /admin
     defaults:   { _controller: ChiaBundle:Admin:index }

@@ -59,6 +59,7 @@ class Task
 
     public function __construct()
     {
+        $this->done = false;
     }
 
     /**

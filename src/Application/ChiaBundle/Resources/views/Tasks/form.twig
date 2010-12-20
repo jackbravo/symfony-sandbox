@@ -1,0 +1,5 @@
+<h3>Add a task</h3>
+<form action="{% path 'tasks_create' %}" method="post" {{ form|render_enctype }}>
+    {{ form|render }}
+    <input type="submit" value="Send!" />
+</form>

@@ -7,7 +7,9 @@
             <strong>Contact: </strong><a href="{% path 'contacts_edit' with {'id': project.contact.id} %}">{{ project.contact }}</a></strong><br/>
             <strong>Owner: </strong>{{ project.owner }}</strong>
         {% endif %}
-        <h3>Background:</h3>{{ project.description|markdown|raw }}
+        <h3>Background</h3>{{ project.description|markdown|raw }}
+
+        {% render "ChiaBundle:Tasks:new" with {'project': project} %}
     </div>
 
     <h1>{% block title project.name %}<small> <a href="{% path 'projects_edit' with {'id': project.id} %}">(edit)</a></small></h1>

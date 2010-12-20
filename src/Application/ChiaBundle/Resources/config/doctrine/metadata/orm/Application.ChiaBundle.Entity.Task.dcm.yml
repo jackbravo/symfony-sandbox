@@ -13,7 +13,7 @@ Application\ChiaBundle\Entity\Task:
     done:
       type: boolean
     due_date:
-      type: datetime
+      type: date
     created_at:
       type: datetime
     updated_at:

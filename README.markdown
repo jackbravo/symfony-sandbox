@@ -46,4 +46,4 @@ TODO:
 - add view action to Contacts
 - add tasks to projects
 - add hability to create new users
-
+- Add people and projects in contact view

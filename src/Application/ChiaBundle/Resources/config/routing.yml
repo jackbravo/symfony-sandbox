@@ -42,6 +42,16 @@ categories_edit:
     pattern:    /categories/:id/edit
     defaults:   { _controller: ChiaBundle:Categories:edit }
 
+task_categories:
+    pattern:    /task_categories
+    defaults:   { _controller: ChiaBundle:TaskCategories:index }
+task_categories_new:
+    pattern:    /task_categories/new
+    defaults:   { _controller: ChiaBundle:TaskCategories:new }
+task_categories_edit:
+    pattern:    /task_categories/:id/edit
+    defaults:   { _controller: ChiaBundle:TaskCategories:edit }
+
 status:
     pattern:    /status
     defaults:   { _controller: ChiaBundle:Status:index }

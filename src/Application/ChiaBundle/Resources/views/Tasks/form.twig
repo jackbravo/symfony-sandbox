@@ -1,5 +1,20 @@
-<h3>Add a task</h3>
-<form action="{% path 'tasks_create' %}" method="post" {{ form|render_enctype }}>
+<script>
+$(function() {
+    $("#task-form").hide().append("<a href='#'>Cancel</a>");
+    $("#task-form a").click(function(event) {
+        $("#task-form").hide('medium');
+        $("#add-task").show('medium');
+        event.preventDefault();
+    });
+    $("#add-task").click(function(event) {
+        $("#task-form").show('medium');
+        $("#add-task").hide('medium');
+        event.preventDefault();
+    });
+});
+</script>
+<h3 id="add-task"><a href="#">Add a task</a></h3>
+<form id="task-form" action="{% path 'tasks_create' %}" method="post" {{ form|render_enctype }}>
     {{ form|render }}
     <input type="submit" value="Send!" />
 </form>

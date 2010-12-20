@@ -1,0 +1,16 @@
+Application\ChiaBundle\Entity\TaskCategory:
+  type: entity
+  table: null
+  repositoryClass: Application\ChiaBundle\Entity\TaskCategoryRepository
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    name:
+      type: string(100)
+  oneToMany:
+    tasks:
+      targetEntity: Application\ChiaBundle\Entity\Task
+      mappedBy: category

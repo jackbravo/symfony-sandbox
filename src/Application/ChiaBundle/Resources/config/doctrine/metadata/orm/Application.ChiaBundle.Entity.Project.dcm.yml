@@ -41,6 +41,9 @@ Application\ChiaBundle\Entity\Project:
     notes:
       targetEntity: Application\ChiaBundle\Entity\Note
       mappedBy: project
+    tasks:
+      targetEntity: Application\ChiaBundle\Entity\Task
+      mappedBy: project
   lifecycleCallbacks:
     prePersist: [ doStuffOnPrePersist ]
     preUpdate: [ doStuffOnPreUpdate ]

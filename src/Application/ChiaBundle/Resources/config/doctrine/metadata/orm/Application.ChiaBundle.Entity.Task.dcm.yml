@@ -1,0 +1,34 @@
+Application\ChiaBundle\Entity\Task:
+  type: entity
+  table: null
+  repositoryClass: Application\ChiaBundle\Entity\TaskRepository
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    task:
+      type: string(255)
+    done:
+      type: boolean
+    due_date:
+      type: datetime
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+  manyToOne:
+    project:
+      targetEntity: Application\ChiaBundle\Entity\Project
+      inversedBy: tasks
+    category:
+      targetEntity: Application\ChiaBundle\Entity\TaskCategory
+      inversedBy: tasks
+    owner:
+      targetEntity: Application\ChiaBundle\Entity\User
+    created_by:
+      targetEntity: Application\ChiaBundle\Entity\User
+  lifecycleCallbacks:
+    prePersist: [ doStuffOnPrePersist ]
+    preUpdate: [ doStuffOnPreUpdate ]

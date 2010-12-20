@@ -4,6 +4,7 @@ namespace Application\ChiaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Application\ChiaBundle\Entity\Note;
+use Application\ChiaBundle\Entity\Task;
 
 /**
  * Application\ChiaBundle\Entity\Project
@@ -77,9 +78,15 @@ class Project
      */
     private $notes;
 
+    /**
+     * @var Application\ChiaBundle\Entity\Task
+     */
+    private $tasks;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
     }
 
     /**
@@ -350,14 +357,35 @@ class Project
     }
 
     /**
+     * Add task
+     *
+     * @param Application\ChiaBundle\Entity\Task $task
+     */
+    public function addTask(\Application\ChiaBundle\Entity\Task $task)
+    {
+        $task->setProject($this);
+        $this->tasks[] = $task;
+    }
+
+    /**
+     * Get tasks
+     *
+     * @return Doctrine\Common\Collections\Collection $tasks
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
+    }
+
+    /**
      * Add notes
      *
-     * @param Application\ChiaBundle\Entity\Note $notes
+     * @param Application\ChiaBundle\Entity\Note $note
      */
-    public function addNotes(\Application\ChiaBundle\Entity\Note $notes)
+    public function addNotes(\Application\ChiaBundle\Entity\Note $note)
     {
         $notes->setProject($this);
-        $this->notes[] = $notes;
+        $this->notes[] = $note;
     }
 
     /**

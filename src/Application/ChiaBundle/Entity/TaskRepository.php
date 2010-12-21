@@ -15,12 +15,62 @@ class TaskRepository extends EntityRepository
     public function getForProject($project)
     {
         return $this->_em->createQuery("
-            SELECT t.id, t.task, t.due_date, t.created_at, t.updated_at, c.name as category, u.username
+            SELECT t.id, t.task, t.due_date, c.name as category, o.username as owner, u.username as created_by
             FROM ChiaBundle:Task t
                 LEFT JOIN t.project p
                 LEFT JOIN t.category c
+                LEFT JOIN t.owner o
                 LEFT JOIN t.created_by u
             WHERE p.id = {$project->getId()}
+                AND t.done = FALSE
+            ORDER BY t.due_date")
+            ->getArrayResult();
+    }
+
+    public function getAssignedBy($user)
+    {
+        return $this->_em->createQuery("
+            SELECT t.id, t.task, t.due_date, c.name as category, o.username as owner, u.username as created_by
+                , p.id as p_id, p.name as project
+            FROM ChiaBundle:Task t
+                LEFT JOIN t.project p
+                LEFT JOIN t.category c
+                LEFT JOIN t.owner o
+                LEFT JOIN t.created_by u
+            WHERE u.id = {$user->getId()}
+                AND u.id != o.id
+                AND t.done = FALSE
+            ORDER BY t.due_date")
+            ->getArrayResult();
+    }
+
+    public function getCompletedFor($user)
+    {
+        return $this->_em->createQuery("
+            SELECT t.id, t.task, t.due_date, c.name as category, o.username as owner, u.username as created_by
+                , p.id as p_id, p.name as project
+            FROM ChiaBundle:Task t
+                LEFT JOIN t.project p
+                LEFT JOIN t.category c
+                LEFT JOIN t.owner o
+                LEFT JOIN t.created_by u
+            WHERE o.id = {$user->getId()}
+                AND t.done = TRUE
+            ORDER BY t.due_date")
+            ->getArrayResult();
+    }
+
+    public function getOpenFor($user)
+    {
+        return $this->_em->createQuery("
+            SELECT t.id, t.task, t.due_date, c.name as category, o.username as owner, u.username as created_by
+                , p.id as p_id, p.name as project
+            FROM ChiaBundle:Task t
+                LEFT JOIN t.project p
+                LEFT JOIN t.category c
+                LEFT JOIN t.owner o
+                LEFT JOIN t.created_by u
+            WHERE o.id = {$user->getId()}
                 AND t.done = FALSE
             ORDER BY t.due_date")
             ->getArrayResult();

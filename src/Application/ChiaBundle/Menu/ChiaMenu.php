@@ -16,6 +16,7 @@ class ChiaMenu extends Menu
 
         $this->addChild('Contacts', $router->generate('contacts'));
         $this->addChild('Projects', $router->generate('projects'));
+        $this->addChild('Tasks', $router->generate('tasks'));
 
         $this->setAttributes(array('id'=>'main-menu', 'class'=>'menu'));
     }

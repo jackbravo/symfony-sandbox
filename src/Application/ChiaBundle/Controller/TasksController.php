@@ -11,10 +11,23 @@ class TasksController extends Controller
     public function indexAction()
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
+        $user = $this->container->get('security.context')->getUser();
 
-        $tasks = $em->getRepository('Application\ChiaBundle\Entity\Task')->getAll();
+        $get_which = $this->get('request')->query->get('which');
+        $which = $get_which ? $get_which : $this->get('session')->get('contacts.which');
+        $this->get('session')->set('contacts.which', $which);
 
-        return $this->render('ChiaBundle:Tasks:index.twig', array('tasks' => $tasks));
+        if ($which == "assigned") {
+            $tasks = $em->getRepository('Application\ChiaBundle\Entity\Task')->getAssignedBy($user);
+        } else if ($which == "completed") {
+            $tasks = $em->getRepository('Application\ChiaBundle\Entity\Task')->getCompletedFor($user);
+        } else {
+            $which = 'mine';
+            $tasks = $em->getRepository('Application\ChiaBundle\Entity\Task')->getOpenFor($user);
+        }
+
+
+        return $this->render('ChiaBundle:Tasks:index.twig', array('tasks' => $tasks, 'which' => $which));
     }
 
     public function listAction($project)

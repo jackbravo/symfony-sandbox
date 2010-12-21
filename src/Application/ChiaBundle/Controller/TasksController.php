@@ -68,6 +68,8 @@ class TasksController extends Controller
             $task->setCreatedBy($user);
             $em->persist($task);
             $em->flush();
+
+            $this->notifyNewTask($task, $user);
         }
 
         return $this->redirect($this->generateUrl('projects_view', array('id' => $form->getData()->getProject()->getId())));
@@ -87,5 +89,23 @@ class TasksController extends Controller
         $em->persist($task);
         $em->flush();
         return $this->redirect($this->get('request')->get('referer'));
+    }
+
+    public function notifyNewTask($task, $from)
+    {
+        if ($from != $task->getOwner())
+        {
+            $mailer = $this->get('swiftmailer.mailer');
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject("[Task] {$task->getTask()} was assigned to you")
+                ->setFrom($from->getEmail())
+                ->setTo($task->getOwner()->getEmail())
+                ->setBody($this->renderView('ChiaBundle:Tasks:email.twig', array('task' => $task)))
+            ;
+            $mailer->send($message);
+
+            $this->get('request')->getSession()->setFlash('notice', 'Email sent');
+        }
     }
 }

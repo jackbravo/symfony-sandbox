@@ -71,4 +71,9 @@ class TaskCategory
     {
         return $this->tasks;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

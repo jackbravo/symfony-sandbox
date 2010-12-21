@@ -15,7 +15,7 @@ class TaskRepository extends EntityRepository
     public function getForProject($project)
     {
         return $this->_em->createQuery("
-            SELECT t.id, t.task, t.due_date, c.name as category, o.username as owner, u.username as created_by
+            SELECT t.id, t.done, t.task, t.due_date, c.name as category, o.username as owner, u.username as created_by
             FROM ChiaBundle:Task t
                 LEFT JOIN t.project p
                 LEFT JOIN t.category c
@@ -30,7 +30,7 @@ class TaskRepository extends EntityRepository
     public function getAssignedBy($user)
     {
         return $this->_em->createQuery("
-            SELECT t.id, t.task, t.due_date, c.name as category, o.username as owner, u.username as created_by
+            SELECT t.id, t.done, t.task, t.due_date, c.name as category, o.username as owner, u.username as created_by
                 , p.id as p_id, p.name as project
             FROM ChiaBundle:Task t
                 LEFT JOIN t.project p
@@ -47,7 +47,7 @@ class TaskRepository extends EntityRepository
     public function getCompletedFor($user)
     {
         return $this->_em->createQuery("
-            SELECT t.id, t.task, t.due_date, c.name as category, o.username as owner, u.username as created_by
+            SELECT t.id, t.done, t.task, t.due_date, c.name as category, o.username as owner, u.username as created_by
                 , p.id as p_id, p.name as project
             FROM ChiaBundle:Task t
                 LEFT JOIN t.project p
@@ -63,7 +63,7 @@ class TaskRepository extends EntityRepository
     public function getOpenFor($user)
     {
         return $this->_em->createQuery("
-            SELECT t.id, t.task, t.due_date, c.name as category, o.username as owner, u.username as created_by
+            SELECT t.id, t.done, t.task, t.due_date, c.name as category, o.username as owner, u.username as created_by
                 , p.id as p_id, p.name as project
             FROM ChiaBundle:Task t
                 LEFT JOIN t.project p

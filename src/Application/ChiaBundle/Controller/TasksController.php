@@ -72,4 +72,20 @@ class TasksController extends Controller
 
         return $this->redirect($this->generateUrl('projects_view', array('id' => $form->getData()->getProject()->getId())));
     }
+
+    public function checkboxAction($task)
+    {
+        $referer = $this->get('request')->getRequestUri();
+        return $this->render('ChiaBundle:Tasks:checkbox.twig', array('task' => $task, 'referer' => $referer));
+    }
+
+    public function toggleAction($id)
+    {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $task = $em->find('Application\ChiaBundle\Entity\Task', $id);
+        $task->setDone($this->get('request')->get('done'));
+        $em->persist($task);
+        $em->flush();
+        return $this->redirect($this->get('request')->get('referer'));
+    }
 }

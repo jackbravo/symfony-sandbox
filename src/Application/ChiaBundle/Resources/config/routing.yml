@@ -35,6 +35,10 @@ tasks_create:
     pattern:    /tasks/create
     defaults:   { _controller: ChiaBundle:Tasks:create }
     requirements: { _method: POST }
+tasks_toggle:
+    pattern:    /tasks/:id/toggle
+    defaults:   { _controller: ChiaBundle:Tasks:toggle }
+    requirements: { _method: POST }
 
 admin:
     pattern:    /admin

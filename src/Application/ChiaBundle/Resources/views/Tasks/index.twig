@@ -12,7 +12,7 @@
     <div class="tasks">
     {% for task in tasks %}
         <div class="row">
-            <input type="checkbox" />
+            {% render 'ChiaBundle:Tasks:checkbox' with {'task': task} %}
             <strong>{{ task.category }}</strong>
             {{ task.owner }}:
             {{ task.task }}

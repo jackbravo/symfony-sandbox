@@ -1,0 +1,15 @@
+<script>
+$(function() {
+    $("#toggle-task-{{task.id}}").change(function() {
+        if (confirm("Are you sure you want to change this task?")) {
+            $(this).parent("form").submit();
+        } else {
+            this.checked = !this.checked;
+        }
+    });
+});
+</script>
+<form method="post" action="{% path 'tasks_toggle' with {'id': task.id} %}" style="display: inline;">
+    <input type="hidden" name="referer" value="{{ referer }}" />
+    <input id="toggle-task-{{task.id}}" type="checkbox" name="done" value="1" {% if task.done %}checked{% endif %}" />
+</form>

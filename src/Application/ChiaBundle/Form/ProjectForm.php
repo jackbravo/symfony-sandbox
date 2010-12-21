@@ -48,7 +48,7 @@ class ProjectForm extends Form
 
         $userTransformer = new EntityToIDTransformer(array(
             'em' => $em,
-            'className' => 'Application\ChiaBundle\Entity\Contact',
+            'className' => 'Application\ChiaBundle\Entity\User',
         ));
         $ownerField = new AutocompleteField('owner', array(
             'choices' => $em->getRepository('Application\ChiaBundle\Entity\User')->getUserOptions(),

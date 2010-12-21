@@ -44,6 +44,7 @@ You need to add this to twig.config in app/config/config.yml
 
 TODO:
 - add view action to Contacts
-- add tasks to projects
+- add won, lost and open projects filters
+- toggle tasks done property with checkbox
 - add hability to create new users
 - Add people and projects in contact view

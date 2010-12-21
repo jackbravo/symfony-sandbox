@@ -1,7 +1,14 @@
 {% extends "ChiaBundle::layout.twig" %}
 
 {% block content %}
-    <h1>{% block title 'Projects' %}</h1>
+    <h1>{% block title 'Projects' %} <small>({{ which }})</small></h1>
+
+    <p>
+        <a href="{% path 'projects' with {'which': 'open'} %}">Open</a> |
+        <a href="{% path 'projects' with {'which': 'won'} %}">Won</a> |
+        <a href="{% path 'projects' with {'which': 'lost'} %}">Lost</a>
+    </p>
+
     <p>
         <a href="{% path 'projects_new' %}">New</a>
     </p>
@@ -21,11 +28,11 @@
     {% for project in projects %}
         <tr class="project-row">
             <td><strong><a href="{% path 'projects_view' with {'id': project.id} %}">{{ project.name }}</a></strong></td>
-            <td>{% if project.category is defined %} {{ project.category.name }} {% endif %}</td>
-            <td>{{ project.price }} {{ price_types[project.priceType] }}</td>
-            <td>{% if project.status is defined %} {{ project.status.name }} {% endif %}</td>
+            <td>{% if project.category is defined %} {{ project.category }} {% endif %}</td>
+            <td>{{ project.price }} {{ price_types[project.price_type] }}</td>
+            <td>{% if project.status is defined %} {{ project.status }} {% endif %}</td>
             <td>{{ project.owner }}</th>
-            <td>{{ project.updatedAt|date("m/d/Y") }}</th>
+            <td>{{ project.updated_at|date("m/d/Y") }}</th>
         </tr>
     {% endfor %}
     </tbody>

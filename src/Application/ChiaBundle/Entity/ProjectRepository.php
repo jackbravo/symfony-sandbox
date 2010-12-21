@@ -12,4 +12,41 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProjectRepository extends EntityRepository
 {
+    public function getAllQuery()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.id, p.name, p.price, p.price_type, p.updated_at,
+                c.name as category, s.name as status, o.username as owner')
+            ->leftJoin('p.category', 'c')
+            ->leftJoin('p.status', 's')
+            ->leftJoin('p.owner', 'o')
+        ;
+    }
+
+    public function getOpen()
+    {
+        return $this->getAllQuery()
+            ->where('s.value != 100 AND s.value != 0')
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
+
+    public function getLost()
+    {
+        return $this->getAllQuery()
+            ->where('s.value = 0')
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
+
+    public function getWon()
+    {
+        return $this->getAllQuery()
+            ->where('s.value = 100')
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
 }

@@ -13,9 +13,21 @@ class ProjectsController extends Controller
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
 
-        $projects = $em->getRepository('Application\ChiaBundle\Entity\Project')->findAll();
+        $get_which = $this->get('request')->query->get('which');
+        $which = $get_which ? $get_which : $this->get('session')->get('contacts.which');
+        $this->get('session')->set('contacts.which', $which);
+
+        if ($which == "won") {
+            $projects = $em->getRepository('Application\ChiaBundle\Entity\Project')->getWon();
+        } else if ($which == "lost") {
+            $projects = $em->getRepository('Application\ChiaBundle\Entity\Project')->getLost();
+        } else {
+            $which = 'open';
+            $projects = $em->getRepository('Application\ChiaBundle\Entity\Project')->getOpen();
+        }
 
         return $this->render('ChiaBundle:Projects:index.twig', array(
+            'which' => $which,
             'projects' => $projects,
             'price_types' => Project::$price_types,
         ));
@@ -64,7 +76,7 @@ class ProjectsController extends Controller
                 $em->persist($project->getLastNote());
                 $em->flush();
 
-                $this->notifyProjectWatchers($project);
+                $this->notifyProjectWatchers($project, $user);
 
                 //$this->container->getSessionService()->setFlash('project_create', array('project' => $project));
                 return $this->redirect($this->generateUrl('projects_view', array('id'=>$project->getId())));

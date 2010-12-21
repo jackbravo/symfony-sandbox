@@ -240,7 +240,7 @@ class Project
      *
      * @param Contact $contact
      */
-    public function setContact($contact)
+    public function setContact(\Application\ChiaBundle\Entity\Contact $contact)
     {
         if (!$contact) exit;
         if ($this->getId() && $this->contact && $this->contact->getId() != $contact->getId()) {
@@ -264,7 +264,7 @@ class Project
      *
      * @param Application\ChiaBundle\Entity\User $owner
      */
-    public function setOwner($owner)
+    public function setOwner(\Application\ChiaBundle\Entity\User $owner)
     {
         if (!$owner) exit;
         if ($this->getId() && $this->owner && $this->owner->getId() != $owner->getId()) {
@@ -384,7 +384,7 @@ class Project
      */
     public function addNotes(\Application\ChiaBundle\Entity\Note $note)
     {
-        $notes->setProject($this);
+        $note->setProject($this);
         $this->notes[] = $note;
     }
 

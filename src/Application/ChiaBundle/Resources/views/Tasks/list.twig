@@ -1,0 +1,10 @@
+<div class="tasks">
+{% for task in tasks %}
+    <div class="row">
+        <input type="checkbox" />
+        <strong>{{ task.category }}</strong>
+        {{ task.username }}:
+        {{ task.task }}
+    </div>
+{% endfor %}
+</div>

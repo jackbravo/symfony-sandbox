@@ -10,6 +10,8 @@
         <h3>Background</h3>{{ project.description|markdown|raw }}
 
         {% render "ChiaBundle:Tasks:new" with {'project': project} %}
+
+        {% render "ChiaBundle:Tasks:list" with {'project': project} %}
     </div>
 
     <h1>{% block title project.name %}<small> <a href="{% path 'projects_edit' with {'id': project.id} %}">(edit)</a></small></h1>

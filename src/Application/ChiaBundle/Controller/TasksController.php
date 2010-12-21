@@ -17,6 +17,15 @@ class TasksController extends Controller
         return $this->render('ChiaBundle:Tasks:index.twig', array('tasks' => $tasks));
     }
 
+    public function listAction($project)
+    {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+
+        $tasks = $em->getRepository('Application\ChiaBundle\Entity\Task')->getForProject($project);
+
+        return $this->render('ChiaBundle:Tasks:list.twig', array('tasks' => $tasks));
+    }
+
     public function newAction($project)
     {
         $em = $this->container->get('doctrine.orm.entity_manager');

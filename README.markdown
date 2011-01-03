@@ -44,5 +44,6 @@ You need to add this to twig.config in app/config/config.yml
 
 TODO:
 - add view action to Contacts
+- add change password (account) options
 - add hability to create new users
 - Add people and projects in contact view

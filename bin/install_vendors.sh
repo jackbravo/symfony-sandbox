@@ -17,19 +17,19 @@ git clone git://github.com/symfony/symfony.git symfony
 # Doctrine ORM
 git clone git://github.com/doctrine/doctrine2.git doctrine
 cd doctrine
-git checkout -b v2.0.0-RC2 2.0.0-RC2
+git checkout -b v2.0.0 2.0.0
 cd $DIR/vendor
 
 # Doctrine DBAL
 git clone git://github.com/doctrine/dbal.git doctrine-dbal
 cd doctrine-dbal
-git checkout -b v2.0.0-RC5 2.0.0-RC5
+git checkout -b v2.0.0 2.0.0
 cd $DIR/vendor
 
 # Doctrine Common
 git clone git://github.com/doctrine/common.git doctrine-common
 cd doctrine-common
-git checkout -b v2.0.0-RC2 2.0.0-RC2
+git checkout -b v2.0.0 2.0.0
 cd $DIR/vendor
 
 # Doctrine migrations
@@ -41,9 +41,6 @@ git clone git://github.com/doctrine/data-fixtures.git doctrine-data-fixtures
 # Doctrine MongoDB
 git clone git://github.com/doctrine/mongodb.git doctrine-mongodb
 git clone git://github.com/doctrine/mongodb-odm.git doctrine-mongodb-odm
-cd doctrine-mongodb-odm
-git checkout -b v1.0.0BETA1 1.0.0BETA1
-cd $DIR/vendor
 
 # Swiftmailer
 git clone git://github.com/swiftmailer/swiftmailer.git swiftmailer
@@ -56,3 +53,6 @@ git clone git://github.com/fabpot/Twig.git twig
 
 # Zend Framework
 git clone git://github.com/zendframework/zf2.git zend
+cd zend
+git submodule update --recursive --init
+cd $DIR/vendor

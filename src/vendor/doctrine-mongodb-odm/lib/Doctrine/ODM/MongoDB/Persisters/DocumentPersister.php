@@ -19,12 +19,10 @@
 
 namespace Doctrine\ODM\MongoDB\Persisters;
 
-
-
 use Doctrine\ODM\MongoDB\DocumentManager,
     Doctrine\Common\EventManager,
     Doctrine\ODM\MongoDB\UnitOfWork,
-    Doctrine\ODM\MongoDB\Hydrator,
+    Doctrine\ODM\MongoDB\Hydrator\HydratorFactory,
     Doctrine\ODM\MongoDB\Mapping\ClassMetadata,
     Doctrine\ODM\MongoDB\Mapping\Types\Type,
     Doctrine\Common\Collections\Collection,
@@ -37,7 +35,10 @@ use Doctrine\ODM\MongoDB\DocumentManager,
     Doctrine\MongoDB\ArrayIterator,
     Doctrine\ODM\MongoDB\Proxy\Proxy,
     Doctrine\ODM\MongoDB\LockMode,
-    Doctrine\ODM\MongoDB\Cursor;
+    Doctrine\ODM\MongoDB\Cursor,
+    Doctrine\ODM\MongoDB\LoggableCursor,
+    Doctrine\MongoDB\Cursor as BaseCursor,
+    Doctrine\MongoDB\LoggableCursor as BaseLoggableCursor;
 
 /**
  * The DocumentPersister is responsible for persisting documents.
@@ -131,18 +132,19 @@ class DocumentPersister
      * @param Doctrine\ODM\MongoDB\DocumentManager $dm
      * @param Doctrine\Common\EventManager $evm
      * @param Doctrine\ODM\MongoDB\UnitOfWork $uow
+     * @param Doctrine\ODM\MongoDB\Hydrator\HydratorFactory $hydratorFactory
      * @param Doctrine\ODM\MongoDB\Mapping\ClassMetadata $class
      * @param string $cmd
      */
-    public function __construct(PersistenceBuilder $pb, DocumentManager $dm, EventManager $evm, UnitOfWork $uow, Hydrator $hydrator, ClassMetadata $class, $cmd)
+    public function __construct(PersistenceBuilder $pb, DocumentManager $dm, EventManager $evm, UnitOfWork $uow, HydratorFactory $hydratorFactory, ClassMetadata $class, $cmd)
     {
-        $this->pb         = $pb;
-        $this->dm         = $dm;
-        $this->evm        = $evm;
-        $this->cmd        = $cmd;
-        $this->uow        = $uow;
-        $this->hydrator   = $hydrator;
-        $this->class      = $class;
+        $this->pb = $pb;
+        $this->dm = $dm;
+        $this->evm = $evm;
+        $this->cmd = $cmd;
+        $this->uow = $uow;
+        $this->hydratorFactory = $hydratorFactory;
+        $this->class = $class;
         $this->collection = $dm->getDocumentCollection($class->name);
     }
 
@@ -310,7 +312,7 @@ class DocumentPersister
     {
         $class = $this->dm->getClassMetadata(get_class($document));
         $data = $this->collection->findOne(array('_id' => $id));
-        $data = $this->hydrator->hydrate($document, $data);
+        $data = $this->hydratorFactory->hydrate($document, $data);
         $this->uow->setOriginalDocumentData($document, $data);
     }
 
@@ -350,8 +352,31 @@ class DocumentPersister
     {
         $criteria = $this->prepareQuery($criteria);
         $cursor = $this->collection->find($criteria);
+        return $this->wrapCursor($cursor);
+    }
+
+    /**
+     * Wraps the supplied base cursor as an ODM one.
+     *
+     * @param Doctrine\MongoDB\Cursor $cursor The base cursor
+     *
+     * @return Cursor An ODM cursor
+     */
+    private function wrapCursor(BaseCursor $cursor)
+    {
         $mongoCursor = $cursor->getMongoCursor();
-        return new Cursor($mongoCursor, $this->uow, $this->class);
+        if ($cursor instanceof BaseLoggableCursor) {
+            return new LoggableCursor(
+                $mongoCursor,
+                $this->uow,
+                $this->class,
+                $cursor->getLoggerCallable(),
+                $cursor->getQuery(),
+                $cursor->getFields()
+            );
+        } else {
+            return new Cursor($mongoCursor, $this->uow, $this->class);
+        }
     }
 
     /**
@@ -448,7 +473,7 @@ class DocumentPersister
                 $embeddedMetadata = $this->dm->getClassMetadata($className);
                 $embeddedDocumentObject = $embeddedMetadata->newInstance();
 
-                $data = $this->hydrator->hydrate($embeddedDocumentObject, $embeddedDocument);
+                $data = $this->hydratorFactory->hydrate($embeddedDocumentObject, $embeddedDocument);
                 $this->uow->registerManaged($embeddedDocumentObject, null, $data);
                 $this->uow->setParentAssociation($embeddedDocumentObject, $mapping, $owner, $mapping['name'].'.'.$key);
                 $collection->add($embeddedDocumentObject);
@@ -479,8 +504,8 @@ class DocumentPersister
             $mongoCollection = $this->dm->getDocumentCollection($className);
             $data = $mongoCollection->find(array('_id' => array($cmd . 'in' => $ids)));
             foreach ($data as $documentData) {
-                $document = $this->uow->getById((string) $documentData['_id'], $className);
-                $data = $this->hydrator->hydrate($document, $documentData);
+                $document = $this->uow->getById((string) $documentData['_id'], $class->rootDocumentName);
+                $data = $this->hydratorFactory->hydrate($document, $documentData);
                 $this->uow->setOriginalDocumentData($document, $data);
             }
         }
@@ -503,22 +528,22 @@ class DocumentPersister
         }
         $newQuery = array();
         foreach ($query as $key => $value) {
-            $value = $this->prepareWhereValue($key, $value);
+            $value = $this->prepareQueryValue($key, $value);
             $newQuery[$key] = $value;
         }
         return $newQuery;
     }
 
     /**
-     * Prepare where values converting document object field names to the document collection
-     * field name.
+     * Prepares a query value and converts any php portable types to the mongodb type.
      *
      * @param string $fieldName
      * @param string $value
-     * @return string $value
+     * @return mixed $value
      */
-    private function prepareWhereValue(&$fieldName, $value)
+    private function prepareQueryValue(&$fieldName, $value)
     {
+        // Process "association.fieldName"
         if (strpos($fieldName, '.') !== false) {
             $e = explode('.', $fieldName);
 
@@ -533,35 +558,55 @@ class DocumentPersister
 
             if (isset($mapping['targetDocument'])) {
                 $targetClass = $this->dm->getClassMetadata($mapping['targetDocument']);
-                if ($targetClass->hasField($e[1]) && $targetClass->identifier === $e[1]) {
-                    $fieldName = $e[0] . '.$id';
-                    $value = $targetClass->getDatabaseIdentifierValue($value);
-                } elseif ($e[1] === '$id') {
-                    $value = $targetClass->getDatabaseIdentifierValue($value);
+                if ($targetClass->hasField($e[1])) {
+                    if ($targetClass->identifier === $e[1] || $e[1] === '$id') {
+                        $fieldName = $e[0] . '.$id';
+                        $value = $this->prepareTypeValue($targetClass->fieldMappings[$targetClass->identifier]['type'], $value);
+                    } else {
+                        $value = $this->prepareTypeValue($targetClass->fieldMappings[$e[1]]['type'], $value);
+                    }
                 }
             }
+
+        // Process all non identifier fields
         } elseif ($this->class->hasField($fieldName) && ! $this->class->isIdentifier($fieldName)) {
             $name = $this->class->fieldMappings[$fieldName]['name'];
+            $mapping = $this->class->fieldMappings[$fieldName];
             if ($name !== $fieldName) {
                 $fieldName = $name;
             }
+            if ( ! isset($mapping['association'])) {
+                $value = $this->prepareTypeValue($mapping['type'], $value);
+            }
+
+        // Process identifier
         } else {
             if ($fieldName === $this->class->identifier || $fieldName === '_id') {
                 $fieldName = '_id';
-                if (is_array($value)) {
-                    if (isset($value[$this->cmd.'in'])) {
-                        foreach ($value[$this->cmd.'in'] as $k => $v) {
-                            $value[$this->cmd.'in'][$k] = $this->class->getDatabaseIdentifierValue($v);
-                        }
-                    } else {
-                        foreach ($value as $k => $v) {
-                            $value[$k] = $this->class->getDatabaseIdentifierValue($v);
-                        }
-                    }
-                } else {
-                    $value = $this->class->getDatabaseIdentifierValue($value);
+                $value = $this->prepareTypeValue($this->class->fieldMappings[$this->class->identifier]['type'], $value);
+            }
+        }
+        return $value;
+    }
+
+    private function prepareTypeValue($type, $value)
+    {
+        if (is_array($value)) {
+            if (isset($value[$this->cmd.'type'])) {
+                // do nothing
+            } elseif (isset($value[$this->cmd.'not'])) {
+                $value[$this->cmd.'not'] = $this->prepareTypeValue($type, $value[$this->cmd.'not']);
+            } elseif (isset($value[$this->cmd.'in'])) {
+                foreach ($value[$this->cmd.'in'] as $k => $v) {
+                    $value[$this->cmd.'in'][$k] = Type::getType($type)->convertToDatabaseValue($v);
+                }
+            } else {
+                foreach ($value as $k => $v) {
+                    $value[$k] = Type::getType($type)->convertToDatabaseValue($v);
                 }
             }
+        } else {
+            $value = Type::getType($type)->convertToDatabaseValue($value);
         }
         return $value;
     }

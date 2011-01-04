@@ -23,8 +23,13 @@ imports:
 
 ## Doctrine Configuration
 doctrine.orm:
-# TODO: for prod environments this is not optimal
-    auto_generate_proxy_classes: true
+    mappings:
+        ChiaBundle:
+            # TODO: for prod environments this is not optimal
+            auto_generate_proxy_classes: true
+        DoctrineUserBundle:
+            # TODO: for prod environments this is not optimal
+            auto_generate_proxy_classes: true
 
 # From MenuBundle
 tools.menu: ~

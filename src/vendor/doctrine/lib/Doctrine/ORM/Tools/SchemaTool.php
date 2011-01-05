@@ -275,6 +275,10 @@ class SchemaTool
         $pkColumns = array();
 
         foreach ($class->fieldMappings as $fieldName => $mapping) {
+            if ($class->isInheritanceTypeSingleTable() && isset($mapping['inherited'])) {
+                continue;
+            }
+
             $column = $this->_gatherColumn($class, $mapping, $table);
 
             if ($class->isIdentifier($mapping['fieldName'])) {
@@ -498,7 +502,11 @@ class SchemaTool
         $conn = $this->_em->getConnection();
 
         foreach ($dropSchemaSql as $sql) {
-            $conn->executeQuery($sql);
+            try {
+                $conn->executeQuery($sql);
+            } catch(\Exception $e) {
+                
+            }
         }
     }
 

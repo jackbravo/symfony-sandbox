@@ -4,13 +4,13 @@
     <h1>{% block title 'Projects' %} <small>({{ which }})</small></h1>
 
     <p>
-        <a href="{% path 'projects' with {'which': 'open'} %}">Open</a> |
-        <a href="{% path 'projects' with {'which': 'won'} %}">Won</a> |
-        <a href="{% path 'projects' with {'which': 'lost'} %}">Lost</a>
+        <a href="{{ path('projects', {'which': 'open'}) }}">Open</a> |
+        <a href="{{ path('projects', {'which': 'won'}) }}">Won</a> |
+        <a href="{{ path('projects', {'which': 'lost'}) }}">Lost</a>
     </p>
 
     <p>
-        <a href="{% path 'projects_new' %}">New</a>
+        <a href="{{ path('projects_new') }}">New</a>
     </p>
 
     <table class="projects">
@@ -27,7 +27,7 @@
     <tbody>
     {% for project in projects %}
         <tr class="project-row">
-            <td><strong><a href="{% path 'projects_view' with {'id': project.id} %}">{{ project.name }}</a></strong></td>
+            <td><strong><a href="{{ path('projects_view', {'id': project.id}) }}">{{ project.name }}</a></strong></td>
             <td>{% if project.category is defined %} {{ project.category }} {% endif %}</td>
             <td>{{ project.price }} {{ price_types[project.price_type] }}</td>
             <td>{% if project.status is defined %} {{ project.status }} {% endif %}</td>

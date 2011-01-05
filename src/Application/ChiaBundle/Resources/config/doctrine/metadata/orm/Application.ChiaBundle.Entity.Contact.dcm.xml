@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity
+	name="Application\ChiaBundle\Entity\Contact"
+	repository-class="Application\ChiaBundle\Entity\ContactRepository">
+
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="name" type="string" length="255" unique="true" />
+
+        <field name="title" type="string" length="255" nullable="true" />
+
+        <field name="code" type="string" length="100" unique="true" nullable="true" />
+
+        <field name="type" type="smallint" />
+
+        <field name="description" type="string" nullable="true" />
+
+        <many-to-one target-entity="Application\ChiaBundle\Entity\Contact" field="company" inversed-by="people" />
+
+        <one-to-many target-entity="Application\ChiaBundle\Entity\Contact" field="people" mapped-by="company" />
+
+        <one-to-many target-entity="Application\ChiaBundle\Entity\Phonenumber" field="phonenumbers" mapped-by="contact" />
+
+        <one-to-many target-entity="Application\ChiaBundle\Entity\Email" field="emails" mapped-by="contact" />
+
+        <one-to-many target-entity="Application\ChiaBundle\Entity\Address" field="addresses" mapped-by="contact" />
+
+        <one-to-many target-entity="Application\ChiaBundle\Entity\Project" field="projects" mapped-by="contact" />
+
+    </entity>
+
+</doctrine-mapping>

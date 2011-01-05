@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity
+	name="Application\ChiaBundle\Entity\Task"
+	repository-class="Application\ChiaBundle\Entity\TaskRepository">
+
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="task" type="string" />
+
+        <field name="done" type="boolean" />
+
+        <field name="due_date" type="date" />
+
+        <field name="created_at" type="datetime" />
+
+        <field name="updated_at" type="datetime" />
+
+        <many-to-one target-entity="Application\ChiaBundle\Entity\Project" field="project" inversed-by="tasks" />
+
+        <many-to-one target-entity="Application\ChiaBundle\Entity\TaskCategory" field="category" inversed-by="tasks" />
+
+        <many-to-one target-entity="Application\ChiaBundle\Entity\User" field="owner" />
+
+        <many-to-one target-entity="Application\ChiaBundle\Entity\User" field="created_by" />
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="doStuffOnPrePersist" />
+            <lifecycle-callback type="preUpdate" method="doStuffOnPreUpdate" />
+        </lifecycle-callbacks>
+
+    </entity>
+
+</doctrine-mapping>

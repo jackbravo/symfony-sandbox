@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity
+	name="Application\ChiaBundle\Entity\Note"
+	repository-class="Application\ChiaBundle\Entity\NoteRepository">
+
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="verb" type="string" />
+
+        <field name="changes" type="string" nullable="true" />
+
+        <field name="note" type="string" nullable="true" />
+
+        <field name="created_at" type="datetime" />
+
+        <field name="updated_at" type="datetime" />
+
+        <many-to-one target-entity="Application\ChiaBundle\Entity\Project" field="project" inversed-by="notes" />
+
+        <many-to-one target-entity="Application\ChiaBundle\Entity\User" field="created_by" inversed-by="notes" />
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="doStuffOnPrePersist" />
+            <lifecycle-callback type="preUpdate" method="doStuffOnPreUpdate" />
+        </lifecycle-callbacks>
+
+    </entity>
+
+</doctrine-mapping>

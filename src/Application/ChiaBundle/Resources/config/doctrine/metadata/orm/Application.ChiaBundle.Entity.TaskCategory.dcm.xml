@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity
+	name="Application\ChiaBundle\Entity\TaskCategory"
+	repository-class="Application\ChiaBundle\Entity\TaskCategoryRepository">
+
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="name" type="string" length="100" unique="true" />
+
+        <one-to-many target-entity="Application\ChiaBundle\Entity\Task" field="tasks" mapped-by="category" />
+
+    </entity>
+
+</doctrine-mapping>

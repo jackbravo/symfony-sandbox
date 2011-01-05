@@ -24,12 +24,10 @@ imports:
 ## Doctrine Configuration
 doctrine.orm:
     mappings:
-        ChiaBundle:
-            # TODO: for prod environments this is not optimal
-            auto_generate_proxy_classes: true
-        DoctrineUserBundle:
-            # TODO: for prod environments this is not optimal
-            auto_generate_proxy_classes: true
+        UserBundle: ~
+        ChiaBundle: ~
+    # TODO: for prod environments this is not optimal
+    auto_generate_proxy_classes: true
 
 # From MenuBundle
 tools.menu: ~
@@ -40,19 +38,16 @@ menu.twig: ~
 markdown.parser: ~
 markdown.twig: ~
 
-doctrine_user.config:
+fos_user.config:
     db_driver: orm
-    password_encoder: sha1
     class:
         model:
             user: Application\ChiaBundle\Entity\User
 
 security.config:
     providers:
-        main:
-            password_encoder: sha1
-            entity:
-                class: ChiaBundle:User
+        fos_user:
+            id: fos_user.user_manager
     firewalls:
         session:
             pattern:    /(login|logout|welcome)
@@ -60,9 +55,4 @@ security.config:
         profiler:
             pattern:    /_profiler/.*
             security:   false
-        frontend:
-            pattern:    /.*
-            logout:     true
-            form-login:
-                default_target_path: /projects
 

@@ -2,7 +2,7 @@
 
 namespace Application\ChiaBundle\Entity;
 
-use Bundle\DoctrineUserBundle\Entity\UserRepository as BaseUserRepository;
+use Bundle\FOS\UserBundle\Entity\UserManager as BaseUserRepository;
 
 /**
  * UserRepository

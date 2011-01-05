@@ -26,11 +26,11 @@ class AppKernel extends Kernel
             //new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
 
             // register your bundles
-            new Application\HelloBundle\HelloBundle(),
-            new Application\ChiaBundle\ChiaBundle(),
             new Bundle\MenuBundle\MenuBundle(),
             new Bundle\MarkdownBundle\MarkdownBundle(),
-            new Bundle\DoctrineUserBundle\DoctrineUserBundle(),
+            new Bundle\FOS\UserBundle\FOSUserBundle(),
+            new Application\HelloBundle\HelloBundle(),
+            new Application\ChiaBundle\ChiaBundle(),
         );
 
         if ($this->isDebug()) {

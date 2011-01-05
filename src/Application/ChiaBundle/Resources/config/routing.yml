@@ -74,6 +74,6 @@ status_edit:
     pattern:    /status/:id/edit
     defaults:   { _controller: ChiaBundle:Status:edit }
 
-session:
-    resource:   DoctrineUserBundle/Resources/config/routing/security.xml
+fos_user_security:
+    resource:   FOS/UserBundle/Resources/config/routing/security.xml
 

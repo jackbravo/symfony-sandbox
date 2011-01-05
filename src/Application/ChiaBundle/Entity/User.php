@@ -3,7 +3,7 @@
 namespace Application\ChiaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Bundle\DoctrineUserBundle\Entity\User as BaseUser;
+use Bundle\FOS\UserBundle\Entity\User as BaseUser;
 
 /**
  * Application\ChiaBundle\Entity\User

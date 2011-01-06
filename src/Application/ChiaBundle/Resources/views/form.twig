@@ -1,17 +1,17 @@
 {% extends 'TwigBundle::form.twig' %}
 
 {% block field_group %}
-    {{ field|render_errors }}
+    {{ form_errors(field) }}
     {% for child in field %}
         {% if not child.ishidden %}
             <div id="{{ child.id }}_wrapper">
-                {{ child|render_label }}
-                {{ child|render_errors }}
-                {{ child|render }}
+                {{ form_label(child) }}
+                {{ form_errors(child) }}
+                {{ form_field(child) }}
             </div>
         {% endif %}
     {% endfor %}
-    {{ field|render_hidden }}
+    {{ form_hidden(field) }}
 {% endblock field_group %}
 
 {% block autocomplete_field %}
@@ -37,8 +37,8 @@
             });
         });
     </script>
-    <input type="hidden" {% display field_attributes %} value="{{ field.displayedData }}">
-    <input type="text" id="{{ field.id }}_auto" value="{{ field.getLabel(field.displayedData) }}" {% display attributes %}>
+    <input type="hidden" {{ block('field_attributes') }} value="{{ field.displayedData }}">
+    <input type="text" id="{{ field.id }}_auto" value="{{ field.getLabel(field.displayedData) }}" {{ block('attributes') }}>
 {% endblock autocomplete_field %}
 
 {% block collection_field %}
@@ -50,17 +50,17 @@
         });
     </script>
     <div class="collection-field">
-    {{ field|render_errors }}
+    {{ form_errors(field) }}
     {% for child in field %}
         {% if not child.ishidden %}
             <div id="{{ child.id }}_wrapper" class="row-item">
-                {{ child|render_errors }}
-                {{ child|render }}
+                {{ form_errors(child) }}
+                {{ form_field(child) }}
                 <a href="#" class="remove-field">Remove field</a>
             </div>
         {% endif %}
     {% endfor %}
-    {{ field|render_hidden }}
+    {{ form_hidden(field) }}
     </div>
     <a href="#" class="add-field">Add another</a>
 {% endblock collection_field %}

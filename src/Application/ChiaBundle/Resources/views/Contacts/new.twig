@@ -2,9 +2,9 @@
 
 {% block content %}
     <h1>{% block title 'New contact' %}</h1>
-    <form action="{% path 'contacts_new' %}" method="post" {{ form|render_enctype }}>
-        {{ form|render }}
+    <form action="{{ path('contacts_new') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_field(form) }}
         <input type="submit" value="Send!" />
-        <a href="{% path 'contacts' %}">Cancel</a>
+        <a href="{{ path('contacts') }}">Cancel</a>
     </form>
 {% endblock %}

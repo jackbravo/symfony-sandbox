@@ -14,7 +14,7 @@ $(function() {
 });
 </script>
 <h3 id="add-task"><a href="#">Add a task</a></h3>
-<form id="task-form" action="{% path 'tasks_create' %}" method="post" {{ form|render_enctype }}>
-    {{ form|render }}
+<form id="task-form" action="{{ path('tasks_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_field(form) }}
     <input type="submit" value="Send!" />
 </form>

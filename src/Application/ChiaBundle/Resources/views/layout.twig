@@ -26,7 +26,7 @@
             {% menu 'tools' %}
         </header>
         <div id="content">
-            <small>Here we should print the flash: notice{# flash('notice') #}</small>
+            <small>{{ session.flash('notice') }}</small>
             {% block content %}{% endblock %}
         </div>
         <footer>

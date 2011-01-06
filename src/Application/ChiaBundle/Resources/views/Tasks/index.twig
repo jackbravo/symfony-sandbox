@@ -4,9 +4,9 @@
     <h1>{% block title 'Tasks' %} <small>({{ which }})</small></h1>
 
     <p>
-        <a href="{% path 'tasks' with {'which': 'mine'} %}">My tasks</a> |
-        <a href="{% path 'tasks' with {'which': 'completed'} %}">Completed</a> |
-        <a href="{% path 'tasks' with {'which': 'assigned'} %}">Assigned by me</a>
+        <a href="{{ path('tasks', {'which': 'mine'}) }}">My tasks</a> |
+        <a href="{{ path('tasks', {'which': 'completed'}) }}">Completed</a> |
+        <a href="{{ path('tasks', {'which': 'assigned'}) }}">Assigned by me</a>
     </p>
 
     <div class="tasks">
@@ -16,7 +16,7 @@
             <strong>{{ task.category }}</strong>
             {{ task.owner }}:
             {{ task.task }}
-            on <a href="{% path 'projects_view' with {'id': task.p_id} %}">{{task.project}}</a>
+            on <a href="{{ path('projects_view', {'id': task.p_id}) }}">{{task.project}}</a>
         </div>
     {% endfor %}
     </div>

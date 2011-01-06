@@ -40,8 +40,8 @@ class ProjectForm extends Form
             'em' => $em,
             'className' => 'Application\ChiaBundle\Entity\Contact',
         ));
-        $contactField = new AutocompleteField('contact', array(
-            'choices' => $em->getRepository('Application\ChiaBundle\Entity\Contact')->getContactOptions(),
+        $contactField = new ChoiceField('contact', array(
+            'choices' => $em->getRepository('Application\ChiaBundle\Entity\Contact')->getCompanyOptions(),
         ));
         $contactField->setValueTransformer($contactTransformer);
         $this->add($contactField);
@@ -50,7 +50,7 @@ class ProjectForm extends Form
             'em' => $em,
             'className' => 'Application\ChiaBundle\Entity\User',
         ));
-        $ownerField = new AutocompleteField('owner', array(
+        $ownerField = new ChoiceField('owner', array(
             'choices' => $em->getRepository('Application\ChiaBundle\Entity\User')->getUserOptions(),
         ));
         $ownerField->setValueTransformer($userTransformer);

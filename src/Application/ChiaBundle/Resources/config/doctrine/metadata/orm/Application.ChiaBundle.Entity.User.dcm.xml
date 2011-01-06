@@ -4,7 +4,9 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="Application\ChiaBundle\Entity\User">
+    <entity
+	name="Application\ChiaBundle\Entity\User"
+	repository-class="Application\ChiaBundle\Entity\UserRepository">
 
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO" />

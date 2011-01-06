@@ -25,11 +25,11 @@ class User extends BaseUser
      */
     private $notes;
 
-    public function __construct($algorithm)
+    public function __construct()
     {
         $this->projects = new ArrayCollection();
         $this->notes = new ArrayCollection();
-        parent::__construct($algorithm);
+        parent::__construct();
     }
 
     /**

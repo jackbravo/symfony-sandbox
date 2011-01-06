@@ -20,6 +20,7 @@ twig.config:
 imports:
     - { resource: database.yml }
     - { resource: email.yml }
+    - { resource: CompatAssetsBundle/Resources/config/assets.xml }
 
 ## Doctrine Configuration
 doctrine.orm:
@@ -47,12 +48,17 @@ fos_user.config:
 security.config:
     providers:
         fos_user:
-            id: fos_user.user_manager
+            password_encoder: sha1
+            entity: { class: ChiaBundle:User, property: username }
     firewalls:
         session:
-            pattern:    /(login|logout|welcome)
+            pattern:    /(login|welcome)
             security:   false
         profiler:
             pattern:    /_profiler/.*
             security:   false
-
+        frontend:
+            pattern:    /.*
+            logout:     true
+            form-login:
+                default_target_path: /projects

@@ -2,8 +2,8 @@
 
 {% block content %}
     <ul>
-        <li><a href="{% path 'status' %}">Status</a></li>
-        <li><a href="{% path 'categories' %}">Categories</a></li>
-        <li><a href="{% path 'task_categories' %}">Task categories</a></li>
+        <li><a href="{{ path('status') }}">Status</a></li>
+        <li><a href="{{ path('categories') }}">Categories</a></li>
+        <li><a href="{{ path('task_categories') }}">Task categories</a></li>
     </ul>
 {% endblock %}

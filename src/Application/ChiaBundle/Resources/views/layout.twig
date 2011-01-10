@@ -5,18 +5,25 @@
 {% javascript 'http://html5shim.googlecode.com/svn/trunk/html5.js' %}
 {% javascript 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js' %}
 {% javascript 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js' %}
+{% javascript 'bundles/chia/js/jquery.tablesorter.min.js' %}
 {% javascript 'bundles/chia/js/collection_field.js' %}
 {#
 {% stylesheet 'bundles/chia/css/jquery-ui.css' %}
 #}
 {% stylesheet 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/redmond/jquery-ui.css' %}
 {% stylesheet 'bundles/chia/css/main.css' %}
+{% stylesheet 'bundles/chia/css/tablesorter.css' %}
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset=utf-8" />
         {% javascripts %}
         {% stylesheets %}
+        <script>
+                $(function () {
+                        $('table.tablesorter').tablesorter();
+                });
+        </script>
         <title>{% block title 'Welcome' %} | Chia</title>
     </head>
     <body>

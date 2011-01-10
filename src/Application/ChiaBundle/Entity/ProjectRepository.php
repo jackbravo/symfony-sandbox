@@ -15,8 +15,8 @@ class ProjectRepository extends EntityRepository
     public function getAllQuery()
     {
         return $this->createQueryBuilder('p')
-            ->select('p.id, p.name, p.price, p.price_type, p.updated_at,
-                c.name as category, s.name as status, o.username as owner')
+            ->select("p.id, p.name, p.price, p.price_type, p.updated_at,
+                c.name as category, CONCAT(CONCAT(s.value, '. '), s.name) as status, o.username as owner")
             ->leftJoin('p.category', 'c')
             ->leftJoin('p.status', 's')
             ->leftJoin('p.owner', 'o')

@@ -133,7 +133,7 @@ class ProjectsController extends Controller
     {
         if ($from != $project->getOwner())
         {
-            $mailer = $this->get('swiftmailer.mailer');
+            $mailer = $this->get('mailer');
 
             $message = \Swift_Message::newInstance()
                 ->setSubject("[Project {$project}] was updated by {$from}")

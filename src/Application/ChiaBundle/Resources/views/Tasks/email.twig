@@ -1,7 +1,7 @@
 [{{ task.category }}] {{ task.task }} was assigned to you by {{ task.createdBy }}
 
-Regarding: {{ task.project }} ({% url 'projects_view' with {'id': task.project.id} %})
+Regarding: {{ task.project }} ({{ path('projects_view', {'id': task.project.id}) }})
 
 Due date: {{ task.dueDate|date }}
 
-You can check your tasks page on: {% url 'tasks' with {'which': 'mine'} %}
+You can check your tasks page on: {{ path('tasks', {'which': 'mine'}) }}

@@ -95,7 +95,7 @@ class TasksController extends Controller
     {
         if ($from != $task->getOwner())
         {
-            $mailer = $this->get('swiftmailer.mailer');
+            $mailer = $this->get('mailer');
 
             $message = \Swift_Message::newInstance()
                 ->setSubject("[Task] {$task->getTask()} was assigned to you")

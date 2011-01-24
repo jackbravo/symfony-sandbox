@@ -7,6 +7,7 @@ use Application\ChiaBundle\Entity\Contact;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\TextField;
+use Symfony\Component\Form\DateField;
 use Symfony\Component\Form\MoneyField;
 use Symfony\Component\Form\ChoiceField;
 use Symfony\Component\Form\TextareaField;
@@ -60,6 +61,7 @@ class ProjectForm extends Form
         $this->add(new TextareaField('description'));
         $this->add(new MoneyField('price'));
         $this->add(new ChoiceField('price_type', array('choices' => Project::$price_types)));
+        $this->add(new DateField('estimated_start_date'));
 
         $categoryTransformer = new EntityToIDTransformer(array(
             'em' => $em,

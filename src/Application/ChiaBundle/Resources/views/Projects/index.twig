@@ -21,6 +21,7 @@
             <th>Price</th>
             <th>Status</th>
             <th>Owner</th>
+            <th>Start Date</th>
             <th>Last update</th>
         </tr>
     </thead>
@@ -32,6 +33,7 @@
             <td>{{ project.price }} {{ price_types[project.price_type] }}</td>
             <td>{% if project.status is defined %} {{ project.status }} {% endif %}</td>
             <td>{{ project.owner }}</th>
+            <td>{% if project.estimated_start_date is defined %} {{ project.estimated_start_date|date("m/d/Y") }} {% endif %}</th>
             <td>{{ project.updated_at|date("m/d/Y") }}</th>
         </tr>
     {% endfor %}

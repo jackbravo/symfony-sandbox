@@ -54,6 +54,16 @@ class Project
     private $description;
 
     /**
+     * @var date $estimated_start_date
+     */
+    private $estimated_start_date;
+
+    /**
+     * @var date $estimated_start_date
+     */
+    private $original_estimated_start_date;
+
+    /**
      * @var datetime $created_at
      */
     private $created_at;
@@ -193,6 +203,51 @@ class Project
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set estimated_start_date
+     *
+     * @param date $estimated_start_date
+     */
+    public function setEstimatedStartDate($estimated_start_date)
+    {
+        if ($this->getId() && $this->estimated_start_date != $estimated_start_date) {
+            $this->getLastNote()->addChange("Estimated start date changed from '{$this->estimated_start_date}' to '$estimated_start_date'");
+        }
+        if ($this->getOriginalEstimatedStartDate() == null)
+            $this->setOriginalEstimatedStartDate($estimated_start_date);
+        $this->estimated_start_date = $estimated_start_date;
+    }
+
+    /**
+     * Get estimated_start_date
+     *
+     * @return date $estimated_start_date
+     */
+    public function getEstimatedStartDate()
+    {
+        return $this->estimated_start_date;
+    }
+
+    /**
+     * Set original_estimated_start_date
+     *
+     * @param date $original_estimated_start_date
+     */
+    public function setOriginalEstimatedStartDate($original_estimated_start_date)
+    {
+        $this->original_estimated_start_date = $original_estimated_start_date;
+    }
+
+    /**
+     * Get original_estimated_start_date
+     *
+     * @return date $original_estimated_start_date
+     */
+    public function getOriginalEstimatedStartDate()
+    {
+        return $this->original_estimated_start_date;
     }
 
     /**

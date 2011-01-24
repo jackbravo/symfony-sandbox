@@ -240,10 +240,9 @@ class Project
      *
      * @param Contact $contact
      */
-    public function setContact(\Application\ChiaBundle\Entity\Contact $contact)
+    public function setContact($contact)
     {
-        if (!$contact) exit;
-        if ($this->getId() && $this->contact && $this->contact->getId() != $contact->getId()) {
+        if (isset($contact) && $this->getId() && $this->contact && $this->contact->getId() != $contact->getId()) {
             $this->getLastNote()->addChange("Contact changed from '{$this->contact}' to '$contact'");
         }
         $this->contact = $contact;

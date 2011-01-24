@@ -3,6 +3,7 @@
 namespace Application\ChiaBundle\Form;
 
 use Application\ChiaBundle\Entity\Project;
+use Application\ChiaBundle\Entity\Contact;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\TextField;
@@ -40,7 +41,7 @@ class ProjectForm extends Form
             'em' => $em,
             'className' => 'Application\ChiaBundle\Entity\Contact',
         ));
-        $contactField = new ChoiceField('contact', array(
+        $contactField = new AutocompleteField('contact', array(
             'choices' => $em->getRepository('Application\ChiaBundle\Entity\Contact')->getCompanyOptions(),
         ));
         $contactField->setValueTransformer($contactTransformer);
@@ -70,5 +71,21 @@ class ProjectForm extends Form
         ));
         $categoryField->setValueTransformer($categoryTransformer);
         $this->add($categoryField);
+    }
+
+    public function doBind(array $taintedData)
+    {
+        $valid = parent::doBind($taintedData);
+
+        if (!is_numeric($taintedData['contact'])) {
+            $em = $this->getOption('entity_manager');
+            $company = new Contact();
+            $company->setName($taintedData['contact']);
+            $company->setType(2);
+            $this->getData()->setContact($company);
+            $em->persist($company);
+        }
+
+        return $valid;
     }
 }

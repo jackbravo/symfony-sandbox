@@ -213,7 +213,8 @@ class Project
     public function setEstimatedStartDate($estimated_start_date)
     {
         if ($this->getId() && $this->estimated_start_date != $estimated_start_date) {
-            $this->getLastNote()->addChange("Estimated start date changed from '{$this->estimated_start_date}' to '$estimated_start_date'");
+            $current = isset($this->estimated_start_date) ? $this->estimated_start_date->format('Y-m-d') : '';
+            $this->getLastNote()->addChange("Estimated start date changed from '$current' to '{$estimated_start_date->format('Y-m-d')}'");
         }
         if ($this->getOriginalEstimatedStartDate() == null)
             $this->setOriginalEstimatedStartDate($estimated_start_date);

@@ -50,7 +50,7 @@ class ProjectsController extends Controller
                 $em->flush();
 
                 //$this->container->getSessionService()->setFlash('project_create', array('project' => $project));
-                return $this->redirect($this->generateUrl('projects'));
+                return $this->redirect($this->generateUrl('projects_view', array('id'=>$project->getId())));
             }
         }
 

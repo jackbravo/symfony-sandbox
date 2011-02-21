@@ -24,19 +24,15 @@ class ProjectForm extends Form
 
         $this->add(new TextField('name'));
 
-        if ($project->getId()) {
-            $statusTransformer = new EntityToIDTransformer(array(
-                'em' => $em,
-                'className' => 'Application\ChiaBundle\Entity\Status',
-            ));
-            $statusField = new ChoiceField('status', array(
-                'choices' => $em->getRepository('Application\ChiaBundle\Entity\Status')->getStatusOptions(),
-            ));
-            $statusField->setValueTransformer($statusTransformer);
-            $this->add($statusField);
-        } else {
-            $project->setStatus($em->getRepository('Application\ChiaBundle\Entity\Status')->getDefaultStatus());
-        }
+        $statusTransformer = new EntityToIDTransformer(array(
+            'em' => $em,
+            'className' => 'Application\ChiaBundle\Entity\Status',
+        ));
+        $statusField = new ChoiceField('status', array(
+            'choices' => $em->getRepository('Application\ChiaBundle\Entity\Status')->getStatusOptions(),
+        ));
+        $statusField->setValueTransformer($statusTransformer);
+        $this->add($statusField);
 
         $contactTransformer = new EntityToIDTransformer(array(
             'em' => $em,

@@ -30,7 +30,7 @@
         <tr class="project-row">
             <td><strong><a href="{{ path('projects_view', {'id': project.id}) }}">{{ project.name }}</a></strong></td>
             <td>{% if project.category is defined %} {{ project.category }} {% endif %}</td>
-            <td>{{ project.price }} {{ price_types[project.price_type] }}</td>
+            <td>{% if project.price is defined %} {{ project.price }} {{ price_types[project.price_type] }} {% endif %}</td>
             <td>{% if project.status is defined %} {{ project.status }} {% endif %}</td>
             <td>{{ project.owner }}</th>
             <td>{% if project.estimated_start_date is defined %} {{ project.estimated_start_date|date("m/d/Y") }} {% endif %}</th>

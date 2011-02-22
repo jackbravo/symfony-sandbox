@@ -59,9 +59,19 @@ class Project
     private $estimated_start_date;
 
     /**
-     * @var date $estimated_start_date
+     * @var date $original_estimated_start_date
      */
     private $original_estimated_start_date;
+
+    /**
+     * @var date $estimated_end_date
+     */
+    private $estimated_end_date;
+
+    /**
+     * @var date $original_estimated_end_date
+     */
+    private $original_estimated_end_date;
 
     /**
      * @var datetime $created_at
@@ -249,6 +259,52 @@ class Project
     public function getOriginalEstimatedStartDate()
     {
         return $this->original_estimated_start_date;
+    }
+
+    /**
+     * Set estimated_end_date
+     *
+     * @param date $estimated_end_date
+     */
+    public function setEstimatedEndDate($estimated_end_date)
+    {
+        if ($this->getId() && $this->estimated_end_date != $estimated_end_date) {
+            $current = isset($this->estimated_end_date) ? $this->estimated_end_date->format('Y-m-d') : '';
+            $this->getLastNote()->addChange("Estimated end date changed from '$current' to '{$estimated_end_date->format('Y-m-d')}'");
+        }
+        if ($this->getOriginalEstimatedEndDate() == null)
+            $this->setOriginalEstimatedEndDate($estimated_end_date);
+        $this->estimated_end_date = $estimated_end_date;
+    }
+
+    /**
+     * Get estimated_end_date
+     *
+     * @return date $estimated_end_date
+     */
+    public function getEstimatedEndDate()
+    {
+        return $this->estimated_end_date;
+    }
+
+    /**
+     * Set original_estimated_end_date
+     *
+     * @param date $original_estimated_end_date
+     */
+    public function setOriginalEstimatedEndDate($original_estimated_end_date)
+    {
+        $this->original_estimated_end_date = $original_estimated_end_date;
+    }
+
+    /**
+     * Get original_estimated_end_date
+     *
+     * @return date $original_estimated_end_date
+     */
+    public function getOriginalEstimatedEndDate()
+    {
+        return $this->original_estimated_end_date;
     }
 
     /**

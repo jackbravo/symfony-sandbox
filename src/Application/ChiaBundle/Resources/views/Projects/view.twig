@@ -17,7 +17,8 @@
     <h1>{% block title project.name %}<small> <a href="{{ path('projects_edit', {'id': project.id}) }}">(edit)</a></small></h1>
     <p>
         {{ project.category.name }} {% if project.price %} - {{ project.price }} {{ project.priceTypeName }} {% endif %}
-        {% if project.estimatedStartDate is defined %}<br><strong>Estimated start date</strong>: {{ project.estimatedStartDate|date('Y-m-d') }}{% endif %}
+        {% if project.estimatedStartDate is defined %}<br>Estimated period: from {{ project.estimatedStartDate|date('Y-m-d') }}{% endif %}
+        {% if project.estimatedEndDate is defined %} to {{ project.estimatedEndDate|date('Y-m-d') }}{% endif %}
     </p>
     <form action="{{ path('projects_modify', {"id": project.id}) }}" method="post" {{ form_enctype(form) }}>
         {{ form_field(form) }}

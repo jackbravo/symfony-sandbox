@@ -58,6 +58,7 @@ class ProjectForm extends Form
         $this->add(new MoneyField('price'));
         $this->add(new ChoiceField('price_type', array('choices' => Project::$price_types)));
         $this->add(new DateField('estimated_start_date'));
+        $this->add(new DateField('estimated_end_date'));
 
         $categoryTransformer = new EntityToIDTransformer(array(
             'em' => $em,

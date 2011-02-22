@@ -24,6 +24,10 @@
 
         <field name="original_estimated_start_date" type="date" nullable="true" />
 
+        <field name="estimated_end_date" type="date" nullable="true" />
+
+        <field name="original_estimated_end_date" type="date" nullable="true" />
+
         <field name="created_at" type="datetime" />
 
         <field name="updated_at" type="datetime" />

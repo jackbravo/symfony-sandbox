@@ -28,7 +28,7 @@
     </thead>
     <tbody>
     {% for project in projects %}
-        <tr class="project-row">
+        <tr class="project-row {{ loop.index0 is odd ? 'odd' : 'even' }}">
             <td><strong><a href="{{ path('projects_view', {'id': project.id}) }}">{{ project.name }}</a></strong></td>
             <td>{% if project.category is defined %} {{ project.category }} {% endif %}</td>
             <td>{% if project.price is defined %} {{ project.price }} {{ price_types[project.price_type] }} {% endif %}</td>

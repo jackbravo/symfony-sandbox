@@ -21,7 +21,7 @@
     </thead>
     <tbody>
     {% for contact in contacts %}
-        <tr class="contact-row">
+        <tr class="contact-row {{ loop.index0 is odd ? 'odd' : 'even' }}">
             <td><strong><a href="{{ path('contacts_edit', {'id': contact.id}) }}">{{ contact.name }}</a></strong></td>
             <td>
                 {% if contact.emails is defined %}
